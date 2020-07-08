@@ -1,3 +1,4 @@
+<html>
 ---
 title: "Introdução ao R"
 author: "Gabriel R. R. & Wagner L. M."
@@ -670,3 +671,4 @@ listaPoderosa$string # acessando apenas o objeto string
 Muitas dessas mesmas operações com listas podem também ser feitas em objetos do tipo `data.frame`.
 
 Por enquanto é isso! :)
+</html>
