@@ -1,0 +1,1538 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Introdução ao R},
+  pdfauthor={Gabriel R. R. \& Wagner L. M.},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Introdução ao R}
+\author{Gabriel R. R. \& Wagner L. M.}
+\date{6/27/2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{considerauxe7uxf5es-iniciais}{%
+\subsection{Considerações iniciais}\label{considerauxe7uxf5es-iniciais}}
+
+O código inicial, em R, está disponível nesse link:
+\url{https://github.com/wagnerLM/quanti2/blob/master/script\%20R\%20intro2.R}
+
+Inspiradao em Torfs \& Brauer (2012) e Epskamp (2013) ``Introductions to
+R''.
+
+\hypertarget{iniciando-no-r}{%
+\subsection{1. Iniciando no R}\label{iniciando-no-r}}
+
+\hypertarget{o-que-uxe9-o-r}{%
+\subsubsection{1.1 O que é o R?}\label{o-que-uxe9-o-r}}
+
+O R é uma linguagem de programação altamente utilizada para estatística.
+Ele permite realizar análises estatísticas, visualização de dados,
+extração (mineração) de dados, e possui ainda outras muitas
+funcionalidades. Além disso, o R é um software livre e gratuito que
+conta com uma comunidade ativa de usuários ao redor do mundo.
+
+Por essas características acima, novas atualizações e possibilidades de
+análise são frequentes no R - o tornando uma ferramenta bem importante
+para pesquisa científica, \emph{data science} etc.
+
+Antes do R, o S havia sido criado em 1976 por John Chambers nos
+Laboratórios Bell - laboratórios industriais americanos de propriedade
+da Nokia. Em 1992 na Nova Zelândia, Ross Ihaka e Robert Gentleman
+começaram a produzir o R \textbf{baseando-se fortemente no software S}.
+Em 1995 a primeira versão de R havia sido lançada. A primeira versão
+estável saiu em 2000.
+
+A partir de 2018, Robert Chambers, criador do S, juntou-se ao time de
+desenvolvimento do R. Qualquer informação sobre o R pode ser consultada
+no site oficial do R: \url{https://www.r-project.org/}
+
+Dentre as razões para utilizar o R estão:
+
+\begin{itemize}
+\tightlist
+\item
+  Capacidades gráficas muito sofisticadas e melhores que muitos
+  softwares.
+\item
+  Possibilidade para desenvolver novas ferramentas.
+\item
+  Comunidade de usuários muito ativa e participativa.
+\end{itemize}
+
+\hypertarget{baixando-o-r}{%
+\subsubsection{1.2 Baixando o R}\label{baixando-o-r}}
+
+O R é gratuito. Para realizar o download do software, basta acessar o
+site \url{https://cloud.r-project.org/} e escolher a versão apropriada
+para sua máquina.
+
+Para acessar o R, vamos utilizar o RStudio - uma interface que facilita
+o uso do R. Da mesma forma, o RStudio é gratuito e pode ser baixado
+aqui: \url{https://www.rstudio.com/products/rstudio/download/}
+
+Para mexermos no R, basta abrir o RStudio.
+
+\hypertarget{reconhecendo-os-quadrantes-do-rstudio}{%
+\subsubsection{1.3 Reconhecendo os quadrantes do
+RStudio}\label{reconhecendo-os-quadrantes-do-rstudio}}
+
+Ao abrir o RStudio, você notará algumas divisões na tela. Cada divisão é
+representa um \emph{quadrante} do R. Cada quadrante nos dá informações
+diferentes.
+
+\begin{figure}
+\centering
+\includegraphics{C:/Users/Marco2/Desktop/Gabriel/Data Science/Projetos/Grupo R/imagens/1.jpg}
+\caption{Quadrantes do RStudio}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  1 - Esquerdo-alto: editor ou script, você pode armazenar seus comandos
+  e salvar os seus projetos.
+\item
+  2 - Direito-alto: espaço de trabalho e repositório de seus
+  ``objetos''.
+\item
+  3 - Direito-baixo: arquivos de ajuda, imagens e gráficos, e
+  informações dos pacotes.
+\item
+  4 - Esquerdo-baixo: console e comando, mostra os registros de
+  atividades, saídas de análises e é onde o ``R'' funciona.
+\end{itemize}
+
+Vamos começar?
+
+\hypertarget{abrindo-uma-nova-aba}{%
+\subsubsection{1.4 Abrindo uma nova aba}\label{abrindo-uma-nova-aba}}
+
+Caso queira iniciar outro trabalho, você pode abrir uma nova aba de
+script no RStudio.
+
+Para isso, basta ir acessar a aba do programa e clicar em
+\texttt{File\ -\textgreater{}\ New\ File\ -\textgreater{}\ R\ Script}.
+Você agora terá mais um script para utilizar.
+
+\hypertarget{primeiros-passos-com-o-r}{%
+\subsection{2. Primeiros passos com o
+R}\label{primeiros-passos-com-o-r}}
+
+\hypertarget{usando-o-r-como-uma-calculadora}{%
+\subsubsection{2.1 Usando o R como uma
+calculadora}\label{usando-o-r-como-uma-calculadora}}
+
+Para começar, digite no campo 1 - esquerdo-alto (a partir de agora,
+chamado de \emph{editor} ou \emph{script}) a seguinte operação:
+\texttt{1\ +\ 1}
+
+Agora, para o R reconhecer que você quer fazer o resultado dessa
+operação, você precisa \emph{rodar esse código}.
+
+\textbf{Rodando um código}: para seus comandos serem executados,
+selecione ou o início da linha de código, ou o final da linha de código,
+ou toda a linha de código, e então clique em \emph{Run}.
+
+\begin{figure}
+\centering
+\includegraphics{C:/Users/Marco2/Desktop/Gabriel/Data Science/Projetos/Grupo R/imagens/2.jpg}
+\caption{Rodando um comando}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  Windows: O comando \texttt{Run} pode ser substituído por ``Ctrl +
+  Enter''
+\item
+  Mac: O comando \texttt{Run} pode ser substituído por ``Cmd + Return''
+\end{itemize}
+
+Ficará assim:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+O resultado aparecerá no quadrante 4 - esquerdo-baixo (a partir de
+agora, chamado de \textbf{console}): \texttt{{[}1{]}\ 2} Ou seja, 1 + 1
+= 2.
+
+É simples assim para utilizar o R como uma calculadora!
+
+\emph{Todos os resultados aparecem no console. Não é necessário escrever
+os comandos no editor de código (quadrante 1) - se preferir, pode
+escrevê-los direto no console (quadrante 4).}
+
+Para \textbf{somar}, usa-se \texttt{+}, como já mostrado.
+
+\textbf{Subtrair} usando \texttt{-}. Por exemplo, \texttt{50\ -\ 25}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{50} \OperatorTok{-}\StringTok{ }\DecValTok{25}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\textbf{Multiplicar} usando \texttt{*}. Por exemplo, \texttt{5\ *\ 5}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{*}\StringTok{ }\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\textbf{Dividir} usando \texttt{/}. Por exemplo, \texttt{50\ /\ 2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{50} \OperatorTok{/}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\textbf{Potencializar} usando \texttt{**} ou \texttt{\^{}x}. Por
+exemplo, \texttt{5\ **\ 2} ou \texttt{5\^{}2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{**}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+Assim, uma série de operações podem ser feitas.
+
+Em cálculos maiores, os parênteses \texttt{(\ )} são utilizados para
+priorizar os elementos que precisam ser calculados antes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{((}\DecValTok{10} \OperatorTok{*}\StringTok{ }\DecValTok{20}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{8}\NormalTok{) }\OperatorTok{^}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 625
+\end{verbatim}
+
+\hypertarget{objetos-no-r}{%
+\subsection{3. Objetos no R}\label{objetos-no-r}}
+
+Até agora trabalhamos apenas com \emph{números inteiros} e com cálculos.
+É importante citar que o R é esperto suficiente para conseguir trabalhar
+com \emph{texto} também.
+
+Antes de aprender sobre isso, vamos aprender a criar um \emph{objeto}.
+
+\hypertarget{criando-objetos}{%
+\subsubsection{3.1 Criando objetos}\label{criando-objetos}}
+
+Um objeto é uma coisa que se pode mudar, mexer e brincar com. Ele possui
+atributos específicos, dependendo do que a gente coloca nele.
+
+Para criar um objeto, primeiro se escolhe o seu nome e depois se
+atribuem os seus valores.
+
+\textbf{Ah, todas as linhas iniciadas em}\texttt{\#}\textbf{são
+comentários, e não são processadas como comandos pelo software.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Esse é um comentário. Note que ele inicia com "#". O R não se importa com ele.}
+
+\CommentTok{# Vamos agora criar um objeto chamado "objeto".}
+
+\NormalTok{objeto <-}\StringTok{ }\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+Pronto, agora \texttt{objeto} possui valor \texttt{10}.
+
+\begin{itemize}
+\tightlist
+\item
+  Para criar objetos, é preciso definir seu \emph{nome} \texttt{objeto}
+  ou \texttt{x} ou \texttt{nomeSuperLegal} (o R não se importa\ldots).
+\item
+  Depois, é necessário colocar o \emph{sinal de atribuição}
+  \texttt{\textless{}-}, que pode significar \emph{possui o valor de}.
+\item
+  Finalmente, dá-se o \emph{valor do objeto}, que nesse caso é
+  \texttt{10}.
+\end{itemize}
+
+\texttt{objeto\ \textless{}-\ 10} pode ser lido como \emph{criar}
+\texttt{objeto} \emph{que} \textbf{possui o valor de}
+(\texttt{\textless{}-}) \texttt{10}.
+
+Depois de criado, se pedirmos apenas \texttt{objeto} para o R, olhe o
+que ele nos retorna:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Agora vamos apenas pedir objeto}
+
+\NormalTok{objeto}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+O R nos retornou o valor 10! Ele entendeu que \texttt{objeto} agora é
+\texttt{10}.
+
+Para saber qual o tipo desse objeto, \emph{o que ele é}, é só pedir
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Agora vamos apenas para o R informar o que "objeto" é}
+
+\CommentTok{# Observação: class() é uma função que retorna o tipo de objeto colocado nela.}
+
+\KeywordTok{class}\NormalTok{(objeto)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+Que legal! O R nos disse que \texttt{objeto} é um numeral.
+
+Como um numeral, podemos fazer operações com ele, certo?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{objeto }\OperatorTok{+}\StringTok{ }\DecValTok{10}  \CommentTok{# Retorna 20}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{objeto }\OperatorTok{-}\StringTok{ }\DecValTok{10}  \CommentTok{# Retorna 0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{objeto }\OperatorTok{/}\StringTok{ }\DecValTok{2}   \CommentTok{# Retorna 5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{objeto }\OperatorTok{*}\StringTok{ }\DecValTok{5}   \CommentTok{# Retorna 50}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{objeto }\OperatorTok{/}\StringTok{ }\NormalTok{objeto }\CommentTok{# Retorna 1 (x / x = 1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\hypertarget{objetos-interagindo-com-objetos}{%
+\subsubsection{3.2 Objetos interagindo com
+objetos}\label{objetos-interagindo-com-objetos}}
+
+Vamos criar dois objetos, \texttt{a}com valor \texttt{50} e \texttt{b}
+com valor \texttt{3} e pedir para eles interagirem.
+
+Vimos que para criar um objeto, é só usar a fórmula
+\texttt{objeto\ \textless{}-\ valor} (lê-se \emph{objeto possui o valor
+de `valor'}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\DecValTok{50}
+
+\NormalTok{b <-}\StringTok{ }\DecValTok{3}
+
+\CommentTok{# Podemos interagir com os objetos}
+
+\NormalTok{a }\OperatorTok{/}\StringTok{ }\NormalTok{b   }\CommentTok{# 'a' dividido por 'b'}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16.66667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{**}\StringTok{ }\NormalTok{b  }\CommentTok{# 'a' elevado a 'b'}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 125000
+\end{verbatim}
+
+\textbf{Exercícios para você fazer}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Realize \texttt{a\ +\ b}.
+\item
+  Agora crie um novo objeto, \texttt{c}, que possua o valor de
+  \texttt{a\ /\ b}.
+\item
+  Qual a classe desse novo objeto \texttt{c}?
+\end{enumerate}
+
+\hypertarget{mudando-o-valor-de-um-objeto}{%
+\subsubsection{3.3 Mudando o valor de um
+objeto}\label{mudando-o-valor-de-um-objeto}}
+
+Outra coisa super fácil de fazer no R é \textbf{mudar o valor de uma
+variável}. Para fazer isso, basta mudar o valor atribuído para essa
+variável.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Mudando o valor de 'a' para 33846}
+
+\NormalTok{a <-}\StringTok{ }\DecValTok{50}
+
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\DecValTok{33846}
+
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 33846
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Mudando o valor de 'a' para (5 + 12 + 8 + 1) * 4}
+
+\NormalTok{a <-}\StringTok{ }\NormalTok{(}\DecValTok{5} \OperatorTok{+}\StringTok{ }\DecValTok{12} \OperatorTok{+}\StringTok{ }\DecValTok{8} \OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{4}
+
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 104
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Mudando o valor de 'a' para 'a / a'}
+
+\NormalTok{a <-}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{a}
+
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 208
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# O R reconhece o valor antigo de 'a' e realiza a operação 2 * a.}
+
+\CommentTok{# Mudando o valor de 'a' para 'a / a'}
+
+\NormalTok{a <-}\StringTok{ }\NormalTok{a }\OperatorTok{/}\StringTok{ }\NormalTok{a}
+
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# O R reconhece o valor antigo de 'a' e realiza a operação a / a = 1.}
+\end{Highlighting}
+\end{Shaded}
+
+Pronto! Mudar valores de objetos é algo relativamente simples de se
+fazer com o R.
+
+\textbf{Exercícios para você fazer}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Crie um objeto com a soma de todos os números pares de 0 a 10.
+\item
+  Crie um objeto com a soma de todos os números ímpares de 0 a 10.
+\item
+  Multiplique esses objetos entre si, armazenando esse resultado em uma
+  nova variável.
+\end{enumerate}
+
+\hypertarget{vetores-e-funuxe7uxf5es}{%
+\subsection{4. Vetores e funções}\label{vetores-e-funuxe7uxf5es}}
+
+\hypertarget{criando-vetores}{%
+\subsubsection{4.1 Criando vetores}\label{criando-vetores}}
+
+Vamos aprender a criar um vetor - uma variável que armazena um ou mais
+valores.
+
+Na verdade, a gente já criou alguns vetores antes. \emph{Basicamente
+tudo no R é um vetor.}
+
+Até agora, vimos vetores com apenas um valor, vamos aprender a criar
+vetores com mais de 1 valor.
+
+\textbf{PROBLEMA}
+
+Imagine que um gerente de voleibol está interessado em descobrir a média
+de salários dos jogadores do time de vôlei \emph{R Voleibol Clube}.
+
+O time possui 8 jogadores, cada um com seu devido número.
+
+\begin{itemize}
+\tightlist
+\item
+  Os jogadores 1 ao 3 recebem R\$1500 por mês.
+\item
+  O jogador 4 recebe R\$3000.
+\item
+  O jogador 5 recebe R\$10000.
+\item
+  O jogador 6 recebe R\$1200.
+\item
+  Os jogadores 7 e 8 recebem R\$3300 cada.
+\end{itemize}
+
+Vamos resolver esse problema aprendendo sobre a função concatenar
+\texttt{c()}.
+
+Essa função permite juntar diferentes valores em um mesmo objeto. Assim,
+podemos criar a variável (aqui em R, um outro nome para \emph{objeto})
+chamada \texttt{salario}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Vamos adicionar os primeiros três elementos.}
+\NormalTok{salario <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1500}\NormalTok{, }\DecValTok{1500}\NormalTok{, }\DecValTok{1500}\NormalTok{)}
+
+\NormalTok{salario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1500 1500 1500
+\end{verbatim}
+
+Pronto, a função \texttt{c()} juntou os salários dos primeiros 3
+jogadores. A separação entre um elemento e outro é feito utilizando uma
+vírgula \texttt{,}.
+
+Agora, vamos adicionar o salário do jogador 4.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Vamos adicionar o quarto elemento.}
+\NormalTok{salario <-}\StringTok{ }\KeywordTok{c}\NormalTok{(salario, }\DecValTok{3000}\NormalTok{)}
+
+\NormalTok{salario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1500 1500 1500 3000
+\end{verbatim}
+
+Olha que interessante! Concatenamos o valor antigo de \texttt{salario}
+junto com o valor novo que queríamos.
+
+Vamos finalizar isso.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Vamos adicionar os últimos elementos.}
+\NormalTok{salario <-}\StringTok{ }\KeywordTok{c}\NormalTok{(salario, }\DecValTok{10000}\NormalTok{, }\DecValTok{1200}\NormalTok{, }\DecValTok{3300}\NormalTok{, }\DecValTok{333300}\NormalTok{)}
+
+\NormalTok{salario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   1500   1500   1500   3000  10000   1200   3300 333300
+\end{verbatim}
+
+Pronto, aí está a nossa variável \texttt{salario}!
+
+Opa, tem um erro ali. O último elemento, o elemento de nº 8, está
+errado!
+
+Ao invés de colocar o valor de \texttt{3300}, colocamos o valor de
+\texttt{333300}.
+
+Vamos mudar o valor desse elemento.
+
+Para \emph{acessar um elemento de um vetor}, basta realizar a função
+\texttt{vetor{[}elemento{]}}.
+
+Nesse caso, queremos acessar o elemento número \texttt{8} da variável
+\texttt{salario}, para modificarmos o seu valor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessando um elemento}
+\NormalTok{salario[}\DecValTok{8}\NormalTok{]  }\CommentTok{# Isso é como pedir ao R: "R, em 'salario', acesse o elemento '8'".}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 333300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Para modificar o valor, basta atribuir um novo valor, como já vínhamos fazendo...}
+
+\NormalTok{salario[}\DecValTok{8}\NormalTok{] <-}\StringTok{ }\DecValTok{3300}
+
+\NormalTok{salario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1500  1500  1500  3000 10000  1200  3300  3300
+\end{verbatim}
+
+Pronto! Agora \texttt{salario} está organizado assim como a gente
+queria.
+
+Nesse momento, tendo criado a variável \texttt{salario}, possuímos
+alguns atributos que podemos descobrir sobre esse vetor.
+
+\hypertarget{utilizando-funuxe7uxf5es}{%
+\subsubsection{4.2 Utilizando funções}\label{utilizando-funuxe7uxf5es}}
+
+Um deles é a média, a solução para o problema lá posto lá em cima. Para
+saber a média, vamos utilizar uma \emph{função}.
+
+\textbf{Funções} são fórmulas prontas que podemos utilizar. O R já vem
+com algumas dessas fórmulas, como por exemplo a \textbf{raiz quadrada}
+\texttt{sqrt()} (abreviação do inglês para ``square root'').
+
+Para usar uma função, colocamos o seu nome e então o valor ou objeto que
+queremos que essa função receba.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Raiz quadrada de 25}
+
+\KeywordTok{sqrt}\NormalTok{(}\DecValTok{25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Algo que se faz bastante é atribuir o resultado de funções a objetos }
+
+\NormalTok{raiz <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{25}\NormalTok{) }\CommentTok{# calcula a raiz quadrada de 25 e armazena em 'raiz'}
+
+\NormalTok{raiz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Assim, o valor da raiz de 25 estará facilmente disponível}
+\end{Highlighting}
+\end{Shaded}
+
+Para descobrir o que uma função faz, basta colocar o seu nome no console
+ao lado de um ponto de interrogação, dessa forma \texttt{?função}.
+
+Outra forma é usar a função \texttt{help()}, dessa forma:
+\texttt{help(função)}. Assim, caso quiséssemos entender o que
+\texttt{sqrt()} faz, poderíamos tanto pedir \texttt{?sqrt} quanto
+\texttt{help(sqrt)}. O resultado do que pedimos irá aparecer no
+quadrante direito-baixo.
+
+\textbf{VOLTANDO AO PROBLEMA}
+
+Lembra que o gerente de voleibol estava interessado em descobrir a média
+de salários dos jogadores do time de vôlei \emph{R Voleibol Clube}?
+
+Acontece que a função \texttt{mean()} calcula a média dos elementos que
+colocarmos nela.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculando a média de dois números}
+
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Note que os dois números foram concatenados com a função 'c()'.}
+
+\CommentTok{# Calculando a média do time de voleibol e armazenando esse valor no objeto 'mediaSalario'.}
+
+\NormalTok{mediaSalario <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(salario)}
+
+\NormalTok{mediaSalario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3162.5
+\end{verbatim}
+
+Resolvemos nosso primeiro problema! A média de salário dos jogadores do
+\emph{R Voleibol Clube} é de R\$3162,50 por mês.
+
+\textbf{PROBLEMA}
+
+Cada jogador recebeu um bônus diferente. Os jogadores 1 a 4 receberam
+2000 de bônus, enquanto os jogadores de 5 a 8 receberam 4000 de bônus.
+Calcule a média de salário nesse mês, considerando os bônus.
+
+Agora que já sabemos o básico, podemos ser introduzidos à função
+\texttt{rep()}, que repete determinado valor algumas vezes.
+
+Vamos criar um objeto chamado \texttt{bonus} utilizando a função
+\texttt{rep()} e \texttt{c()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Criando bonus}
+
+\NormalTok{bonus <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{2000}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{4000}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+
+\NormalTok{bonus}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2000 2000 2000 2000 4000 4000 4000 4000
+\end{verbatim}
+
+Bem, isso foi bem mais fácil do que criar \texttt{salario}. Mas como
+isso aconteceu?
+
+\begin{itemize}
+\tightlist
+\item
+  Primeiro, colocamos \texttt{c()} para concatenar mais de um valor.
+\item
+  Após isso, utilizamos \texttt{rep()} para repetir o valor
+  \texttt{2000} 4 vezes diferentes.
+\item
+  Separamos essa primeira parte utilizando uma vírgula \texttt{,}.
+\item
+  Nessa segunda parte, utilizamos \texttt{rep()} novamente para repetir
+  o valor \texttt{4000} 4 vezes diferentes.
+\item
+  Fechamos o parênteses de \texttt{rep()} e também fechamos os
+  parênteses de \texttt{c()}.
+\end{itemize}
+
+Assim, 8 elementos foram criados. Como adicionar esses 8 elementos aos
+antigos 8 elementos?
+
+\textbf{Basta adicionar os dois vetores!}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  O elemento \texttt{salario{[}1{]}} será adicionado ao elemento
+  \texttt{bonus{[}1{]}}.
+\item
+  O elemento \texttt{salario{[}2{]}} será adicionado ao elemento
+  \texttt{bonus{[}2{]}}.
+\item
+  Essa fórmula se repete até o elemento \texttt{salario{[}8{]}} ser
+  adicionado ao elemento \texttt{bonus{[}8{]}}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Para adicionar os dois vetores, basta:}
+
+\NormalTok{salarioComBonus <-}\StringTok{ }\NormalTok{salario }\OperatorTok{+}\StringTok{ }\NormalTok{bonus}
+
+\NormalTok{salarioComBonus}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3500  3500  3500  5000 14000  5200  7300  7300
+\end{verbatim}
+
+Podemos averiguar com a função \texttt{mean()} a nova média do valor
+recebido pelos jogadores. Ainda, podemos utilizar a função
+\texttt{sum()}, que irá somar todos os elementos que colocarmos nela.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Averiguando nova média}
+
+\NormalTok{mediaSalarioComBonus <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(salarioComBonus)}
+
+\NormalTok{mediaSalarioComBonus}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6162.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Descobrindo o valor total que os jogadores receberam}
+
+\NormalTok{somaSalario <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(salarioComBonus)}
+
+\NormalTok{somaSalario}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 49300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Utilizando a função summary() - uma boa carta na manga}
+
+\KeywordTok{summary}\NormalTok{(salarioComBonus) }\CommentTok{# summary() é usado para informações gerais de objetos com números}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    3500    3500    5100    6162    7300   14000
+\end{verbatim}
+
+Descobrimos que a nova média é de R\$6162,50. Sabemos também que a soma
+de todos os salários equivale a R\$49300.
+
+Mais legal ainda, \texttt{summary()} nos informou várias informações.
+
+\textbf{O que}\texttt{summary()}\textbf{mostrou?}
+
+\begin{itemize}
+\item
+  Na primeira parte, em \texttt{Min.}( \emph{Mínimo} ): que o valor
+  mínimo, na posição 0\%, foi R\$3500.
+\item
+  Na segunda parte, em \texttt{1st\ Qu.}( \emph{1º Quartil} ): que o
+  valor na casa dos 25\% foi R\$3500.
+\item
+  Na terceira parte, em \texttt{Median}( \emph{Mediana} ): que o valor
+  na casa dos 50\% (a mediana) foi R\$5100.
+\item
+  Na quarta parte, em \texttt{Mean}( \emph{Média} ): que a média de
+  todos os valores foi R\$6162.
+\item
+  Na quinta parte, em \texttt{3rd\ Qu.}( \emph{3º Quartil} ): que o
+  valor na casa dos 75\% foi R\$7300.
+\item
+  Na terceira parte, em \texttt{Max.}( \emph{Máximo} ): que o valor
+  máximo, na posição 100\%, foi R\$14000.
+\end{itemize}
+
+Assim, \texttt{summary()} nos informa os valores na posição 0\%, 25\%,
+50\% (mediana), 75\%, 100\% e ainda nos informa a média dos valores.
+
+\hypertarget{instalando-e-lendo-pacotes}{%
+\subsubsection{4.3 Instalando e lendo
+pacotes}\label{instalando-e-lendo-pacotes}}
+
+Aqui, vale a pena dar uma pausa para mencionar os \emph{pacotes do R}.
+Pacotes são conjuntos de linhas de código, funções e cálculos que se
+pode baixar diretamente no R. Assim, ao invés de escrever algoritmos
+difíceis no R, podemos baixar pacotes que fazem isso para a gente.
+
+\hypertarget{instalando-o-pacote-dplyr}{%
+\subsubsection{4.3.1 Instalando o pacote
+dplyr}\label{instalando-o-pacote-dplyr}}
+
+Para instalar um pacote, basta executar o comando
+\texttt{install.packages("pacote")}
+
+\emph{É importante atentar para as aspas!}
+
+Vamos agora instalar um pacote bastante usado para a manipulação de
+dados - o pacote dplyr.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{) }\CommentTok{# basta colocar dplyr no lugar do pacote}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{lendo-o-pacote-dplyr}{%
+\subsubsection{4.3.2 Lendo o pacote dplyr}\label{lendo-o-pacote-dplyr}}
+
+Assim que instalado, para utilizar as funções de um pacote, é necessário
+trazê-lo ao R. Para isso, se utiliza a função \texttt{library(pacote)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr) }\CommentTok{# basta colocar dplyr no lugar do pacote}
+\end{Highlighting}
+\end{Shaded}
+
+Agora, você tem as funções do \texttt{dplyr} para uso.
+
+Caso você não tenha entendido esse processo, vamos tentar elaborar um
+pouco mais. \textbf{É como se, para ler um livro, fosse necessário
+pegá-lo de uma prateleira e colocar na mesa de trabalho. A prateleira é
+seu computador, a sua mesa de trabalho é o R.}
+
+Quando você já tem um livro em sua prateleira
+(\texttt{install.packages("pacote")}), basta colocar na sua mesa de
+trabalho com \texttt{library(pacote)}. Assim, até o final da sua sessão
+no R, você pode utilizar as funções desse pacote. Após você sair de uma
+sessão no R e iniciar outra sessão no R, será necessário realizar a
+leitura do pacote que você desejar novamente com
+\texttt{library(pacote)}.
+
+\hypertarget{instalando-tidyverse}{%
+\subsubsection{4.3.3 Instalando tidyverse}\label{instalando-tidyverse}}
+
+O pacote \emph{tidyverse}(\url{https://www.tidyverse.org/}) é um pacote
+bem famoso e utilizado pela comunidade do R. \textbf{O tidyverse é um
+pacote que agrupa outros pacotes} muito importantes, como o \emph{dplyr}
+para manipulação dos dados, \emph{ggplot2} para visualização de dados,
+\emph{readr} para importação e leitura de dados e outros.
+
+\textbf{Exercício para você fazer}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Instale o pacote \emph{tidyverse} utilizando o que aprendeu nessa
+  seção.
+\end{enumerate}
+
+\hypertarget{matrizes}{%
+\subsection{5. Matrizes}\label{matrizes}}
+
+As matrizes são elementos que armazenam um conjunto de \textbf{valores
+numéricos}. Elas teriam um \emph{número i de linhas} e um \emph{número j
+de colunas}. Assim, uma matriz A\textsubscript{ij} que tenha i = 2 e j =
+3 é tida como \textbf{A\textsubscript{23}} - isso significa que essa
+matriz terá 2 linhas (i = 2) e 3 colunas (j = 3).
+
+Para criar uma matriz no R, se utiliza a função \texttt{matrix()}. Vamos
+agora criar uma matriz A\textsubscript{23} que tenha os valores
+\texttt{5}, \texttt{2} e \texttt{7} na primeira linha, e \texttt{10},
+\texttt{1} e \texttt{9} na segunda linha.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Para adicionar os dois vetores, basta:}
+
+\NormalTok{novaMatriz <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{7}\NormalTok{,}
+                       \DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{novaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    7    1
+## [2,]    2   10    9
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Primeiro, criamos um objeto chamado \texttt{novaMatriz} que armazenará
+  o valor resultante da função \texttt{matrix()}.
+\item
+  Na função matrix, concatenamos todas os elementos que queríamos com a
+  função \texttt{c()}. Inserimos um \texttt{Enter} para visualizar a
+  segunda linha de forma mais fácil (isso não altera os valores da
+  matriz).
+\item
+  Por fim, adicionamos os argumentos \texttt{nrow\ =} e
+  \texttt{ncol\ =}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{nrow\ =} pede o número de linhas que queremos colocar nessa
+    matriz. Já que i = 2, \texttt{nrow\ =\ 2}.
+  \item
+    \texttt{ncol\ =} pede o número de colunas que queremos colocar nessa
+    matriz. Já que j = 3, \texttt{ncol\ =\ 3}.
+  \end{itemize}
+\end{itemize}
+
+Agora que está criada, podemos acessar elementos específicos dessa
+matriz. Para isso, utiliza-se o nome da matriz e, dentro de colchetes, o
+valor da linha e da coluna que se deseja acessar:
+\texttt{matriz{[}i,\ j{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessar o elemento da linha 1 e coluna 2}
+
+\NormalTok{novaMatriz[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessar o elemento da linha 2 e coluna 3}
+
+\NormalTok{novaMatriz[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessar todos os valores da segunda coluna}
+
+\NormalTok{novaMatriz[, }\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  7 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessar todos os valores da primeira linha}
+
+\NormalTok{novaMatriz[}\DecValTok{1}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 7 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Acessar os valores das linhas de 1 a 2 da coluna 1}
+
+\NormalTok{novaMatriz[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 2
+\end{verbatim}
+
+Já que podemos acessar, também podemos modificar esses valores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Mudando o elemento da linha 1 e coluna 2}
+
+\NormalTok{novaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    7    1
+## [2,]    2   10    9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{novaMatriz[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{3}
+
+\NormalTok{novaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    2   10    9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Mudando todos os elementos da linha 2 para 0}
+
+\NormalTok{novaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    2   10    9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{novaMatriz[}\DecValTok{2}\NormalTok{, ] <-}\StringTok{ }\DecValTok{0}
+
+\NormalTok{novaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    0    0    0
+\end{verbatim}
+
+\hypertarget{objetos-string}{%
+\subsection{\texorpdfstring{6. Objetos
+\emph{string}}{6. Objetos string}}\label{objetos-string}}
+
+Além de utilizar objetos para armazenar valores numéricos, podemos
+também armazenar um conjunto de letras, símbolos e números - essas são
+chamadas de \emph{strings}.
+
+Por exemplo, vamos criar um objeto chamado \texttt{string} que contém o
+texto: \texttt{Isso\ é\ uma\ string}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Para criar uma string, deve-se colocar o valor desejado em aspas}
+
+\NormalTok{string <-}\StringTok{ "Isso é uma string"}
+
+\NormalTok{string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Isso é uma string"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{outraString <-}\StringTok{ "10"}
+
+\NormalTok{outraString}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "10"
+\end{verbatim}
+
+Criamos duas strings: uma que contém o valor
+\texttt{Isso\ é\ uma\ string} e outro que contém o valor \texttt{"10"} -
+esse ``10'' não é um número pois está entre aspas.
+
+Podemos adicionar novos elementos assim como fizemos com vetores de
+números.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Novo elemento "Outros valores"}
+
+\NormalTok{string <-}\StringTok{ }\KeywordTok{c}\NormalTok{(string, }\StringTok{"Outros valores"}\NormalTok{)}
+
+\NormalTok{string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Isso é uma string" "Outros valores"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Assim como antes, podemos alterar esse elemento ou até adicionar outro}
+
+\NormalTok{string[}\DecValTok{2}\NormalTok{] <-}\StringTok{ "Valor mais interessante"}
+
+\NormalTok{string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Isso é uma string"       "Valor mais interessante"
+\end{verbatim}
+
+\hypertarget{listas}{%
+\subsection{7. Listas}\label{listas}}
+
+Listas são um conjunto de objetos - por isso é o último assunto que
+veremos. Ela possui a capacidade de armazenar várias informações
+diferentes.
+
+Até agora, esses foram os principais objetos criados: * \texttt{objeto}:
+um objeto que contém o número \texttt{10}.
+
+\begin{itemize}
+\item
+  \texttt{salario}: um vetor contendo 8 salários do time \emph{R
+  Voleibol Clube}.
+\item
+  \texttt{novaMatriz}: uma matriz A\textsubscript{23} com números
+  aleatórios.
+\item
+  \texttt{string}: um vetor de strings contendo 2 elementos.
+\end{itemize}
+
+Uma lista é um objeto que pode abranger todas essas informações - ele
+pode ser criado com a função \texttt{list()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Essa lista vai se chamar listaPoderosa}
+
+\NormalTok{listaPoderosa <-}\StringTok{ }\KeywordTok{list}\NormalTok{(objeto, salario, novaMatriz, string)}
+
+\NormalTok{listaPoderosa}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 10
+## 
+## [[2]]
+## [1]  1500  1500  1500  3000 10000  1200  3300  3300
+## 
+## [[3]]
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    0    0    0
+## 
+## [[4]]
+## [1] "Isso é uma string"       "Valor mais interessante"
+\end{verbatim}
+
+\textbf{Já que não nomeamos os objetos que iam entrar na lista}, o
+seguinte aconteceu:
+
+\begin{itemize}
+\item
+  O elemento \texttt{listaPoderosa{[}{[}1{]}{]}} armazenou o valor de
+  \texttt{objeto}.
+\item
+  O elemento \texttt{listaPoderosa{[}{[}2{]}{]}} armazenou o valor de
+  \texttt{salario}.
+\item
+  O elemento \texttt{listaPoderosa{[}{[}3{]}{]}} armazenou o valor de
+  \texttt{novaMatriz}.
+\item
+  O elemento \texttt{listaPoderosa{[}{[}4{]}{]}} armazenou o valor de
+  \texttt{string}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Agora vamos nomear cada objeto com o seu próprio nome}
+
+\NormalTok{listaPoderosa <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{objeto =}\NormalTok{ objeto, }
+                      \DataTypeTok{salario =}\NormalTok{ salario, }
+                      \DataTypeTok{novaMatriz =}\NormalTok{ novaMatriz, }
+                      \DataTypeTok{string =}\NormalTok{ string)}
+
+\NormalTok{listaPoderosa}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $objeto
+## [1] 10
+## 
+## $salario
+## [1]  1500  1500  1500  3000 10000  1200  3300  3300
+## 
+## $novaMatriz
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    0    0    0
+## 
+## $string
+## [1] "Isso é uma string"       "Valor mais interessante"
+\end{verbatim}
+
+Pronto! Para acessar os objetos de uma lista utilizamos o cifrão
+\texttt{\$} (pode-se fazer o mesmo com os objetos de um
+\texttt{data.frame}, como veremos adiante).
+
+Com isso, podemos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Observar um objeto específico de uma lista.
+\item
+  Modificar um elemento específico ou acrescentar valores diretamente em
+  uma lista.
+\item
+  Criar um objeto extraindo apenas um objeto de uma lista.
+\item
+  Excluir um objeto de uma lista.
+\item
+  Excluir um elemento de uma lista.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 1. Observar um objeto específico de uma lista}
+
+\NormalTok{listaPoderosa[[}\DecValTok{2}\NormalTok{]] }\CommentTok{# Vê o objeto 2 (salario)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1500  1500  1500  3000 10000  1200  3300  3300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{salario }\CommentTok{# Vê o objeto 2 (salario)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1500  1500  1500  3000 10000  1200  3300  3300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 2. Modificar um elemento específico ou acrescentar valores diretamente em uma lista.}
+
+\NormalTok{listaPoderosa[[}\DecValTok{2}\NormalTok{]][}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{5000} \CommentTok{# Acessa o objeto 2 (salario), elemento 1, e modifica ele para 5000}
+\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{salario[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{5000} \CommentTok{# Acessa o objeto 2 (salario), elemento 1, e modifica ele para 5000}
+
+\CommentTok{# 3. Criar um objeto extraindo apenas um objeto de uma lista.}
+
+\NormalTok{queroEssaMatriz <-}\StringTok{ }\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{novaMatriz }\CommentTok{# pega o objeto matriz e armazena em um objeto separado}
+\NormalTok{queroEssaMatriz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 4. Excluir um objeto de uma lista.}
+
+\NormalTok{listaPoderosa <-}\StringTok{ }\NormalTok{listaPoderosa[}\OperatorTok{-}\NormalTok{salario] }\CommentTok{# recria o objeto listaPoderosa, dessa vez sem o objeto "salario"}
+\NormalTok{listaPoderosa}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $objeto
+## [1] 10
+## 
+## $salario
+## [1]  5000  1500  1500  3000 10000  1200  3300  3300
+## 
+## $novaMatriz
+##      [,1] [,2] [,3]
+## [1,]    5    3    1
+## [2,]    0    0    0
+## 
+## $string
+## [1] "Isso é uma string"       "Valor mais interessante"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 5. Excluir um elemento de uma lista}
+
+\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{string <-}\StringTok{ }\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{string[}\OperatorTok{-}\DecValTok{2}\NormalTok{] }\CommentTok{# o objeto string possui o valor de string SEM o elemento 2}
+\NormalTok{listaPoderosa}\OperatorTok{$}\NormalTok{string }\CommentTok{# acessando apenas o objeto string}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Isso é uma string"
+\end{verbatim}
+
+Muitas dessas mesmas operações com listas podem também ser feitas em
+objetos do tipo \texttt{data.frame}.
+
+Por enquanto é isso! :)
+
+\end{document}

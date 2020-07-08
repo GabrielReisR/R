@@ -2,7 +2,7 @@
 title: "Introdução ao R"
 author: "Gabriel R. R. & Wagner L. M."
 date: "6/27/2020"
-output: html_document
+output: rmarkdown::github_document
 ---
 ## Considerações iniciais
 O código inicial, em R, está disponível nesse link: https://github.com/wagnerLM/quanti2/blob/master/script%20R%20intro2.R
