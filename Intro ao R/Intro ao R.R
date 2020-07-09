@@ -1,6 +1,5 @@
 ################## INTRODUÇÃO AO R ##################
 
-
 #' Autores: Gabriel R. R. & Wagner L. M.
 #' Inspiradao em Torfs & Brauer (2012) e Epskamp (2013) "Introductions to R".
 
@@ -11,7 +10,6 @@
 
 #' Todo esse código pode ser rodado direto no R.
 #' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
-
 
 ####################################################
 
@@ -745,7 +743,6 @@ listaPoderosa$string # acessando apenas o objeto string
 
 
 #' Muitas dessas mesmas operações com listas podem também ser feitas em objetos do tipo `data.frame`.
-
 #' Por enquanto é isso! :)
 
-####################################################
+#################################################FIM
