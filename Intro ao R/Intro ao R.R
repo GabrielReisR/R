@@ -1,7 +1,7 @@
 ################## INTRODUÇÃO AO R ##################
 
 #' Autores: Gabriel R. R. & Wagner L. M.
-#' Inspiradao em Torfs & Brauer (2012) e Epskamp (2013) "Introductions to R".
+#' Inspirado em Torfs & Brauer (2012) e Epskamp (2013) "Introductions to R".
 
 #' O código inicial, em R, está disponível nesse link: https://github.com/wagnerLM/quanti2/blob/master/script%20R%20intro2.R
 #' O código final, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Intro%20ao%20R/Intro%20ao%20R.R
