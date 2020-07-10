@@ -2,7 +2,6 @@
 Introdução à linguagem R - do básico ao intermediário.
 Os scripts são educativos e todos podem ser rodados diretamente no R.
 
-### Sumário
 - Introdução ao R ([Script](https://github.com/GabrielReisR/R/blob/master/Intro%20ao%20R/Intro%20ao%20R.R) ou [RMarkdown](https://rpubs.com/reisrgabriel/634704)
   - O que é o R e o RStudio?
   - Funções iniciais
