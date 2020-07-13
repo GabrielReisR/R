@@ -6,7 +6,7 @@
 #' O código inicial, em R, está disponível nesse link: https://github.com/wagnerLM/quanti2/blob/master/script%20R%20intro2.R
 #' O código final, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Intro%20ao%20R/Intro%20ao%20R.R
 
-#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/634704
+#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/IntroAoR
 
 #' Todo esse código pode ser rodado direto no R.
 #' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
