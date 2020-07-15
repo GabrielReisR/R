@@ -14,3 +14,4 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
     - select(), renomeando, starts_/ends_with()
     - mutate(), mutate_at(), mutate_if()
   - Juntando bancos de dados
+  - Wide data to Long data
