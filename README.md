@@ -11,3 +11,6 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
   - Instalando pacotes
   - Importando dados
   - Manipulando data.frame com dplyr
+    - select(), renomeando, starts_/ends_with()
+    - mutate(), mutate_at(), mutate_if()
+  - Juntando bancos de dados
