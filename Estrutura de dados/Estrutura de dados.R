@@ -121,3 +121,25 @@ missmap(dass)
 ## transmute
 ?recode
 library(skimr)
+
+libraries <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/Libraries.csv", sep = ",")
+head(libraries)
+
+library(janitor)
+
+libraries <- libraries %>% 
+  clean_names(case = "snake")
+head(libraries)
+
+library(tidyr)
+
+librariesClean <- libraries %>% 
+  drop_na()   # qualquer caso sem um dado será omitido
+
+libraries <- libraries %>%
+  drop_na(total_librarians)
+
+# ou podemos usar is.na
+
+
+# como saber se preciso transformar em long data?! fazer mini-checklist
