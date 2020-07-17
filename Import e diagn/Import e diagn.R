@@ -5,9 +5,9 @@
 #' output: html_document
 #' ---
 #' ## Considerações iniciais
-#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R
+#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Import%20e%20diagn.R
 #' 
-#' Os bancos de dados utilizados podem ser encontrados aqui: https://github.com/GabrielReisR/R/tree/master/Estrutura%20de%20dados/Dados
+#' Os bancos de dados utilizados podem ser encontrados aqui: https://github.com/GabrielReisR/R/tree/master/Import%20e%20diagn/Dados
 #' 
 #' ## 1. Importando dados
 #' A primeira tarefa quando se trata de manipular um banco de dados consiste na importação correta dos dados ao software de programação.
@@ -29,7 +29,7 @@
 #' 
 #' Para utilizar _haven_, basta ler o pacote e executar `read_sav("dataset")` para criar um objeto com o banco de dados.
 #' 
-#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.sav
+#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Dados/dass42.sav
 #' 
 #' Você pode baixar o arquivo no link acima e tentar também :)
 #' 
@@ -52,8 +52,8 @@ str(dass_sav) # estrutura do objeto
 #' 
 #' Para utilizar _readxl_, basta ler o pacote e executar `read_excel("dataset")` para criar um objeto com o banco de dados.
 #' 
-#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.xlsx
-#' 
+#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Dados/dass42.xlsx
+#'
 #' Você pode baixar o arquivo no link acima e tentar também :)
 #' 
 ## ----Lendo excel com readxl e vendo os primeiros e últimos casos----------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ str(dass_excel) # estrutura do objeto
 #' Vamos utilizar a função base do R (que é muito simples de usar). Utilizarei como exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.csv 
 #' 
 ## ----Lendo .csv com função base do R--------------------------------------------------------------------------------------------------------------------
-dass_base <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
+dass_base <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Import%20e%20diagn/Dados/dass42.csv", sep = "\t")
 
 str(dass_base) # estrutura do objeto
 
@@ -99,8 +99,8 @@ str(dass_base) # estrutura do objeto
 #' Vamos começar carregando duas vezes nosso banco de dados. Uma vez como um objeto nomeado de _dass_ e outra como um objeto nomeado _dass_resetar_. Caso algum erro ocorra em _dass_, para voltar ao banco original basta executar `dass <- dass_resetar`, já que a releitura de um banco como esse pode demorar um pouco.
 #' 
 ## ----Lendo dass e dass_resetar--------------------------------------------------------------------------------------------------------------------------
-dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
-dass_resetar <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
+dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Import%20e%20diagn/Dados/dass42.csv", sep = "\t")
+dass_resetar <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Import%20e%20diagn/Dados/dass42.csv", sep = "\t")
 
 #' 
 #' Para entender o banco, podemos utilizar:
