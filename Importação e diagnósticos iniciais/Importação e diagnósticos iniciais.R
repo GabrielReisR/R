@@ -1,9 +1,16 @@
-#' ---
-#' title: "Importação e diagnósticos iniciais"
-#' author: "Gabriel R. R."
-#' date: "7/9/2020"
-#' output: html_document
-#' ---
+######## IMPORTAÇÃO E DIAGNÓSTICOS INICIAIS ########
+
+#' Autor: Gabriel R. R.
+
+#' O código final, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R
+
+#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/EstruturaDeDados
+
+#' Todo esse código pode ser rodado direto no R.
+#' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
+
+####################################################
+
 #' ## Considerações iniciais
 #' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R
 #' 
@@ -173,3 +180,5 @@ missmap(dass)
 
 #' 
 #' Podemos perceber que não há nenhum missing computado nesse banco! Que maravilha :)
+
+#################################################FIM
