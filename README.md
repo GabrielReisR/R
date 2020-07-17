@@ -7,10 +7,10 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
   - O que é o R e o RStudio?
   - Funções iniciais
   - Objetos, vetores, matrizes e listas
-- Importação e diagnósticos iniciais ([RMarkdown](https://rpubs.com/reisrgabriel/ImportDiag) ou [Script](https://github.com/GabrielReisR/R/blob/master/Importa%C3%A7%C3%A3o%20e%20diagn%C3%B3sticos%20iniciais/Importa%C3%A7%C3%A3o%20e%20diagn%C3%B3sticos%20iniciais.R))
+- Importação e diagnósticos iniciais ([RMarkdown](https://rpubs.com/reisrgabriel/ImportDiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Import%20e%20diagn.R))
   - Importando dados
     - .sav, .xls/xlsx, .csv
-  - Entendendo o banco
+  - Diagnósticos iniciais
   - glimpse() e skim()
 - [Estrutura de dados](https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R) (em construção)
   - Manipulando data.frame com dplyr
