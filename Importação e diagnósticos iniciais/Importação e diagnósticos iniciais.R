@@ -1,0 +1,175 @@
+#' ---
+#' title: "Importação e diagnósticos iniciais"
+#' author: "Gabriel R. R."
+#' date: "7/9/2020"
+#' output: html_document
+#' ---
+#' ## Considerações iniciais
+#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R
+#' 
+#' Os bancos de dados utilizados podem ser encontrados aqui: https://github.com/GabrielReisR/R/tree/master/Estrutura%20de%20dados/Dados
+#' 
+#' ## 1. Importando dados
+#' A primeira tarefa quando se trata de manipular um banco de dados consiste na importação correta dos dados ao software de programação.
+#' 
+#' Vamos aprender a importar 3 tipos comuns de dados utilizando o R:
+#' 
+#' * *.sav*: dados do SPSS; vamos utilizar o pacote _haven_.
+#' * *.xls/.xlsx*: tabelas do excel; vamos utilizar o pacote _readxl_.
+#' * *.csv*: "comma-separated values"; pode ser importado com o pacote _readr_ e com o pacote base do R.
+#' 
+#' ### 1.1 Importando _.sav_
+#' Para importar um arquivo do SPSS (Statistical Package for the Social Sciences) vamos utilizar o pacote _haven_. Isso facilita a importação já que não precisaríamos fazer a conversão do arquivo .sav para um arquivo .csv, por exemplo.
+#' 
+#' Para começar, basta instalar _haven_.
+#' 
+## ----Instalando haven, eval=FALSE-----------------------------------------------------------------------------------------------------------------------
+## install.packages("haven", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
+
+#' 
+#' Para utilizar _haven_, basta ler o pacote e executar `read_sav("dataset")` para criar um objeto com o banco de dados.
+#' 
+#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.sav
+#' 
+#' Você pode baixar o arquivo no link acima e tentar também :)
+#' 
+## ----Lendo sav com haven e vendo os primeiros e últimos casos-------------------------------------------------------------------------------------------
+library(haven) # leitura do haven
+
+dass_sav <- read_sav("dass42.sav") # importando um .sav
+
+str(dass_sav) # estrutura do objeto
+
+#' 
+#' ### 1.2 Importando _.xls/xlsx_
+#' Para importar um arquivo em Excel vamos utilizar o pacote _readxl_, que faz essa manipulação muito tranquilamente.
+#' 
+#' Para começar, basta instalar e ler o pacote _readxl_.
+#' 
+## ----Instalando readxl, eval=FALSE----------------------------------------------------------------------------------------------------------------------
+## install.packages("readxl", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
+
+#' 
+#' Para utilizar _readxl_, basta ler o pacote e executar `read_excel("dataset")` para criar um objeto com o banco de dados.
+#' 
+#' Utilizarei um exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.xlsx
+#' 
+#' Você pode baixar o arquivo no link acima e tentar também :)
+#' 
+## ----Lendo excel com readxl e vendo os primeiros e últimos casos----------------------------------------------------------------------------------------
+library(readxl) # leitura do readxl
+
+dass_excel <- read_excel("dass42.xlsx") # importando um .xlsx
+
+str(dass_excel) # estrutura do objeto
+
+#' 
+#' ### 1.3 Importando _.csv_
+#' Uma situação um pouco mais comum. O R já permite que façamos isso com a função `read.csv`. O pacote _readr_ facilita o uso dessa função ao retirar um argumento do código base (`sep = ","`), então vamos apresentá-lo. Durante o restante, vamos utilizar apenas o de base (`read.csv`).
+#' 
+#' Para começar, basta instalar e ler o pacote _readr_. Ah, esse pacote é útil também para ler outros tipos de dados "retangulares" (como .tsv e .fwf).
+#' 
+## ----Instalando e lendo readr, eval=FALSE---------------------------------------------------------------------------------------------------------------
+## install.packages("readr", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
+## 
+## library(readr) # lendo o pacote readxl no R
+
+#' Feito a leitura do pacote, basta criar um objeto com o banco de dados, realizando a leitura com o código `read_csv("dataset")`. Não precisa de mais nenhum argumento. Para fazer isso, o arquivo precisa estar delimitado por vírgulas! Como esse arquivo que vou usar não está, não vou exemplificar aqui.
+#' 
+#' Vamos utilizar a função base do R (que é muito simples de usar). Utilizarei como exemplo com um banco que pode ser encontrado aqui: https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Dados/dass42.csv 
+#' 
+## ----Lendo .csv com função base do R--------------------------------------------------------------------------------------------------------------------
+dass_base <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
+
+str(dass_base) # estrutura do objeto
+
+#' O argumento `sep = "\t"` informa à função `read.csv` que o arquivo está separado por espaços de tabulação. Geralmente, arquivos .csv estão separados por vírgula. Nesse caso, basta descrever `sep = ","`. Para entender a separação do arquivo, basta visualizá-lo.
+#' 
+#' ## 2. Manipulação de bancos de dados
+#' Assim que carregado, um banco de dados precisa ser entendido e visualizado. Suas limitações acessadas e modificações feitas de acordo com o objetivo da análise.
+#' 
+#' Vamos utilizar o banco DASS42:
+#' 
+#' * Banco possui 42 respostas à Depression-Anxiety-Stress Scale.
+#' * Quase 40000 casos.
+#' * Algumas variáveis demográficas.
+#' * Necessidade de calcular um escore final e colocar classificações.
+#' 
+#' ### 2.1 Entendendo o banco de dados
+#' Vamos começar carregando duas vezes nosso banco de dados. Uma vez como um objeto nomeado de _dass_ e outra como um objeto nomeado _dass_resetar_. Caso algum erro ocorra em _dass_, para voltar ao banco original basta executar `dass <- dass_resetar`, já que a releitura de um banco como esse pode demorar um pouco.
+#' 
+## ----Lendo dass e dass_resetar--------------------------------------------------------------------------------------------------------------------------
+dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
+dass_resetar <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
+
+#' 
+#' Para entender o banco, podemos utilizar:
+#' 
+#' * `View()`: abre uma janela para visualização dos dados.
+#' * `names()`: apresenta os nomes de todas as colunas do dataset.
+#' * `str()`: apresenta a estrutura do dataset.
+#' * `head()`: primeiros casos do banco de dados.
+#' * `tail()`: últimos casos do banco de dados.
+#' * `glimpse()`: uma visualização limitada de algumas variáveis e alguns casos.
+#' * `skim()`: análises descritivas iniciais (incluindo mini-histogramas) de variáveis númericas.
+#' 
+#' Vamos ver o que cada uma das outras funções faz.
+## ----Vendo o nome de todas as variáveis com names()-----------------------------------------------------------------------------------------------------
+names(dass) # útil para uma lida rápida nas variáveis contempladas pelo banco
+
+#' 
+## ----Estrutura com str()--------------------------------------------------------------------------------------------------------------------------------
+str(dass) # entender a estrutura do nosso objeto
+
+#' 
+## ----Vendo 5 primeiros casos com head()-----------------------------------------------------------------------------------------------------------------
+head(dass, n = 5) # útil para entender o tipo de resposta de cada variável em alguns casos
+
+#' 
+## ----Vendo 5 últimos casos com tail()-------------------------------------------------------------------------------------------------------------------
+tail(dass, n = 5) # útil para entender o tipo de resposta de cada variável em alguns casos
+
+#' 
+#' Vimos que `head()` e `tail()` proporcionam a leitura dos 5 primeiros casos considerando **todas as colunas do dataframe**. Isso dificulta muito a compreensão do banco. Vamos instalar dois pacotes que vão auxiliar um pouco mais nisso: _dplyr_ e _skimr_.
+#' 
+## ----Instalando dplyr, eval=FALSE-----------------------------------------------------------------------------------------------------------------------
+## install.packages("dplyr", dependencies = T) # manipulação de banco de dados
+
+#' 
+#' Agora, vamos ver a função `glimpse()` do dplyr em ação.
+#' 
+## ----Entendendo as variáveis com glimpse()--------------------------------------------------------------------------------------------------------------
+library(dplyr) # leitura do pacote dplyr
+glimpse(dass)
+
+#' 
+#' Uma visão bem mais completa das variáveis, sem dúvida. Conseguimos entender tanto os primeiros casos quando o tipo de dados contido em cada coluna e seus respectivos nomes.
+#' 
+#' Agora vamos ver como funciona com a função `skim()`.
+#' 
+## ----Instalando skimr, eval=FALSE-----------------------------------------------------------------------------------------------------------------------
+## install.packages("skimr", dependencies = T) # compreensão rápida de banco de dados
+
+#' 
+#' Depois de instalar o pacote, basta lê-lo e executar `skim()`
+## ----Análises iniciais com skim()-----------------------------------------------------------------------------------------------------------------------
+library(skimr)
+skim(dass)
+
+#' 
+#' `skim()` vai um passo além e fornece análises descritivas iniciais, junto com mini-histogramas, para todas as variáveis numéricas. Certamente ajuda na detecção de missing values.
+#' 
+#' Falando em missing values, o pacote _Amelia_ auxilia na compreensão de onde os missing values da amostra estão com a função `missmap()`.
+#' 
+## ----Instalando Amelia, eval=FALSE----------------------------------------------------------------------------------------------------------------------
+## install.packages("Amelia", dependencies = T) # diagnóstico e manipulação de missings
+
+#' 
+#' Para visualização dos missings com Amelia, basta rodar `missingmap(dataset)`.
+#' 
+## ----Utilizando missmap()-------------------------------------------------------------------------------------------------------------------------------
+library(Amelia) # leitura do pacote Amelia
+missmap(dass)
+
+#' 
+#' Podemos perceber que não há nenhum missing computado nesse banco! Que maravilha :)
