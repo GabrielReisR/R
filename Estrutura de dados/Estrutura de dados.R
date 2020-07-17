@@ -11,39 +11,12 @@
 
 ####################################################
 
-# install.packages("gapminder", dependencies = TRUE)
 # install.packages("janitor", dependencies = TRUE)
 # install.packages("tidyverse", dependencies = TRUE)
-# install.packages("haven", dependencies = TRUE)
-# install.packages("readxl", dependencies = TRUE)
-# install.packages("skimr", dependencies = TRUE)
 # install.packages("psych", dependencies = TRUE)
-# library(gapminder)
 # library(janitor)
 # library(psych)
 
-# Lendo bancos de dados
-## csv
-### file.choose()
-## spss
-## excel
-
-
-# banco de dados
-# names(dass)
-## dass($)
-# janitor(dass)
-# str(dass)
-
-# lendo bancos de dados
-library(haven) # para ler bancos no formato do spss (.sav)
-library(readxl) # para ler bancos no formato do excel (.xls/xlsx)
-
-dass <- read_sav("dass42.sav")
-
-dass <- read_excel("dass42.xlsx")
-
-dass <- read.csv(file.choose(), sep = ",") # file.choose() é uma função que permite escolher arquivos
 
 # mesmos bancos, usados para voltar ao banco inicial caso "dass" quebre
 dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/Estrutura%20de%20dados/Dados/dass42.csv", sep = "\t")
