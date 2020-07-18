@@ -114,5 +114,5 @@ libraries <- libraries %>%
 
 # ou podemos usar is.na
 
-
 # como saber se preciso transformar em long data?! fazer mini-checklist
+
