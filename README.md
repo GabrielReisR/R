@@ -12,9 +12,11 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
     - .sav, .xls/xlsx, .csv
   - Diagnósticos iniciais
   - glimpse() e skim()
-- [**Estrutura de dados**](https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Estrutura%20de%20dados.R) (em construção)
-  - Manipulando data.frame com dplyr
-    - select(), renomeando, starts_/ends_with()
-    - mutate(), mutate_at(), mutate_if()
+- **Estrutura de dados**(em construção; [RMarkdown](https://rpubs.com/reisrgabriel/ManipComTidyv) ou [Script](https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Manipulando%20data.frame%20com%20Tidyverse.R)
+  - Usando select()
+    - Renomeando, starts_/ends_with() e contains()
+  - Usando mutate()
+    - Criando novas variáveis com mutate_at()
+    - Usando mutate() e case_when()
   - Juntando bancos de dados
   - Wide data to Long data
