@@ -12,7 +12,7 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
     - .sav, .xls/xlsx, .csv
   - Diagnósticos iniciais
   - glimpse() e skim()
-- **Estrutura de dados**(em construção; [RMarkdown](https://rpubs.com/reisrgabriel/ManipComTidyv) ou [Script](https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Manipulando%20data.frame%20com%20Tidyverse.R)
+- **Estrutura de dados**(em construção; [RMarkdown](https://rpubs.com/reisrgabriel/ManipComTidyv) ou [Script](https://github.com/GabrielReisR/R/blob/master/Estrutura%20de%20dados/Manipulando%20data.frame%20com%20Tidyverse.R))
   - Usando select()
     - Renomeando, starts_/ends_with() e contains()
   - Usando mutate()
