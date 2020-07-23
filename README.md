@@ -8,9 +8,6 @@ Todo esse material é educativo. Todos os *scripts* podem ser rodados diretament
   - Funções iniciais
   - Objetos, vetores, matrizes e listas
   
-**Importação e diagnósticos iniciais** ([RMarkdown](https://rpubs.com/reisrgabriel/ImportDiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Import%20e%20diagn.R))
-
-  
 **Estrutura de dados**
 
   *Importação e diagnósticos iniciais* ([RMarkdown](https://rpubs.com/reisrgabriel/ImportDiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/Import%20e%20diagn/Import%20e%20diagn.R))
