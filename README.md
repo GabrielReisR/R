@@ -23,7 +23,7 @@ Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, 
   
   *Dplyr: Parte 1* ([RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R))   
 
-Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42, que contém 39775 casos em 172 variáveis.
+Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42 que contém 10000 casos e 172 variáveis.
   - Usando select()
     - Selecionando e excluindo variáveis
     - Renomeando colunas com starts_with()
@@ -32,7 +32,17 @@ Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Va
     - Utilizando case_when()
     
   *Dplyr: Parte 2* ([RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/dplyr-parte-2.R))   
-Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse.
-    
+
+Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos juntar colunas de bancos de dados diferentes e também juntar linhas de bancos diferentes com bind(). Além disso, aprenderemos sobre joins() para juntar bancos de dados em uma fatia do banco da DASS42 que possuem colunas de nomes iguais. Ademais, usaremos filtering joins() para escolher condições específicas para entrada de casos ao juntarmos dois bancos de dados.
+ - Usando bind()
+   - bind_cols()
+   - bind_rows()
+ - Joins()
+   - Full join()
+   - Inner join()
+   - Left join()
+   - Right join()
+   - Semi join()
+   - Anti join()
 
   
