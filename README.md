@@ -13,6 +13,7 @@ Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/
   
 ### Estrutura de dados (em construção)
   *Importação de bancos de dados e diagnósticos iniciais* ([RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/import%20e%20diagn/import%20e%20diagn.R))
+  
 Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, como realizar diagnósticos iniciais do banco de dados.
   - Importação de .sav, .xls/xlsx, .csv
     - Pacotes _haven_,_readxl_ e _readr_
@@ -21,6 +22,7 @@ Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, 
   - Usando skim() e glimpse()
   
   *Dplyr: Parte 1* ([RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R))   
+
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42, que contém 39775 casos em 172 variáveis.
   - Usando select()
     - Selecionando e excluindo variáveis
