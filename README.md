@@ -24,6 +24,7 @@ Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, 
   *Dplyr: Parte 1* ([RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R))   
 
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42 que contém 10000 casos e 172 variáveis.
+
   - Usando select()
     - Selecionando e excluindo variáveis
     - Renomeando colunas com starts_with()
