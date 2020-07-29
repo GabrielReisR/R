@@ -670,3 +670,20 @@ listaPoderosa$string # acessando apenas o objeto string
 Muitas dessas mesmas operações com listas podem também ser feitas em objetos do tipo `data.frame`.
 
 Por enquanto é isso! :)
+
+---
+# Mais informações
+Manipulando com dplyr - Parte 1: select() e mutate(): https://rpubs.com/reisrgabriel/dplyrPt1
+
+Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
+
+Tidyr --- Parte 1: https://rpubs.com/reisrgabriel/tidyrPt1
+
+Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/ ou https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
+
+# Contato
+Email: reisrgabriel@gmail.com
+
+GitHub: https://github.com/GabrielReisR
+
+LinkedIn: https://www.linkedin.com/in/gabrielreisrodrigues/
