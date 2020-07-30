@@ -12,7 +12,7 @@ O material desse repositório é educativo. **Todos os *scripts* podem ser rodad
 Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/reisrgabriel
 
 ---
-### Iniciando com R
+## Iniciando com R
 
 #### Introdução ao R
 [RMarkdown](https://rpubs.com/reisrgabriel/IntroAoR) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro%20ao%20r.R)
@@ -21,7 +21,7 @@ Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/
   - Funções iniciais
   - Objetos, vetores, matrizes e listas
 
-### Estrutura de dados
+## Estrutura de dados
 #### Importação de bancos de dados e diagnósticos iniciais
 [RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R)
 
