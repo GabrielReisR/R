@@ -12,14 +12,14 @@ Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/
   - Objetos, vetores, matrizes e listas
   
 ### Estrutura de dados (em construção)
-  *Importação de bancos de dados e diagnósticos iniciais* ([RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/import%20e%20diagn/import%20e%20diagn.R))
+  *Importação de bancos de dados e diagnósticos iniciais* ([RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R))
   
 Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, como realizar diagnósticos iniciais do banco de dados.
   - Importação de .sav, .xls/xlsx, .csv
     - Pacotes _haven_,_readxl_ e _readr_
   - Diagnósticos iniciais do banco
-    - Entendendo missings com missmap()
-  - Usando skim() e glimpse()
+    - Usando skim() e glimpse()
+  - Visualizando missings com missmap()
   
   *Dplyr: Parte 1* ([RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R))   
 
