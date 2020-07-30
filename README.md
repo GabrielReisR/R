@@ -5,13 +5,17 @@ O material desse repositório é educativo. Todos os *scripts* podem ser rodados
 
 Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/reisrgabriel
 
+---
+
 ### Iniciando com R
   *Introdução ao R* ([RMarkdown](https://rpubs.com/reisrgabriel/IntroAoR) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro%20ao%20r.R)) 
   - O que é o R e o RStudio?
   - Funções iniciais
   - Objetos, vetores, matrizes e listas
-  
-### Estrutura de dados (em construção)
+
+---
+
+### Estrutura de dados
   *Importação de bancos de dados e diagnósticos iniciais* ([RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R))
   
 Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, como realizar diagnósticos iniciais do banco de dados.
