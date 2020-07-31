@@ -19,7 +19,7 @@ O script em R está disponível aqui: https://github.com/GabrielReisR/R/blob/mas
 
 Essa publicação possui uma continuação em *Manipulando com dplyr - Parte 2: bind() e join()*: https://rpubs.com/reisrgabriel/dplyrPt2
 
-Foram utilizados 10000 casos do dataset DASS42, retirado desse desafio do Kaggle: https://www.kaggle.com/lucasgreenwell/depression-anxiety-stress-scales-responses?select=data.csv
+Foi utilizado o banco de dados DASS42, retirado desse desafio do Kaggle: https://www.kaggle.com/lucasgreenwell/depression-anxiety-stress-scales-responses?select=data.csv
 
 ## Sobre o _dplyr_
 O pacote *dplyr* possui várias funções interessantes que permitem:
@@ -333,7 +333,7 @@ nrow(casosGraves)
 casosGraves[1:10, ] # vamos ver os 10 primeiros casos
 ```
 
-**Dos 10000 participantes, 2600 apresentam sintomas de Depressão + Ansiedade + Estresse acima do nível Severo!**
+**Dos 39775 participantes, 10431 apresentam sintomas de Depressão + Ansiedade + Estresse no nível Severo ou acima!**
 
 Espero que você tenha entendido o quão poderoso pode ser o _dplyr_.
 

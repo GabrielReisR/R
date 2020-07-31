@@ -14,13 +14,12 @@
 ## ----Lendo o banco DASS42-----------------------------------------------------------------------------
 dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
 
-
 ## ----Entendendo o banco-------------------------------------------------------------------------------
 dass[1:10,] # vamos ver os primeiros 10 casos
 
 
 ## ----Lendo dplyr, message=FALSE, warning=FALSE--------------------------------------------------------
-library(dplyr) # caso não o possua, instale com 'install.packages("dplyr")'
+library(dplyr) # caso não o possua, instale com: install.packages("dplyr")
 
 
 ## ----Fórmula base para uso de dplyr, eval=FALSE-------------------------------------------------------
@@ -81,10 +80,10 @@ names(dass) # permite ver os nomes das colunas de dass
 
 ## ----Recalculando DASS42------------------------------------------------------------------------------
 dass <- dass %>%
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 1, 0, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 2, 1, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 3, 2, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 4, 3, .))
+  mutate(across(dass_1:dass_42), ~ifelse(. == 1, 0, .)) %>% 
+  mutate(across(dass_1:dass_42), ~ifelse(. == 2, 1, .)) %>% 
+  mutate(across(dass_1:dass_42), ~ifelse(. == 3, 2, .)) %>% 
+  mutate(across(dass_1:dass_42), ~ifelse(. == 4, 3, .))
 
 
 ## ----eval = FALSE-------------------------------------------------------------------------------------
@@ -161,6 +160,6 @@ casosGraves <- dass %>% # criando um novo banco de dados chamado CasosGraves
          nivel_ans == "Severo" | nivel_ans == "Extremamente Severo",
          nivel_est == "Severo" | nivel_est == "Extremamente Severo")
 
-nrow(casosGraves)
+nrow(casosGraves) # 
 casosGraves[1:10, ] # vamos ver os 10 primeiros casos
 
