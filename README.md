@@ -11,7 +11,6 @@ O material desse repositório é educativo. **Todos os *scripts* podem ser rodad
 
 Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/reisrgabriel
 
----
 ## Iniciando com R
 
 #### Introdução ao R
