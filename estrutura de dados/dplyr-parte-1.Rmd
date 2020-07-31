@@ -21,6 +21,8 @@ Essa publicação possui uma continuação em *Manipulando com dplyr - Parte 2: 
 
 Foi utilizado o banco de dados DASS42, retirado desse desafio do Kaggle: https://www.kaggle.com/lucasgreenwell/depression-anxiety-stress-scales-responses?select=data.csv
 
+Os participantes que responderam foram os que procuraram a plataforma OpenPsychometrics.org e responderam a pesquisa do site.
+
 ## Sobre o _dplyr_
 O pacote *dplyr* possui várias funções interessantes que permitem:
 
@@ -180,49 +182,24 @@ Agora que temos todas as principais colunas, podemos começar a utilizar o `muta
 * Modificar valores de variáveis existentes.
 
 ## Calculando escores da DASS
-Antes de começar o cálculo, vamos lembrar que a DASS é respondida de 0 a 3, e aqui temos resposta de 1 a 4. Isso é importante pois os pontos de corte para a classificação de severidade parte de escores brutos das respostas.
+Antes de começar o cálculo, vamos lembrar que a DASS é respondida de 0 a 3, e aqui temos resposta de 1 a 4. Isso é importante pois os pontos de corte para a classificação de severidade partem de escores brutos das respostas.
 
-Assim, precisamos que
+Assim, precisamos que:
 
 * Todas as variáveis respondidas com 1 sejam 0
 * Todas as variáveis respondidas com 2 sejam 1
 * Todas as variáveis respondidas com 3 sejam 2
 * Todas as variáveis respondidas com 4 sejam 3
 
-Essa fórmula acima parece muito com uma função `ifelse()`. Por exemplo:
+Ou seja, precisamos que x seja x - 1.
 
-`ifelse(., 1, 0, .)`
+Para fazer isso, basta pedir o seguinte:
 
-1. Se o valor de uma variável (representado aqui por um ponto `.`) for igual a `1`, faça que seja zero (`0`).
-1. Caso alguma variável não atenda à condição de ser igual a 1, faça que tenha o valor dela mesma (`.`).
-
-O verbo `mutate()` permite que coloquemos uma função em seu corpo.
-
-Para atribuir uma variável com mutate, basta seguir a fórmula de renomeação do verbo `select()`:
-
-`novaVariável = antigaVariável`
-
-Vamos recalcular os escores da DASS42:
-
-```{r Recalculando DASS42}
-dass <- dass %>%
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 1, 0, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 2, 1, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 3, 2, .)) %>% 
-  mutate_at(vars(dass_1:dass_42), ~ifelse(. == 4, 3, .))
+```{r Recalculando escores da DASS}
+dass <- dass - 1 # isso já resolve!
 ```
 
-**Importante**: enquanto `mutate()` muda o valor de apenas uma variável por vez, `mutate_at` altera o valor de todas as variáveis contidas em `vars()`, por isso foi utilizado. O verbo `mutate()` possui ainda outras variações como `mutate_if()` e `mutate_all`.
-
-Caso o banco não tenha nenhum missing, podemos simplesmente pedir:
-
-```{r eval = FALSE}
-dass <- dass %>%
-  select(starts_with("dass")) %>% 
-  - 1
-```
-
-Bem mais simples! Essa foi uma solução proposta pelo [André Stephanou](https://www.linkedin.com/in/andr%C3%A9-stephanou-b4bb5a140/).
+Essa foi uma solução proposta pelo [André Stephanou](https://www.linkedin.com/in/andr%C3%A9-stephanou-b4bb5a140/). Simples e super fácil né?
 
 Com tudo isso pronto, vamos dar uma olhada no nosso banco.
 
@@ -334,6 +311,10 @@ casosGraves[1:10, ] # vamos ver os 10 primeiros casos
 ```
 
 **Dos 39775 participantes, 10431 apresentam sintomas de Depressão + Ansiedade + Estresse no nível Severo ou acima!**
+
+Ou seja, 26,22% da amostra preencheram nosso critério arbitrário de gravidade. Aqui, tenho a hipótese de que esse número seja alto por conta de um viés amostral no momento de coleta de dados. Explico melhor.
+
+Os dados foram coletados das pessoas que entraram na plataforma OpenPsychometrics.org e resolveram responder à pesquisa sobre depressão, ansiedade e estresse. **É possível que o público que busca e que é interessado em responder a testes de ansiedade e depressão na internet sejam pessoas mais ansiosas.**
 
 Espero que você tenha entendido o quão poderoso pode ser o _dplyr_.
 

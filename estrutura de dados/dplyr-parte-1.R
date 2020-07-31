@@ -11,6 +11,21 @@
 
 ####################################################
 
+# Considerações iniciais ##########################
+
+## Sobre o _dplyr_
+#' O pacote *dplyr* possui várias funções interessantes que permitem:
+#'
+#' * Selecionar variáveis de maneira dinâmica e fácil.
+#' * Criar novas variáveis a partir de variáveis antigas.
+#' * Sumarizar vários valores em um só.
+#' * Filtrar e agrupar variáveis de interesse a partir de condições específicas.
+#'
+# 'Em suma, o *dplyr* é um pacote muito versátil e bastante útil para manipulação de dados em objetos data.frame.
+
+#' Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/
+
+
 ## ----Lendo o banco DASS42-----------------------------------------------------------------------------
 dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
 
@@ -78,18 +93,8 @@ dass <- dass %>%
 names(dass) # permite ver os nomes das colunas de dass
 
 
-## ----Recalculando DASS42------------------------------------------------------------------------------
-dass <- dass %>%
-  mutate(across(dass_1:dass_42), ~ifelse(. == 1, 0, .)) %>% 
-  mutate(across(dass_1:dass_42), ~ifelse(. == 2, 1, .)) %>% 
-  mutate(across(dass_1:dass_42), ~ifelse(. == 3, 2, .)) %>% 
-  mutate(across(dass_1:dass_42), ~ifelse(. == 4, 3, .))
-
-
-## ----eval = FALSE-------------------------------------------------------------------------------------
-## dass <- dass %>%
-##   select(starts_with("dass")) %>%
-##   - 1
+## ----Recalculando escores da DASS------------------------------------------------------------------------------
+dass <- dass - 1 # isso já resolve!
 
 
 ## ----Vendo novos valores------------------------------------------------------------------------------
