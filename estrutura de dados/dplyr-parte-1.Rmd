@@ -33,7 +33,10 @@ O pacote *dplyr* possui várias funções interessantes que permitem:
 
 Em suma, o *dplyr* é um pacote muito versátil e bastante útil para manipulação de dados em objetos data.frame.
 
-Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/ ou https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
+Para maiores informações sobre o dplyr: 
+
+* Página no tidyverse: https://dplyr.tidyverse.org/
+* Cheatsheet (folha de códigos): https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 
 ---
 

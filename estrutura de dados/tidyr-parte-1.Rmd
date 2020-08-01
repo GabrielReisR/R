@@ -1,0 +1,191 @@
+---
+title: "Limpando com tidyr - Parte 1: dados wide e long"
+author: "Gabriel R. R."
+date: "7/21/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    smooth_scroll: true
+    df_print: paged
+    code_folding: show
+---
+# Considerações iniciais
+
+Esse é um documento feito para ensinar e para reforçar conteúdos de manipulação de dados usando _tidyr_. Qualquer comentário, erro ou sugestão, é só falar comigo entrando em contato através de qualquer uma das opções listadas em *Contato*.
+
+O script em R está disponível aqui: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/tidyr-parte-1.R
+
+Essa publicação possui uma continuação em *Limpando com tidyr - Parte 2: valores missing*: https://rpubs.com/reisrgabriel/tidyrPt2
+
+## Limpando bancos - de wide data para long data
+Às vezes, os dados estão desorganizados, o que pode dificultar as análises.
+
+Um banco bem organizado é um no qual:
+
+1. Cada célula é um valor único.
+1. Cada coluna é uma variável.
+1. Cada linha é uma observação.
+
+Dados desorganizados, *untidy data*, quebram uma ou mais dessas regras acima.
+
+## Sobre o _tidyr_
+
+O _tidyr_ é um pacote criado pelo time do tidyverse com a função de organização de um banco de dados.
+
+**Ele existe para que as três regras acima sejam cumpridas**
+
+Para maiores informações sobre o dplyr: 
+
+* Documentação: https://cran.r-project.org/web/packages/tidyr/tidyr.pdf
+* Página no tidyverse: https://tidyr.tidyverse.org/index.html
+* Cheatsheet (folha de códigos): https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf
+
+## Banco a ser usado
+
+Para explicar os conceitos sobre o tidyverse, criei um banco de dados que está disponível aqui: https://github.com/GabrielReisR/R/tree/master/estrutura%20de%20dados/dados/untidy.csv
+
+Esse banco contém dados fictícios do número de telefonemas e cartas que passaram pelas pequenas cidades citadas.
+
+```{r Lendo untidy, message=FALSE, warning=FALSE}
+data_url <- "https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/untidy.csv"
+untidy_inicial <- read.csv(data_url)
+```
+
+Antes de começar, vou fazer algumas mudanças no nome com o pacote *dplyr*.
+
+```{r Lendo dplyr e excluindo X, message=FALSE, warning=FALSE}
+library(dplyr)
+
+untidy <- untidy_inicial %>%
+  select(-c(1)) # excluindo primeira coluna
+
+untidy
+```
+
+Nosso objeto *untidy* é um data.frame. A coluna *id* representa o código de identificação. A coluna *cidade* agrupa o nome das cidades. 
+
+A informação sobre as cartas são sempre pegas no mesmo dia do ano, já as colunas *hora_coleta* e *minutos_coleta* representa o horário em que as informações sobre a cidade foram coletadas naquele ano - sempre entre 11h da manhã e 13h da tarde. 
+
+Os anos estão separados por colunas, sendo que as últimas colunas, infelizmente, tiveram seu valor colocado em uma mesma coluna... Uma pena, embora seja conveniente para o que quero apresentar.
+
+# Uma célula, um valor único
+Cada célula deve ser um valor único. Para ter a certeza de que nosso banco cumpra isso, utilizaremos `separate()`.
+
+O primeiro grande erro do banco, como já citado, está na computação da coluna *ano_1994_1995_1996*.
+
+Vamos usar a função `separate()` para separar os valores da coluna *ano_1994_1995_1996*.
+
+`separate()` é bem simples, então vamos exemplificar fazendo:
+
+```{r Separando colunas}
+untidy <- untidy %>% 
+  separate("ano_1994_1995_1996", # coluna a ser separada
+           sep = " ", # o que separa uma observação de outra
+           into = c("ano_1994", "ano_1995", "ano_1996"), # novas colunas
+           convert = TRUE) # converter o nome da coluna para 'character'
+```
+
+Basta adicionar o nome da coluna atual (`"ano_1994_1995_1996"`), a separação que existe entre as variáveis daquela coluna (nesse caso, um *espaço* `sep = " "`), e quais as novas colunas que devem ser criadas (`into = c("ano_1994", "ano_1995", "ano_1996")`). Pronto!
+
+# Uma coluna, uma variável
+Cada coluna deve ser uma variável. Para ter a certeza de que nosso banco cumpra isso, utilizaremos `pivot_longer()`. Nos livraremos de **colunas** repetitivas e alongaremos o banco de dados ao acrescentar mais linhas nele.
+
+A parte mais fácil passou. Era óbvio que os dados dos anos precisavam ser separados. 
+
+**Entretanto, nem tudo é óbvio quando se trata de dados organizados. Às vezes pode ser difícil enxergar que precisamos deixar apenas uma coluna para cada variável.**
+
+Todos os anos de coleta dizem respeito a apenas **uma** variável, a variável _ano_. Como sabemos disso? Pois isso é algo que *varia* em cada respondente. Ao invés de termos uma coluna para cada um dos anos, o ideal seria criar uma coluna *ano* para armazenar todos esses anos.
+
+Quais colunas entrarão na nova coluna ano?
+
+A nossa nova coluna ano armazenará todos os nomes das colunas que representam o *ano*. Já os valores dessas colunas serão armazenados em uma nova coluna chamada de *casos*.
+
+Como escrever isso? Usaremos a função `pivot_longer()`.
+```{r Juntando os anos em uma só coluna}
+untidy <- untidy %>% 
+  pivot_longer(
+    cols = ano_1990:ano_1996, # as colunas desse intervalo
+    names_to = "ano", # terão seus nomes armazenados nessa nova coluna
+    values_to = "casos") # e os seus valores armazenados nessa nova coluna
+
+untidy
+```
+
+# Uma linha, uma observação
+Cada linha é uma observação só. Para ter a certeza de que nosso banco cumpra isso, utilizaremos `pivot_wider()`. Nos livraremos de **linhas** repetitivas e alargaremos o banco de dados ao acrescentar mais colunas nele.
+
+Agora que temos o nosso banco quase pronto, vamos refletir sobre duas colunas importantes: _tipo_ e _casos_.
+
+* *tipo* informa qual meio de comunicação essa cidade usou.
+* *casos* informa quantas vezes essa cidade usou esse meio.
+
+O problema aqui é que temos duas linhas para uma observação só! Em 1990, Butte, às 11h27, desde o ano anterior, havia enviado 4275 cartas e feito 3450 telefonemas.
+
+A questão é que "cartas" e "telefonemas" são coisas diferentes, elas não são variáveis contidas em "tipo" (assim como os anos estão contidos _ano_, telefonemas e cartas não estão contidas em _tipo_). Estamos alongando o banco sem necessidade, já que estamos falando de coisas diferentes e poderíamos ter duas colunas para cada uma dessas variáveis.
+
+Torna-se interessante alargar esses dados (*essa é uma escolha, não uma regra*) - ou seja, criar colunas para _cartas_ e _telefonemas_. Para isso, usamos `pivot_wider()`.
+
+```{r Alargando o nosso banco}
+untidy <- untidy %>%
+  pivot_wider(
+    names_from = tipo, # para criar as colunas, use os nomes que encontrar em 'tipo'
+    values_from = casos # e coloque nessas colunas o valor que encontrar em 'casos'
+  )
+
+untidy
+```
+
+Grandes mudanças!
+
+* Perceba que agora temos apenas uma linha para cada ano, ao invés de 2 linhas para cada ano.
+* Da mesma forma, 'casos' não é mais necessário, e nosso banco se tornou mais fácil de ser lido.
+
+# Unir valores
+Uma coluna para cada variável e uma célula para um caso único. Aqui, a gente vai se preocupar com duas colunas, utilizando `unite()` para resolver esse probleminha que temos.
+
+Algo que ainda não conversamos sobre é a redundância das colunas _hora_coleta_ e _minutos_coleta_. Essa pode ser apenas uma coluna, não precisa ser duas. Vamos criar uma nova coluna que vai se chamar _horario_coleta_.
+
+Vamos juntar as duas com `unite()`.
+
+```{r Juntando duas colunas}
+untidy <- untidy %>% 
+  unite(hora_coleta, minutos_coleta, # podemos escrever quantas colunas quisermos
+        sep = ":", # separe os valores por ":"
+        col = "horario_coleta") # o nome da nova coluna
+
+untidy
+```
+
+Vamos entender:
+
+* Iniciamos com a primeira coluna que queremos. O valor dessa coluna irá na frente (`hora_coleta`).
+* A segunda coluna informa o valor que irá em segundo lugar (`minutos_coleta`).
+* Definimos uma separação para nossas variáveis. Nesse caso, tratando-se de horários, preferi `sep = ":"`.
+  * É possível definir sem separação: nesse caso,  `sep = ""`.
+* Em `col = "horario_coleta"`, definimos o nome da nossa coluna como _horario_coleta_.
+
+Espero que eu tenha ajudado a entender um pouco mais sobre a força do _tidyr_.
+
+Por enquanto é isso! :)
+
+---
+
+# Mais informações
+Limpando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
+
+Manipulando com dplyr - Parte 1: select() e mutate(): https://rpubs.com/reisrgabriel/dplyrPt1
+
+Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel/dplyrPt2
+
+Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
+
+Para maiores informações sobre o tidyr: https://tidyr.tidyverse.org/ ou `###`
+
+# Contato
+Email: reisrgabriel@gmail.com
+
+GitHub : https://github.com/GabrielReisR
+
+LinkedIn: https://www.linkedin.com/in/gabrielreisrodrigues/
