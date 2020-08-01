@@ -14,8 +14,9 @@ Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/
 ## Iniciando no R
 
 #### Introdução ao R
+**[RMarkdown](https://rpubs.com/reisrgabriel/introaor) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro-ao-r.R)**
+
 Um tutorial prático que tenta ensinar os básicos em R.
-*[RMarkdown](https://rpubs.com/reisrgabriel/introaor) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro-ao-r.R)**
 
   - O que é o R e o RStudio?
   - Funções iniciais
