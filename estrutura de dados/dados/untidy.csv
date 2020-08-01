@@ -1,4 +1,4 @@
-"","id","pessoa","1990","1991","1992","1993","1994_1995_1996","tipo","hora_coleta","minutos_coleta"
+"","id","cidade","ano_1990","ano_1991","ano_1992","ano_1993","ano_1994_1995_1996","tipo","hora_coleta","minutos_coleta"
 "1",1,"Butte",4275,360,846,451,"694 1411 1899","cartas",11,27
 "2",1,"Butte",3450,540,771,250,"1211 1550 1994","telefonemas",11,27
 "3",2,"Calaveras",10,0,0,0,"0 0 0","cartas",12,39
