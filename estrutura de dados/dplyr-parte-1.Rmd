@@ -191,7 +191,7 @@ Assim, precisamos que:
 * Todas as variáveis respondidas com 3 sejam 2
 * Todas as variáveis respondidas com 4 sejam 3
 
-Ou seja, precisamos que x seja x - 1.
+**Ou seja, precisamos que x seja x - 1.**
 
 Para fazer isso, basta pedir o seguinte:
 
