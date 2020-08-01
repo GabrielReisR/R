@@ -14,8 +14,8 @@ Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/
 ## Iniciando no R
 
 #### Introdução ao R
-Um tutorial prático que tenta ensinar os básicos em R.
-[RMarkdown](https://rpubs.com/reisrgabriel/introaor) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro-ao-r.R)
+Um tutorial prático que tenta ensinar os básicos em R. 
+**[RMarkdown](https://rpubs.com/reisrgabriel/introaor) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro-ao-r.R)**
 
   - O que é o R e o RStudio?
   - Funções iniciais
@@ -23,7 +23,7 @@ Um tutorial prático que tenta ensinar os básicos em R.
 
 ## Estrutura de dados
 #### Importação de bancos de dados e diagnósticos iniciais
-[RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R)
+**[RMarkdown](https://rpubs.com/reisrgabriel/importdiagn) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R)**
 
 Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, como realizar diagnósticos iniciais do banco de dados.
   - Importação de .sav, .xls/xlsx, .csv
@@ -33,7 +33,7 @@ Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, 
   - Visualizando missings com missmap()
   
 #### Dplyr: Parte 1
-[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R) 
+**[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R)**
 
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42 que contém 39775 casos.
 
@@ -45,7 +45,7 @@ Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Va
     - Utilizando case_when()
     
 #### Dplyr: Parte 2
-[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/dplyr-parte-2.R)  
+**[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/dplyr-parte-2.R)** 
 
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos juntar colunas de bancos de dados diferentes e também juntar linhas de bancos diferentes com bind(). Além disso, aprenderemos sobre joins() para juntar bancos de dados em uma fatia do banco da DASS42 que possuem colunas de nomes iguais. Ademais, usaremos filtering joins() para escolher condições específicas para entrada de casos ao juntarmos dois bancos de dados.
  - Usando bind()
