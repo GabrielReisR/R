@@ -79,7 +79,9 @@ Vamos usar a função `separate()` para separar os valores da coluna *ano_1994_1
 
 `separate()` é bem simples, então vamos exemplificar fazendo:
 
-```{r Separando colunas}
+```{r Separando colunas, message=FALSE, warning=FALSE}
+library(tidyr) # lendo tidyr
+
 untidy <- untidy %>% 
   separate("ano_1994_1995_1996", # coluna a ser separada
            sep = " ", # o que separa uma observação de outra
@@ -181,7 +183,7 @@ Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel
 
 Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
 
-Para maiores informações sobre o tidyr: https://tidyr.tidyverse.org/ ou `###`
+Para maiores informações sobre o tidyr: https://tidyr.tidyverse.org/ ou https://cran.r-project.org/web/packages/tidyr/tidyr.pdf
 
 # Contato
 Email: reisrgabriel@gmail.com

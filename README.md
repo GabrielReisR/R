@@ -49,15 +49,21 @@ Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Va
 **[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/dplyr-parte-2.R)** 
 
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos juntar colunas de bancos de dados diferentes e também juntar linhas de bancos diferentes com bind(). Além disso, aprenderemos sobre joins() para juntar bancos de dados em uma fatia do banco da DASS42 que possuem colunas de nomes iguais. Ademais, usaremos filtering joins() para escolher condições específicas para entrada de casos ao juntarmos dois bancos de dados.
- - Usando bind()
-   - bind_cols()
-   - bind_rows()
- - Joins()
-   - Full join()
-   - Inner join()
-   - Left join()
-   - Right join()
-   - Semi join()
-   - Anti join()
+  - Usando bind()
+  - Joins()
 
+#### Tidyr: Parte 1
+**[RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-1.R)** 
+
+Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Transformações de dados wide para long, e união de valores entre colunas e linhas.
+  - Uma célula, um valor único
+  - Uma coluna, uma variável
+  - Uma linha, uma observação
+  - Unir valores
   
+#### Tidyr: Parte 2 (EM CONSTRUÇÃO)
+**[RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-2.R)** 
+
+Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Transformações de dados wide para long, e união de valores entre colunas e linhas.
+  - Limpando nome das colunas
+  - Lidando com missings

@@ -68,6 +68,8 @@ untidy
 
 
 ## ----Separando colunas----
+library(tidyr) # lendo tidyr
+
 untidy <- untidy %>% 
   separate("ano_1994_1995_1996", # coluna a ser separada
            sep = " ", # o que separa uma observação de outra

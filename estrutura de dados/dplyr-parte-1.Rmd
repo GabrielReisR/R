@@ -35,6 +35,7 @@ Em suma, o *dplyr* é um pacote muito versátil e bastante útil para manipulaç
 
 Para maiores informações sobre o dplyr: 
 
+* Documentação: https://cran.r-project.org/web/packages/dplyr/dplyr.pdf
 * Página no tidyverse: https://dplyr.tidyverse.org/
 * Cheatsheet (folha de códigos): https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 
@@ -328,9 +329,11 @@ Por enquanto é isso! :)
 # Mais informações
 Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel/dplyrPt2
 
-Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
+Limpando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
 
-Tidyr --- Parte 1: https://rpubs.com/reisrgabriel/tidyrPt1
+Limpando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
+
+Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
 
 Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/ ou https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 
