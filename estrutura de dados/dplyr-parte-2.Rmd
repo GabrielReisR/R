@@ -29,7 +29,11 @@ O pacote *dplyr* possui várias funções interessantes que permitem:
 
 Em suma, o *dplyr* é um pacote muito versátil e bastante útil para manipulação de dados em objetos data.frame.
 
-Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/ ou https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
+Para maiores informações sobre o dplyr: 
+
+* Documentação: https://cran.r-project.org/web/packages/dplyr/dplyr.pdf
+* Página no tidyverse: https://dplyr.tidyverse.org/
+* Cheatsheet (folha de códigos): https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 
 ---
 
@@ -38,7 +42,7 @@ Em muitas situações unir dois bancos de dados é uma necessidade. Assim como n
 
 Vamos começar com a situação mais simples: dois bancos de dados nos quais os casos estão ordenados e basta apenas juntá-los. Ou seja, o participante da linha 1 no banco 1 é o mesmo participante da linha 1 no banco 2, e assim por diante.
 
-Esse é o caso mais simples (portanto, não tão usual). Para demonstrá-lo, não é necessário importar um banco de dados. Basta criar dois data.frames com algumas linhas de código.
+Esse é o caso mais simples de união de dois bancos. Para demonstrá-lo, não é necessário importar um banco de dados. Basta criar dois data.frames com algumas linhas de código.
 
 ## bind_cols()
 Vou criar 2 bancos, cada um com duas colunas e cinco casos.
@@ -68,7 +72,7 @@ dataframe_completo
 É bem simples! Como podemos ver, os bancos foram unidos pela posição das variáveis.
 
 ## bind_rows()
-Com `bind_rows()` a lógica é a mesma. A mesma lógica das linhas se aplica para cá. A coluna 1 no banco 1 representa a mesma variável da coluna 1 no banco 2. Quando um data.frame e outro possuem variáveis iguais, os casos são adicionados. Quando as colunas diferem de nome, os casos que não possuem valor nessa coluna recebem o valor de missing `NA`.
+Com `bind_rows()` a lógica é a mesma. A coluna 1 no banco 1 representa a mesma variável da coluna 1 no banco 2. Quando um data.frame e outro possuem variáveis iguais, os casos são adicionados. Quando as colunas diferem de nome, os casos que não possuem valor nessa coluna recebem o valor de missing `NA`.
 
 ```{r Unindo com bind_rows()}
 lista <- list(col1 = "a", col2 = 4, col3 = 1028, col4 = 255, col5 = 9902)
@@ -78,13 +82,15 @@ dataframe_completo
 ```
 Pronto! Já que nenhuma linha possui valores na coluna 5, isso é preenchido como `NA`, assim como explicado acima.
 
-# Joins()
-Vamos para funções mais completas e que consideram bancos de dados com mais informações. Considere os bancos a seguir:
+# Mutating-Joins
+Vamos para funções mais completas e que levam em conta bancos de dados com mais informações. Os mutating joins são funções que unem bancos baseados em condições específicas. Vou explicar.
+
+Considere os bancos a seguir:
 
 ```{r Lendo os três mini-bancos, message=FALSE, warning=FALSE}
-dass_dep <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_dep.csv", sep = ",")
-dass_ans <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_ans.csv", sep = ",")
-dass_est <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_est.csv", sep = ",")
+dass_dep <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_dep.csv")
+dass_ans <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_ans.csv")
+dass_est <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_est.csv")
 ```
 
 São os mesmos casos que vimos no bloco 2. Abaixo as características dos bancos.
@@ -206,8 +212,11 @@ dass_right
 
 Temos 900 casos agora. Isso acontece porque preservamos primeiro o banco da direita (*dass_ans*), que possuía 900 casos.
 
+# Filter-joins
+Enquanto os mutating joins se importam em unir bancos baseados em condições, os filter joins são construídos para filtrar casos de um banco a outro, não necessariamente para unir bancos.
+
 ## Semi join()
-O semi join retorna todos os valores do banco x que também estão no banco y. Ao fazer isso, ele não incorpora as colunas e variáveis de y. Ou seja, assim como o próximo verbo que vamos tratar (`anti_join()`), o semi_join é uma função **filtro**, pois retorna as colunas de apenas um banco se baseando nos casos de outro banco.
+O semi join retorna todos os valores do banco x que também estão no banco y. Ao fazer isso, ele **não** incorpora as colunas e variáveis de y. Ou seja, assim como o próximo verbo que vamos tratar (`anti_join()`), o semi_join é uma função **filtro**, pois retorna as colunas de apenas um banco se baseando nos casos de outro banco.
 
 Vamos fazer o semi-join entre *dass_dep* e os outros bancos. Notemos que, aqui, não é necessário renomear variáveis ou colocar sufixos, pois as colunas de *dass_ans* e *dass_est* não serão incorporadas.
 
@@ -246,9 +255,11 @@ Por enquanto é isso :)
 # Mais informações
 Manipulando com dplyr - Parte 1: select() e mutate(): https://rpubs.com/reisrgabriel/dplyrPt1
 
-Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
+Organizando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
 
-Tidyr --- Parte 1: https://rpubs.com/reisrgabriel/tidyrPt1
+Organizando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
+
+Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
 
 Para maiores informações sobre o dplyr: https://dplyr.tidyverse.org/ ou https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 

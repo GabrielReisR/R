@@ -602,6 +602,10 @@ Manipulando com dplyr - Parte 1: select() e mutate(): https://rpubs.com/reisrgab
 
 Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel/dplyrPt2
 
+Organizando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
+
+Organizando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
+
 # Contato
 Email: reisrgabriel@gmail.com
 

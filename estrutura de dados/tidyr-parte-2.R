@@ -1,105 +1,89 @@
-######## IMPORTAÇÃO E DIAGNÓSTICOS INICIAIS ########
+biblios_original <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/libraries.csv")
 
-#' Autor: Gabriel R. R.
+biblios_original <- biblios_original %>%
+  rename(id = x)
 
-#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/import-e-diagn.R
+str(biblios_original)
 
-#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/importdiagn
+library(dplyr) # lendo dplyr para usar a fun??o 'glimpse()' e renomear "id"
 
-#' Todo esse código pode ser rodado direto no R.
-#' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
+biblios_snake <- biblios_original %>% # note o uso do pipe
+  clean_names() # se n?o dermos nenhum argumento, ent?o 'case = snake'
 
-####################################################
+names(biblios_snake)
 
-## ----Instalando haven, eval=FALSE---------------------------------------------------------------------
-## install.packages("haven", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
+# lowerCamel
+biblios_lowerCamel <- biblios_original %>% # note o uso do pipe
+  clean_names(case = "lower_camel")
 
+names(biblios_lowerCamel)
 
-## ----Lendo sav com haven------------------------------------------------------------------------------
-library(haven) # leitura do haven
+# UpperCamel
+biblios_UpperCamel <- biblios_original %>% # note o uso do pipe
+  clean_names(case = "upper_camel")
 
-dass_sav <- read_sav("dass42.sav") # importando um .sav
+names(biblios_UpperCamel)
 
-str(dass_sav) # estrutura do objeto
+# screaming_snake
+biblios_SCREAMING_SNAKE <- biblios_original %>% # note o uso do pipe
+  clean_names(case = "screaming_snake")
 
+names(biblios_SCREAMING_SNAKE)
 
-## ----Instalando readxl, eval=FALSE--------------------------------------------------------------------
-## install.packages("readxl", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
+# lowerUPPER
+biblios_lowerUPPER <- biblios_original %>% # note o uso do pipe
+  clean_names(case = "lower_upper")
 
+names(biblios_lowerUPPER)
 
-## ----Lendo excel com readxl---------------------------------------------------------------------------
-library(readxl) # leitura do readxl
+# UPPERlower
+biblios_UPPERlower <- biblios_original %>% # note o uso do pipe
+  clean_names(case = "upper_lower")
 
-dass_excel <- read_excel("dass42.xlsx") # importando um .xlsx
-
-str(dass_excel) # estrutura do objeto
-
-
-## ----Instalando readr, eval = FALSE-------------------------------------------------------------------
-## install.packages("readr", dependencies = T) # tenho como prática baixar pacotes associados sempre, por isso "dependencies = TRUE"
-
-
-## ----Lendo .csv com readr-----------------------------------------------------------------------------
-library(readr) # lendo o pacote readr no R
-
-dass <- read_csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv")
-
-str(dass) # estrutura do objeto
+names(biblios_UPPERlower)
 
 
-## ----Lendo .csv com função base do R------------------------------------------------------------------
-dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
+biblios <- biblios_snake # basta dar a biblios o valor de biblios_snake
+names(biblios_snake)
 
-str(dass) # estrutura do objeto
+library(tidyr)
+biblios_zero_missing <- biblios %>% 
+  drop_na() # nenhum argumento: qualquer linha que possua qualquer missing é excluída
 
+missmap(biblios_zero_missing) # visualizando os missings
 
-## ----Lendo dass---------------------------------------------------------------------------------------
-dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
+biblios_expenditures <- biblios %>% 
+  drop_na(expenditures_us_dollars) # qualquer linha que possua missing nessa coluna é excluída
 
-
-## ----Abrindo uma janela com View(), eval = FALSE------------------------------------------------------
-## View(dass) # útil para explorar todos casos e/ou todas variáveis
-
-
-## ----Vendo o nome de todas as variáveis com names()---------------------------------------------------
-names(dass) # útil para uma lida rápida nas variáveis contempladas pelo banco
-
-
-## ----Estrutura com str()------------------------------------------------------------------------------
-str(dass) # entender a estrutura do nosso objeto
+missmap(biblios_expenditures)
+biblios_exp <- biblios_expenditures %>% # renomeando o banco
+  relocate(total_librarians, # colocando como primeira coluna
+           total_users, # colocando como primeira coluna
+           everything()) # restante das variáveis
 
 
-## ----Vendo 5 primeiros casos com head()---------------------------------------------------------------
-head(dass, n = 5) # útil para entender o tipo de resposta de cada variável em alguns casos
+
+biblios_fill <- biblios_exp %>%
+  fill(total_librarians,
+       total_users)
+
+missmap(biblios_fill)
 
 
-## ----Vendo 5 últimos casos com tail()-----------------------------------------------------------------
-tail(dass, n = 5) # útil para entender o tipo de resposta de cada variável em alguns casos
+
+mean_librarians <- mean(biblios_expenditures$total_librarians)
+mean_users <- mean(biblios_expenditures$total_users)
+
+biblios_replace <- biblios_expenditures %>% 
+  replace_na(list(total_librarians = 5688.577, total_users = 9156959))
 
 
-## ----Instalando dplyr, eval=FALSE---------------------------------------------------------------------
-## install.packages("dplyr", dependencies = T) # manipulação de banco de dados
+biblios_mutate <- biblios_expenditures %>% 
+  mutate(
+    total_librarians = ifelse(
+      is.na(total_librarians), # há um valor missing?
+      mean(total_librarians, na.rm = TRUE), # se sim, substituir por média da coluna
+      total_librarians) # se não é missing, deixe como está
+  ) 
 
-
-## ----Entendendo as variáveis com glimpse()------------------------------------------------------------
-library(dplyr) # leitura do pacote dplyr
-glimpse(dass)
-
-
-## ----Instalando skimr, eval=FALSE---------------------------------------------------------------------
-## install.packages("skimr", dependencies = T) # compreensão rápida de banco de dados
-
-
-## ----Análises iniciais com skim()---------------------------------------------------------------------
-library(skimr)
-skim(dass)
-
-
-## ----Instalando Amelia, eval=FALSE--------------------------------------------------------------------
-## install.packages("Amelia", dependencies = T) # diagnóstico e manipulação de missings
-
-
-## ----Utilizando missmap()-----------------------------------------------------------------------------
-library(Amelia) # leitura do pacote Amelia
-missmap(dass)
-
+missmap(biblios_mutateteste)

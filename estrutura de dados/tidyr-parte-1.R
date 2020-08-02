@@ -2,9 +2,9 @@
 
 #' Autor: Gabriel R. R.
 
-#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-2.R
+#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/tidyr-parte-1.R
 
-#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/dplyrPt1
+#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/tidyrPt1
 
 #' Todo esse código pode ser rodado direto no R.
 #' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
@@ -13,6 +13,7 @@
 
 
 # Considerações iniciais ##########################
+
 
 ## Limpando bancos - de wide data para long data
 
@@ -76,6 +77,9 @@ untidy <- untidy %>%
            into = c("ano_1994", "ano_1995", "ano_1996"), # novas colunas
            convert = TRUE) # converter o nome da coluna para 'character'
 
+untidy
+
+
 #' Basta adicionar o nome da coluna atual (`"ano_1994_1995_1996"`), a separação
 #' que existe entre as variáveis daquela coluna (nesse caso, um *espaço* `sep = " "`),
 #' e quais as novas colunas que devem ser criadas (`into = c("ano_1994", "ano_1995", "ano_1996")`).
@@ -103,6 +107,7 @@ untidy <- untidy %>%
   pivot_longer(
     cols = ano_1990:ano_1996, # as colunas desse intervalo
     names_to = "ano", # terão seus nomes armazenados nessa nova coluna
+    names_pattern = "ano_(.*)", # pegar apenas os nomes que vem depois de 'ano_'
     values_to = "casos") # e os seus valores armazenados nessa nova coluna
 
 untidy

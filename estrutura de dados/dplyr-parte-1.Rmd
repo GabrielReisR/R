@@ -49,7 +49,7 @@ A primeira tarefa quando se trata de manipular um banco de dados consiste na imp
 Vamos ler o nosso banco com a função base do R `read.csv()`.
 
 ```{r Lendo o banco DASS42}
-dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
+dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv")
 ```
 
 Agora, vamos ver como está a estrutura desse banco.
@@ -329,9 +329,9 @@ Por enquanto é isso! :)
 # Mais informações
 Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel/dplyrPt2
 
-Limpando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
+Organizando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
 
-Limpando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
+Organizando com tidyr - Parte 2: valores missing: https://rpubs.com/reisrgabriel/tidyrPt2
 
 Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
 

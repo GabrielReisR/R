@@ -1,0 +1,72 @@
+---
+title: 'Organizando com tidyr - Parte 2: valores missing'
+author: "Gabriel R. R."
+date: "8/2/2020"
+output: html_document
+---
+
+# Considerações iniciais
+
+Esse é um documento feito para ensinar e para reforçar conteúdos de manipulação de dados usando _tidyr_. Qualquer comentário, erro ou sugestão, é só falar comigo entrando em contato através de qualquer uma das opções listadas em *Contato*.
+
+O script em R está disponível aqui: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/tidyr-parte-1.R
+
+Essa publicação possui uma continuação em *Organizando com tidyr - Parte 2: valores missing*: https://rpubs.com/reisrgabriel/tidyrPt2
+
+## Organizando bancos - de wide data para long data
+Às vezes, os dados estão desorganizados, o que pode dificultar as análises.
+
+Um banco bem organizado é um no qual:
+
+1. Cada célula é um valor único.
+1. Cada coluna é uma variável.
+1. Cada linha é uma observação.
+
+Dados desorganizados, *untidy data*, quebram uma ou mais dessas regras acima.
+
+## Sobre o _tidyr_
+
+O _tidyr_ é um pacote criado pelo time do tidyverse com a função de organização de um banco de dados.
+
+**Ele existe para que as três regras acima sejam cumpridas**.
+
+Para maiores informações sobre o tidyr: 
+
+* Documentação: https://cran.r-project.org/web/packages/tidyr/tidyr.pdf
+* Página no tidyverse: https://tidyr.tidyverse.org/index.html
+* Cheatsheet (folha de códigos): https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf
+
+## Banco a ser usado
+
+Para explicar os conceitos sobre o tidyverse, criei um banco de dados que está disponível aqui: https://github.com/GabrielReisR/R/tree/master/estrutura%20de%20dados/dados/untidy.csv
+
+Esse banco contém dados fictícios do número de telefonemas e cartas que passaram pelas pequenas cidades citadas.
+
+```{r Lendo untidy, message=FALSE, warning=FALSE}
+data_url <- "https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/untidy.csv"
+untidy_inicial <- read.csv(data_url)
+```
+
+Antes de começar, vou fazer algumas mudanças no nome com o pacote *dplyr*.
+
+
+
+---
+
+# Mais informações
+Organizando com tidyr - Parte 1: dados wide e long: https://rpubs.com/reisrgabriel/tidyrPt1
+
+Manipulando com dplyr - Parte 1: select() e mutate(): https://rpubs.com/reisrgabriel/dplyrPt1
+
+Manipulando com dplyr - Parte 2: bind() e join(): https://rpubs.com/reisrgabriel/dplyrPt2
+
+Importação de dados e diagnósticos iniciais: https://rpubs.com/reisrgabriel/importdiagn
+
+Para maiores informações sobre o tidyr: https://tidyr.tidyverse.org/ ou https://cran.r-project.org/web/packages/tidyr/tidyr.pdf
+
+# Contato
+Email: reisrgabriel@gmail.com
+
+GitHub : https://github.com/GabrielReisR
+
+LinkedIn: https://www.linkedin.com/in/gabrielreisrodrigues/

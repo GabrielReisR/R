@@ -33,7 +33,7 @@
 
 
 ## ----Lendo o banco DASS42-----
-dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv", sep = ",")
+dass <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass42.csv")
 
 ## ----Entendendo o banco-----
 View(dass)

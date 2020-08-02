@@ -11,12 +11,12 @@ O material desse repositório é educativo. **Todos os *scripts* podem ser rodad
 
 Todos os materiais, em RMarkdown, podem ser encontrados aqui: https://rpubs.com/reisrgabriel
 
-## Iniciando no R
+## Introdução ao R
 
 #### Introdução ao R
 **[RMarkdown](https://rpubs.com/reisrgabriel/introaor) ou [Script](https://github.com/GabrielReisR/R/blob/master/intro%20ao%20r/intro-ao-r.R)**
 
-Um tutorial prático que tenta ensinar os básicos em R.
+Um tutorial prático que apresenta os básicos em R.
 
   - O que é o R e o RStudio?
   - Funções iniciais
@@ -66,4 +66,6 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
 
 Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Transformações de dados wide para long, e união de valores entre colunas e linhas.
   - Limpando nome das colunas
+    - Pacote *janitor*
   - Lidando com missings
+    - drop_na, fill, replace_na
