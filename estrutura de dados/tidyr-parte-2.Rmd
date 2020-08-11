@@ -118,7 +118,7 @@ names(biblios_snake)
 
 Há diversas formas de lidar com missings.
 
-```{r Limpando missings, message=FALSE, warning=FALSE}
+```{r Limpando missings dataset com drop_na, message=FALSE, warning=FALSE}
 library(Amelia) # para visualizar missings com 'missmap()'
 library(tidyr)
 
@@ -126,34 +126,80 @@ biblios_zero_missing <- biblios %>%
   drop_na() # nenhum argumento: qualquer linha que possua qualquer missing é excluída
 
 missmap(biblios_zero_missing) # visualizando os missings
+```
 
+```{r Limpando missings variável com drop_na}
 biblios_expenditures <- biblios %>% 
   drop_na(expenditures_us_dollars) # qualquer linha que possua missing nessa coluna é excluída
 
 missmap(biblios_expenditures)
+```
+
+```{r Realocando variáveis}
 biblios_exp <- biblios_expenditures %>% # renomeando o banco
   relocate(total_librarians, # colocando como primeira coluna
-           total_users, # colocando como primeira coluna
-           everything()) # restante das variáveis
+           total_users, # colocando como segunda coluna
+           everything()) # restante das variáveis 
 
+biblios_exp
+```
 
+* O id 68 e 82 possuem NAs em *total_librarians*.
+* O id 77 posui NA em *total_users*.
 
-biblios_fill <- biblios_exp %>%
+```{r Preenche NAs com direction up}
+# Preenche com o valor mais próximo
+biblios_fill_up <- biblios_exp %>%
   fill(total_librarians,
-       total_users)
+       total_users,
+       direction = "up") # pega o valor mais próximo de linhas de cima ('up')
 
-missmap(biblios_fill)
+biblios_fill_up
+```
+
+```{r Preenche NAs com direction up}
+# Preenche com o valor mais próximo
+biblios_fill_down <- biblios_exp %>%
+  fill(total_librarians,
+       total_users,
+       direction = "down") # pega o valor mais próximo de linhas de cima ('up')
+
+biblios_fill_down
+```
 
 
+```{r Trocando pela média ou outro número com replace_na}
+mean(biblios_expenditures$total_librarians, na.rm = TRUE)
+mean(biblios_expenditures$total_users, na.rm = TRUE)
 
-mean_librarians <- mean(biblios_expenditures$total_librarians)
-mean_users <- mean(biblios_expenditures$total_users)
-
-biblios_replace <- biblios_expenditures %>% 
+biblios_replace <- biblios_exp %>% 
   replace_na(list(total_librarians = 5688.577, total_users = 9156959))
+
+biblios_replace
+```
+
+```{r Trocando pela média usando base}
+# Solução encontrada aqui: https://stackoverflow.com/questions/25835643/replace-missing-values-with-column-mean
+
+sum(is.na(biblios_exp))
+
+biblios_base <- for(i in 1:ncol(biblios_exp)){
+  biblios_exp[is.na(biblios_exp[,i]), i] <- mean(biblios_exp[,i], na.rm = TRUE)
+}
+
+sum(is.na(biblios_base))
 
 ```
 
+```{r Trocando pela média das colunas com o pacote zoo, message=FALSE, warning=FALSE}
+
+library(zoo) # lendo o pacote. caso não tenha, instale: install.packages("zoo")
+
+biblios_zoo <- na.aggregate(biblios_exp, by = 1, median) # escolhi mediana, e não média
+
+missmap(biblios_zoo)
+
+```
 Por enquanto é isso! :)
 
 ---
