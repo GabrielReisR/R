@@ -14,15 +14,13 @@ output:
 
 # Considerações iniciais
 
-**ESSA APRESENTAÇÃO ESTÁ EM CONSTRUÇÃO.**
-
 Esse é um documento feito para ensinar e para reforçar conteúdos de manipulação de dados usando _tidyr_. Qualquer comentário, erro ou sugestão, é só falar comigo entrando em contato através de qualquer uma das opções listadas em *Contato*.
 
-O script em R está disponível aqui: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/tidyr-parte-1.R
+O script em R está disponível aqui: https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/tidyr-parte-2.R
 
-Essa publicação possui uma continuação em *Organizando com tidyr - Parte 2: valores missing*: https://rpubs.com/reisrgabriel/tidyrPt2
+Essa publicação possui uma primeira parte em *Organizando com tidyr - Parte 1: dados wide e long*: https://rpubs.com/reisrgabriel/tidyrPt1
 
-## Organizando bancos - de wide data para long data
+## Organizando bancos - colunas e missings
 Às vezes, os dados estão desorganizados, o que pode dificultar as análises.
 
 Um banco bem organizado é um no qual:
@@ -32,6 +30,11 @@ Um banco bem organizado é um no qual:
 1. Cada linha é uma observação.
 
 Dados desorganizados, *untidy data*, quebram uma ou mais dessas regras acima.
+
+Outros aspectos de bancos de dados desorganizados incluem:
+
+* Nomes estranhos de coluna, o que dificulta parte da análise e leitura do código.
+* Valores incompletos, também chamados de dados *missing*.
 
 ## Sobre o _tidyr_
 
@@ -70,6 +73,8 @@ names(biblios_original)
 ```
 
 É preciso uniformizar os nomes para facilitar a manipulação do banco. Vamos ler e utilizar *janitor*, especificamente a função `clean_names()`.
+
+Abaixo, todas as possibilidades dessa função.
 
 ```{r Usando janitor, message=FALSE, warning=FALSE}
 library(janitor)
@@ -116,7 +121,15 @@ names(biblios_snake)
 
 # Limpando missings
 
-Há diversas formas de lidar com missings.
+Há diversas formas de lidar com missings. Aqui, vamos ver apenas quatro dessas formas:
+
+* `drop_na()`: escolhendo apenas as linhas sem nenhum missing; pacote *tidyr*.
+* `fill_na()`: escolhendo preencher missing com valores do dataset; pacote *tidyr*.
+* `replace_na()`: escolhendo valores específicos para armazenar em missings; pacote *tidyr*.
+* `na.aggregate()`: substituindo missings por média e mediana; pacote *zoo*.
+
+## drop_na()
+A função `drop_na()` elimina todas as linhas que contém missings no dataset.
 
 ```{r Limpando missings dataset com drop_na, message=FALSE, warning=FALSE}
 library(Amelia) # para visualizar missings com 'missmap()'
@@ -128,46 +141,74 @@ biblios_zero_missing <- biblios %>%
 missmap(biblios_zero_missing) # visualizando os missings
 ```
 
+Quando especificamos uma coluna como argumento (`drop_na(coluna)`), todas as linhas que contém missing nessa coluna são eliminados.
+
 ```{r Limpando missings variável com drop_na}
 biblios_expenditures <- biblios %>% 
   drop_na(expenditures_us_dollars) # qualquer linha que possua missing nessa coluna é excluída
 
 missmap(biblios_expenditures)
 ```
+## fill_na()
+
+E se não quisermos eliminar colunas, mas sim preencher os valores? Para isso, vamos utilizar `fill_na()`.
 
 ```{r Realocando variáveis}
-biblios_exp <- biblios_expenditures %>% # renomeando o banco
-  relocate(total_librarians, # colocando como primeira coluna
-           total_users, # colocando como segunda coluna
-           everything()) # restante das variáveis 
+biblios_exp <- biblios_expenditures %>%
+  relocate(id, # colocando como primeira coluna
+           total_librarians, # colocando como segunda coluna
+           total_users, # colocando como terceira coluna
+           everything()) %>%  # restante das variáveis 
+  arrange(id)
 
+biblios_exp <- biblios_exp[54:63,] # escolhendo ids entre 76 e 90
 biblios_exp
 ```
 
-* O id 68 e 82 possuem NAs em *total_librarians*.
 * O id 77 posui NA em *total_users*.
+* O id 82 posui NA em *total_librarians*.
 
 ```{r Preenche NAs com direction up}
 # Preenche com o valor mais próximo
 biblios_fill_up <- biblios_exp %>%
   fill(total_librarians,
        total_users,
-       direction = "up") # pega o valor mais próximo de linhas de cima ('up')
+       .direction = "up") # pega o valor mais próximo de linhas de cima ('up')
 
 biblios_fill_up
 ```
 
-```{r Preenche NAs com direction up}
+**Com** `.direction = "up"`**, os valores completos passaram para cima:**
+
+* O id 77, em *total_users*, recebeu o valor *3600*, que veio do id 79.
+* O id 82, em *total_librarians*, recebeu o valor *17*, que veio do id 84.
+
+Vamos ver agora o mesmo exemplo, porém usando `.direction = "down"`.
+
+```{r Preenche NAs com direction down}
 # Preenche com o valor mais próximo
 biblios_fill_down <- biblios_exp %>%
   fill(total_librarians,
        total_users,
-       direction = "down") # pega o valor mais próximo de linhas de cima ('up')
+       .direction = "down") # pega o valor mais próximo de linhas de cima ('up')
 
 biblios_fill_down
 ```
 
+**Com** `.direction = "up"`**, os valores completos passaram para baixo:**
 
+* O id 77, em *total_users*, recebeu o valor *4071801*, que veio do id 76.
+* O id 82, em *total_librarians*, recebeu o valor *11*, que veio do id 79.
+
+Poderíamos também especificar outros dois valores em `.direction`:
+
+* `.direction = "updown"`: primeiro vai pra cima, depois para baixo, e assim por diante.
+* `.direction = "downup"`: primeiro vai pra baixo, depois para cima, e assim por diante.
+
+## replace_na()
+A última função do **tidyr** para tratar de missings se chama `replace_na()`. Ela recebe uma coluna ou um dataset e substitui por um valor que informamos em uma lista.
+
+Vamos descobrir as médias das duas variáveis que queremos e substituir por elas.
 ```{r Trocando pela média ou outro número com replace_na}
 mean(biblios_expenditures$total_librarians, na.rm = TRUE)
 mean(biblios_expenditures$total_users, na.rm = TRUE)
@@ -178,18 +219,15 @@ biblios_replace <- biblios_exp %>%
 biblios_replace
 ```
 
-```{r Trocando pela média usando base}
-# Solução encontrada aqui: https://stackoverflow.com/questions/25835643/replace-missing-values-with-column-mean
+# Substituindo missing com "zoo"
 
-sum(is.na(biblios_exp))
+Um pacote útil para substituir missings é o pacote *zoo*.
 
-biblios_base <- for(i in 1:ncol(biblios_exp)){
-  biblios_exp[is.na(biblios_exp[,i]), i] <- mean(biblios_exp[,i], na.rm = TRUE)
-}
+Basta usar a função `na.aggregate(x, função)`.
 
-sum(is.na(biblios_base))
-
-```
+* Em `x`, colocamos o dataset ou a coluna que queremos substituir.
+  * Se escolhermos um dataset, `by = 1` informa que queremos de coluna em coluna.
+* Em `função`, especificamos se queremos média, moda, mediana, etc.
 
 ```{r Trocando pela média das colunas com o pacote zoo, message=FALSE, warning=FALSE}
 
@@ -197,9 +235,10 @@ library(zoo) # lendo o pacote. caso não tenha, instale: install.packages("zoo")
 
 biblios_zoo <- na.aggregate(biblios_exp, by = 1, median) # escolhi mediana, e não média
 
-missmap(biblios_zoo)
+biblios_zoo
 
 ```
+
 Por enquanto é isso! :)
 
 ---

@@ -61,11 +61,13 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
   - Uma linha, uma observação
   - Unir valores
   
-#### Tidyr: Parte 2 (EM CONSTRUÇÃO)
+#### Tidyr: Parte 2
 **[RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-2.R)** 
 
 Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Alterando nomes de todas colunas com o pacote janitor, limpando missings do banco de dados.
   - Limpando nome das colunas
     - Pacote *janitor*
   - Lidando com missings
-    - drop_na, fill, replace_na
+    - drop_na, fill_na, replace_na
+  - Substituindo missings
+    - zoo::na.aggregate
