@@ -238,6 +238,7 @@ dass <- dass %>%
 #' Isso pode ser feito diretamente com R. Vamos criar um hiperparâmetro chamado 'nivelSeveridade.'
 
 
+
 nivelSeveridade <- c("Normal", "Leve", "Moderado", "Severo", "Extremamente Severo")
 
 dass$nivel_dep <- dass$nivel_dep %>% as.factor # transformar em fator
