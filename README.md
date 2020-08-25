@@ -34,7 +34,7 @@ Tutorial de como importar arquivos .sav, .xls/xlsx e .csv para o R. Após isso, 
   - Visualizando missings com missmap()
   
 #### Dplyr: Parte 1
-**[RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R)**
+**[Medium](https://medium.com/psicodata/corrigindo-uma-escala-psicometrica-com-r-bfd6340f9609?source=collection_home---4------3-----------------------), [RMarkdown](https://rpubs.com/reisrgabriel/dplyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/dplyr-parte-1.R)**
 
 Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Vamos selecionar, renomear e excluir variáveis de um banco de dados. Além disso, criar novas colunas em data.frames e recodificar valores de um banco de dados. Faremos isso com o banco de dados DASS42 que contém 39775 casos.
 
@@ -53,7 +53,7 @@ Operações em data.frames feitas com o pacote _dplyr_, contido no tidyverse. Va
   - Joins()
 
 #### Tidyr: Parte 1
-**[RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-1.R)** 
+**[Medium](https://medium.com/psicodata/transformando-colunas-em-linhas-com-tidyr-a649f287a238), [RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt1) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-1.R)** 
 
 Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Transformações de dados wide para long, e união de valores entre colunas e linhas.
   - Uma célula, um valor único
@@ -62,7 +62,7 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
   - Unir valores
   
 #### Tidyr: Parte 2
-**[RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-2.R)** 
+**[Medium](https://medium.com/psicodata/valores-missing-parte-1-4382bb026660?source=collection_home---4------0-----------------------), [RMarkdown](https://rpubs.com/reisrgabriel/tidyrPt2) ou [Script](https://github.com/GabrielReisR/R/blob/master/estrutura%20de%20dados/estrutura%20de%20dados/tidyr-parte-2.R)** 
 
 Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Alterando nomes de todas colunas com o pacote janitor, limpando missings do banco de dados.
   - Limpando nome das colunas

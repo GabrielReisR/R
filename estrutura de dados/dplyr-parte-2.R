@@ -25,6 +25,7 @@ col2 <- sample(c(1:5), size = 5, replace = FALSE) # numeros de 1 a 5
 col3 <- sample(c(100:2500), size = 5, replace = TRUE) # numeros aleatorios de 100 a 2500
 col4 <- sample(c(100:2500), size = 5, replace = TRUE) # numeros aleatorios de 100 a 2500
 
+
 dataframe1 <- data.frame(col1, col2) # criando df1
 dataframe2 <- data.frame(col3, col4) # criando df2
 
@@ -41,7 +42,6 @@ library(dplyr) # lendo dplyr
 dataframe_completo <- bind_cols(dataframe1, dataframe2) # usando bind_cols()
 
 dataframe_completo
-
 
 #' É bem simples! Como podemos ver, os bancos foram unidos pela posição das variáveis.
 
