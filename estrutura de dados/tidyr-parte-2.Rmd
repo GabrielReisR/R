@@ -149,6 +149,7 @@ biblios_expenditures <- biblios %>%
 
 missmap(biblios_expenditures)
 ```
+
 ## fill_na()
 
 E se não quisermos eliminar colunas, mas sim preencher os valores? Para isso, vamos utilizar `fill_na()`.
@@ -210,34 +211,85 @@ A última função do **tidyr** para tratar de missings se chama `replace_na()`.
 
 Vamos descobrir as médias das duas variáveis que queremos e substituir por elas.
 ```{r Trocando pela média ou outro número com replace_na}
-mean(biblios_expenditures$total_librarians, na.rm = TRUE)
-mean(biblios_expenditures$total_users, na.rm = TRUE)
-
 biblios_replace <- biblios_exp %>% 
-  replace_na(list(total_librarians = 5688.577, total_users = 9156959))
+  replace_na(list(total_librarians = floor(mean(biblios_exp$total_librarians, na.rm = T)),
+                  total_users = floor(mean(biblios_exp$total_users, na.rm = T))
+  ))
 
 biblios_replace
 ```
 
-# Substituindo missing com "zoo"
 
-Um pacote útil para substituir missings é o pacote *zoo*.
+Perceba que aqui é um pouco mais complicado. Isso porque precisamos:
 
-Basta usar a função `na.aggregate(x, função)`.
+* Definir nossa variável depois de abrir uma lista.
+* Adicionar '=' e começar a especificar qual valor os missings dessa coluna receberão.
+* Já que as duas últimas colunas da função contam o número de pessoas, adicionei na frente a função `floor()`, que arredonda esse valor para baixo.
 
-* Em `x`, colocamos o dataset ou a coluna que queremos substituir.
-  * Se escolhermos um dataset, `by = 1` informa que queremos de coluna em coluna.
-* Em `função`, especificamos se queremos média, moda, mediana, etc.
+Olhemos para o resultado agora. Basta olhar para *total_librarians* para vermos que a média talvez não seja a melhor representação de tendência central dessa variável. O valor novo para o id 82 é **1587**. E, para *total_users* no id 77, é de **1229871**. Vimos aqui o problema de se substituir pela média. Ela é facilmente influenciada por valores extremos.
 
-```{r Trocando pela média das colunas com o pacote zoo, message=FALSE, warning=FALSE}
+# Imputação por regressão
 
-library(zoo) # lendo o pacote. caso não tenha, instale: install.packages("zoo")
+Podemos personalizar ainda mais, caso a caso, o valor das três variáveis iniciais que tinham missings: *total_librarians*, *total_users* e *expenditures_us_dollars*.
 
-biblios_zoo <- na.aggregate(biblios_exp, by = 1, median) # escolhi mediana, e não média
+Vamos carregar o banco inicial novamente.
 
-biblios_zoo
-
+```{r Carregando o banco inicial novamente}
+missmap(biblios) # vendo novamente os missings
+head(biblios)
 ```
+
+Podemos fazer isso utilizando-se da regressão linear, um método que busca estimar os valores de y a partir de variáveis x.
+
+Aqui, vamos estimar o valor de *gastos*, *total_trabalham* e *total_usarios* usando as outras variáveis numéricas do nosso banco. Quais são essas?
+
+**Em todos os casos, possuímos dois valores numéricos que não se alteram: total_biblios e total_volumes.**
+
+Fazendo uma rápida regressão linear (tópico para um próximo post no [PsicoData](https://medium.com/psicodata)) para cada coluna temos que em:
+
+* gastos: conseguimos 37,83% de ajuste do nosso modelo,
+* total_trabalham: conseguimos 65,01% de ajuste do nosso modelo,
+* total_usuarios: conseguimos 16,45% de ajuste do nosso modelo.
+
+Para fazer uma imputação simples com regressão, não vamos utilizar nenhum pacote, vamos criar a nossa própria função (o que aprendi a fazer com [esse ótimo capítulo sobre missings](http://www.stat.columbia.edu/~gelman/arm/missing.pdf)).
+
+```{r Criando modelos de regressão e função}
+# modelos de regressão
+regressao_gastos <- lm(gastos ~ total_biblios + total_volumes - 1,
+                       data = data)
+regressao_trabalham <- lm(total_trabalham ~ total_biblios + total_volumes - 1,
+                          data = data)
+regressao_usuarios <- lm(total_usuarios ~ total_biblios + total_volumes - 1,
+                         data = data)
+
+# criando predição dos valores para cada coluna
+gastos_pred <- predict(regressao_gastos, data) # coluna gastos
+trabalham_pred <- predict(regressao_trabalham, data) # coluna gastos
+usuarios_pred <- predict(regressao_usuarios, data) # coluna gastos
+
+# criando a função
+imputar <- function(coluna, pred){
+  ifelse(is.na(coluna), pred, coluna)
+}
+```
+
+* Criamos o modelo para cada coluna com a função `lm()`
+  * Aqui, a primeira variável é a ser predita, e as outras são os valores que vamos utilizar para predizer a variável. No primeiro caso, quando escrevemos `gastos ~ total_biblios + total_volumes - 1` estamos querendo dizer que os valores de gastos serão preditos pelos valores das colunas total_biblios e total_volumes. O `- 1` significa que nós estamos retirando desse cálculo o valor do intercepto, que nesses casos eram bem significativos.
+* Predizemos com esse modelo os valores de cada linha usando a função `predict()`
+* Criamos a função `imputar()`
+  * Essa função vai receber uma coluna, depois vai verificar se o valor em que ela está dessa coluna é um missing. A partir disso, se o valor for missing, o valor a ser imputado será o da fórmula que passamos para ela, se não o valor continuará igual.
+
+Agora vamos usar tudo isso que fizemos para imputar esses valores no nosso banco de dados!
+
+```{r Imputação por regressão}
+# imputando valores
+data$gastos <- imputar(data$gastos, gastos_pred)
+data$total_trabalham <- floor(imputar(data$total_trabalham, trabalham_pred))
+data$total_usuarios <- floor(imputar(data$total_usuarios, usuarios_pred))
+
+head(data)
+```
+
 
 Por enquanto é isso! :)
 
