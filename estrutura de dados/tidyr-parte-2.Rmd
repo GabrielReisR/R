@@ -13,6 +13,7 @@ output:
 ---
 
 # Considerações iniciais
+Post no Medium sobre isso aqui: 
 
 Esse é um documento feito para ensinar e para reforçar conteúdos de manipulação de dados usando _tidyr_. Qualquer comentário, erro ou sugestão, é só falar comigo entrando em contato através de qualquer uma das opções listadas em *Contato*.
 
@@ -125,8 +126,12 @@ Há diversas formas de lidar com missings. Aqui, vamos ver apenas quatro dessas 
 
 * `drop_na()`: escolhendo apenas as linhas sem nenhum missing; pacote *tidyr*.
 * `fill_na()`: escolhendo preencher missing com valores do dataset; pacote *tidyr*.
-* `replace_na()`: escolhendo valores específicos para armazenar em missings; pacote *tidyr*.
-* `na.aggregate()`: substituindo missings por média e mediana; pacote *zoo*.
+* `replace_na()`: escolhendo valores específicos ou de tendência central (como média, mediana, etc.) para armazenar em missings; pacote *tidyr*.
+* `imputar()`: uma função que vamos criar para imputação com regressão.
+
+Em primeiro lugar, vamos carregar nosso banco de dados que já vimos, agora com o nome de suas colunas em português.
+
+Novamente: esse é um banco sobre bibliotecas públicas de diversos países, junto com o dinheiro (em dólar) de quanto cada país gastou com suas bibliotecas, a quantidade de pessoas que trabalhavam nas bibliotecas, a quantidade de usuários e de livros dessas bibliotecas.
 
 ## drop_na()
 A função `drop_na()` elimina todas as linhas que contém missings no dataset.
@@ -135,109 +140,157 @@ A função `drop_na()` elimina todas as linhas que contém missings no dataset.
 library(Amelia) # para visualizar missings com 'missmap()'
 library(tidyr)
 
-biblios_zero_missing <- biblios %>% 
-  drop_na() # nenhum argumento: qualquer linha que possua qualquer missing é excluída
+# lendo os dados
+url <- "https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/biblios.csv"
+data <- read.csv(url)[,- 1]
 
-missmap(biblios_zero_missing) # visualizando os missings
+# visualizando dados
+head(data)
+
+# visualizando missings com o pacote Amelia
+missmap(data)
 ```
 
-Quando especificamos uma coluna como argumento (`drop_na(coluna)`), todas as linhas que contém missing nessa coluna são eliminados.
+Show! Entendemos então que nossas três variáveis com mais missings são:
 
-```{r Limpando missings variável com drop_na}
-biblios_expenditures <- biblios %>% 
-  drop_na(expenditures_us_dollars) # qualquer linha que possua missing nessa coluna é excluída
+* *gastos*: o quanto um país gastou com bibliotecas públicas, 
+* *total_trabalham*: o número total de pessoas que eram bibliotecárias,
+* *total_usuarios*: o número total de pessoas que usavam as bibliotecas.
 
-missmap(biblios_expenditures)
+Logo no início podemos fazer algo bem radical e excluir todas as linhas que contenham qualquer tipo de missing (*listwise deletion*). Fazemos isso usando a função `drop_na()` do pacote *tidyr*.
+
+```{r Excluindo todas linhas com missing}
+data <- tidyr::drop_na(data) # excluindo com drop_na()
+
+head(data) # primeiros casos
+nrow(data) # quantas linhas?
 ```
 
-## fill_na()
+Agora não temos mais nenhum missing em nenhum lugar. Entretanto, temos 79 casos a menos.
 
-E se não quisermos eliminar colunas, mas sim preencher os valores? Para isso, vamos utilizar `fill_na()`.
+Digamos que ao invés de excluirmos todas as linhas que tivesse ao menos um missing, quiséssemos excluir qualquer linha que tenha missing na coluna *total_usuarios.* 
 
-```{r Realocando variáveis}
-biblios_exp <- biblios_expenditures %>%
-  relocate(id, # colocando como primeira coluna
-           total_librarians, # colocando como segunda coluna
-           total_users, # colocando como terceira coluna
-           everything()) %>%  # restante das variáveis 
-  arrange(id)
+Para isso, bastaria mudar o código só um pouquinho para `tidyr::drop_na(data, total_usuarios)`
 
-biblios_exp <- biblios_exp[54:63,] # escolhendo ids entre 76 e 90
-biblios_exp
+Quando especificamos uma coluna como argumento (`drop_na(banco_de_dados, coluna)`), todas as linhas que contém missing nessa coluna são eliminados.
+
+```{r Excluindo todas as linhas com missing em total_usuarios}
+data <- read.csv(url)[,- 1] # relendo o banco inicial
+
+data <- tidyr::drop_na(data, total_usuarios)
+
+head(data) # mostra os primeiros casos
+nrow(data) # quantas linhas?
 ```
 
-* O id 77 posui NA em *total_users*.
-* O id 82 posui NA em *total_librarians*.
+Filtrando apenas pela coluna *total_usuarios*, o nosso banco fica com 180 casos.
 
-```{r Preenche NAs com direction up}
-# Preenche com o valor mais próximo
-biblios_fill_up <- biblios_exp %>%
-  fill(total_librarians,
-       total_users,
-       .direction = "up") # pega o valor mais próximo de linhas de cima ('up')
+## fill()
 
-biblios_fill_up
+E se não quisermos eliminar colunas, mas sim preencher os valores?
+
+Uma substituição possível de ser usada é a com a função `fill()` do pacote *tidyr*.
+
+A solução provida por essa função é a de pegar os valores que não estão missings mais próximos para preencher os valores missings das variáveis. Não é uma solução muito adequada porque o critério é muito aleatório e pode não ser representativo daquele caso.
+
+```{r Preenchendo observações missing PARA CIMA}
+data <- read.csv(url)[,- 1] # relendo o banco inicial
+
+library(tidyr)
+data <- data %>% 
+  fill(gastos,
+          total_trabalham,
+          total_usuarios,
+          .direction = "up") # preenche de baixo PARA CIMA ('up'))
+
+head(data) # mostra os primeiros casos
+nrow(data) # quantas linhas?
 ```
 
-**Com** `.direction = "up"`**, os valores completos passaram para cima:**
+Com `.direction = "up"`, os valores completos passaram para cima.
 
-* O id 77, em *total_users*, recebeu o valor *3600*, que veio do id 79.
-* O id 82, em *total_librarians*, recebeu o valor *17*, que veio do id 84.
+Por exemplo, em *gastos*, na primeira linha, Afghanistan recebeu o valor de *gastos* de Albania.
 
-Vamos ver agora o mesmo exemplo, porém usando `.direction = "down"`.
+Agora vamos ver de cima PARA BAIXO. Para isso, precisamos especificar nosso parâmetro como `.direction = "down"`
 
-```{r Preenche NAs com direction down}
-# Preenche com o valor mais próximo
-biblios_fill_down <- biblios_exp %>%
-  fill(total_librarians,
-       total_users,
-       .direction = "down") # pega o valor mais próximo de linhas de cima ('up')
+```{r Preenchendo observações missing PARA BAIXO}
+data <- read.csv(url)[,- 1] # relendo o banco inicial
 
-biblios_fill_down
+library(tidyr)
+data <- data %>% 
+  fill(gastos,
+          total_trabalham,
+          total_usuarios,
+          .direction = "down") # preenche de baixo PARA CIMA ('up'))
+
+head(data) # mostra os primeiros casos
+nrow(data) # quantas linhas?
 ```
 
-**Com** `.direction = "up"`**, os valores completos passaram para baixo:**
-
-* O id 77, em *total_users*, recebeu o valor *4071801*, que veio do id 76.
-* O id 82, em *total_librarians*, recebeu o valor *11*, que veio do id 79.
+Note que na primeira linha da coluna *gastos* é `NA`: isso porque não existe nenhum valor acima dela para a substituir.
 
 Poderíamos também especificar outros dois valores em `.direction`:
 
-* `.direction = "updown"`: primeiro vai pra cima, depois para baixo, e assim por diante.
-* `.direction = "downup"`: primeiro vai pra baixo, depois para cima, e assim por diante.
+* `.direction = "updown"`: primeiro vai para cima, depois para baixo, e assim por diante.
+* `.direction = "downup"`: primeiro vai para baixo, depois para cima, e assim por diante.
 
 ## replace_na()
 A última função do **tidyr** para tratar de missings se chama `replace_na()`. Ela recebe uma coluna ou um dataset e substitui por um valor que informamos em uma lista.
 
-Vamos descobrir as médias das duas variáveis que queremos e substituir por elas.
-```{r Trocando pela média ou outro número com replace_na}
-biblios_replace <- biblios_exp %>% 
-  replace_na(list(total_librarians = floor(mean(biblios_exp$total_librarians, na.rm = T)),
-                  total_users = floor(mean(biblios_exp$total_users, na.rm = T))
-  ))
+Para usar replace_na() basta nós colocarmos a lista das nossas variáveis junto com a função OU o valor que queremos para essas variáveis.
 
-biblios_replace
+```{r Trocando pela média com replace_na}
+data <- read.csv(url)[,- 1] # relendo o banco inicial
+
+library(tidyr) # lendo tidyr
+
+data <- data %>%
+  replace_na(list(
+    gastos = mean(data$gastos, na.rm = T), # NAs se tornam média
+    total_trabalham = floor(mean(data$total_trabalham, na.rm = T)), # NAs se tornam média
+    total_usuarios = floor(mean(data$total_usuarios, na.rm = T)) # NAs se tornam média
+  ))
+  
+head(data)
 ```
 
 
 Perceba que aqui é um pouco mais complicado. Isso porque precisamos:
 
 * Definir nossa variável depois de abrir uma lista.
-* Adicionar '=' e começar a especificar qual valor os missings dessa coluna receberão.
+* Adicionar `=`e começar a especificar qual valor os missings dessa coluna receberão.
 * Já que as duas últimas colunas da função contam o número de pessoas, adicionei na frente a função `floor()`, que arredonda esse valor para baixo.
 
-Olhemos para o resultado agora. Basta olhar para *total_librarians* para vermos que a média talvez não seja a melhor representação de tendência central dessa variável. O valor novo para o id 82 é **1587**. E, para *total_users* no id 77, é de **1229871**. Vimos aqui o problema de se substituir pela média. Ela é facilmente influenciada por valores extremos.
+Olhemos para o resultado agora. Basta olhar para *total_trabalham* para vermos que a média talvez não seja a melhor representação de tendência central dessa variável. O valor novo para as linhas que continham missing (1, 4 e 6) passou a ser 5002, o que não parece ser a realidade desses países.
+
+Em gastos, o mesmo é percebido. Por exemplo, na linha 4, o país American Samoa tinha um missing em gastos que foi substituído pela média dessa coluna. O novo valor em dólares de *gastos* com as 32 bibliotecas desse país passou a ser de R$357.736.161. Um valor absurdamente maior do que o provável valor real.
+
+Vimos o problema de se substituir pela média. Ela é facilmente influenciada por valores extremos.
+
+Uma solução poderia ser substituir pela mediana. A função seria basicamente a mesma e o resultado bem diferente:
+
+```{r Trocando pela mediana com replace_na}
+data <- read.csv(url)[,- 1] # relendo o banco inicial
+
+library(tidyr) # lendo tidyr
+
+data <- data %>%
+  replace_na(list(
+    gastos = median(data$gastos, na.rm = T), # NAs se tornam média
+    total_trabalham = floor(median(data$total_trabalham, na.rm = T)), # NAs se tornam média
+    total_usuarios = floor(median(data$total_usuarios, na.rm = T)) # NAs se tornam média
+  ))
+
+head(data)
+```
+
+O novo valor para os missings de *total_trabalham* agora é 175. O valor novo para as linhas que continham missing em gastos passou a ser R$1.810.863, o que parece estar mais adequado à realidade dos países que estamos vendo aqui. Já os missings de *total_usuarios* receberam o valor de 316.202, também mais condizente com os dados que estamos explorando.
+
+Uma simples mudança da média para a mediana parece ter feito uma grande diferença aqui.
 
 # Imputação por regressão
 
-Podemos personalizar ainda mais, caso a caso, o valor das três variáveis iniciais que tinham missings: *total_librarians*, *total_users* e *expenditures_us_dollars*.
-
-Vamos carregar o banco inicial novamente.
-
-```{r Carregando o banco inicial novamente}
-missmap(biblios) # vendo novamente os missings
-head(biblios)
-```
+Podemos personalizar ainda mais os valores de missing. Vamos fazer agora com que cada linha receba um valor específico nos missings baseado nos valores de suas outras variáveis. 
 
 Podemos fazer isso utilizando-se da regressão linear, um método que busca estimar os valores de y a partir de variáveis x.
 
@@ -273,6 +326,7 @@ imputar <- function(coluna, pred){
 }
 ```
 
+
 * Criamos o modelo para cada coluna com a função `lm()`
   * Aqui, a primeira variável é a ser predita, e as outras são os valores que vamos utilizar para predizer a variável. No primeiro caso, quando escrevemos `gastos ~ total_biblios + total_volumes - 1` estamos querendo dizer que os valores de gastos serão preditos pelos valores das colunas total_biblios e total_volumes. O `- 1` significa que nós estamos retirando desse cálculo o valor do intercepto, que nesses casos eram bem significativos.
 * Predizemos com esse modelo os valores de cada linha usando a função `predict()`
@@ -289,7 +343,6 @@ data$total_usuarios <- floor(imputar(data$total_usuarios, usuarios_pred))
 
 head(data)
 ```
-
 
 Por enquanto é isso! :)
 
