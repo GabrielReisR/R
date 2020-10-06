@@ -1,4 +1,4 @@
-########### TIDYR PARTE 2 - EM CONSTRUÇÃO ##########
+########### TIDYR PARTE 2 ##########
 
 #' Autor: Gabriel R. R.
 
@@ -10,16 +10,15 @@
 #' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
 
 ####################################################
-
-biblios_original <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/libraries.csv")
-
 library(dplyr) # lendo dplyr
+
+# dados
+biblios_original <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/libraries.csv")
 
 biblios_original <- biblios_original %>%
   rename(id = X)
 
 head(biblios_original)
-
 
 # Limpando nome das colunas ########################
 
