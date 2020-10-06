@@ -67,7 +67,8 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
 Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dados. Alterando nomes de todas colunas com o pacote janitor, limpando missings do banco de dados.
   - Limpando nome das colunas
     - Pacote *janitor*
-  - Lidando com missings
-    - drop_na, fill_na, replace_na
+  - Excluindo missings
+    - drop_na
   - Substituindo missings
-    - zoo::na.aggregate
+    - fill_na, replace_na
+  - Imputando missings com regressão linear
