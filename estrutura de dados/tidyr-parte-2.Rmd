@@ -13,7 +13,7 @@ output:
 ---
 
 # Considerações iniciais
-Post no Medium sobre isso aqui: 
+Post no Medium sobre isso aqui: https://medium.com/psicodata/valores-missing-parte-2-d2e0b832ce14
 
 Esse é um documento feito para ensinar e para reforçar conteúdos de manipulação de dados usando _tidyr_. Qualquer comentário, erro ou sugestão, é só falar comigo entrando em contato através de qualquer uma das opções listadas em *Contato*.
 
@@ -197,11 +197,11 @@ A solução provida por essa função é a de pegar os valores que não estão m
 data <- read.csv(url)[,- 1] # relendo o banco inicial
 
 library(tidyr)
-data <- data %>% 
+data <- data %>%
   fill(gastos,
-          total_trabalham,
-          total_usuarios,
-          .direction = "up") # preenche de baixo PARA CIMA ('up'))
+       total_trabalham,
+       total_usuarios,
+       .direction = "up") # preenche de baixo PARA CIMA ('up'))
 
 head(data) # mostra os primeiros casos
 nrow(data) # quantas linhas?
@@ -217,11 +217,11 @@ Agora vamos ver de cima PARA BAIXO. Para isso, precisamos especificar nosso par�
 data <- read.csv(url)[,- 1] # relendo o banco inicial
 
 library(tidyr)
-data <- data %>% 
+data <- data %>%
   fill(gastos,
-          total_trabalham,
-          total_usuarios,
-          .direction = "down") # preenche de baixo PARA CIMA ('up'))
+       total_trabalham,
+       total_usuarios,
+       .direction = "down") # preenche de baixo PARA CIMA ('up'))
 
 head(data) # mostra os primeiros casos
 nrow(data) # quantas linhas?
@@ -246,9 +246,12 @@ library(tidyr) # lendo tidyr
 
 data <- data %>%
   replace_na(list(
-    gastos = mean(data$gastos, na.rm = T), # NAs se tornam média
-    total_trabalham = floor(mean(data$total_trabalham, na.rm = T)), # NAs se tornam média
-    total_usuarios = floor(mean(data$total_usuarios, na.rm = T)) # NAs se tornam média
+    gastos = mean(data$gastos, na.rm = T),
+    # NAs se tornam média
+    total_trabalham = floor(mean(data$total_trabalham, na.rm = T)),
+    # NAs se tornam média
+    total_usuarios = floor(mean(data$total_usuarios, na.rm = T)) 
+    # NAs se tornam média
   ))
   
 head(data)
@@ -276,9 +279,12 @@ library(tidyr) # lendo tidyr
 
 data <- data %>%
   replace_na(list(
-    gastos = median(data$gastos, na.rm = T), # NAs se tornam média
-    total_trabalham = floor(median(data$total_trabalham, na.rm = T)), # NAs se tornam média
-    total_usuarios = floor(median(data$total_usuarios, na.rm = T)) # NAs se tornam média
+    gastos = median(data$gastos, na.rm = T),
+    # NAs se tornam média
+    total_trabalham = floor(median(data$total_trabalham, na.rm = T)),
+    # NAs se tornam média
+    total_usuarios = floor(median(data$total_usuarios, na.rm = T)) 
+    # NAs se tornam média
   ))
 
 head(data)
