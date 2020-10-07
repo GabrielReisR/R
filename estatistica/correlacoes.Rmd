@@ -1,0 +1,99 @@
+---
+title: "Correlações"
+author: "Gabriel R. R."
+date: "7 de Outubro de 2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    smooth_scroll: true
+    df_print: paged
+    code_folding: show
+---
+
+# Introdução
+A correlação é uma medida que informa o quanto uma variável está relacionada a outra variável. Isto é, o quanto a variação em uma variável acompanha a variação em outra variável.
+
+Um exemplo de correlação ocorre entre as variáveis *depressão* e *ansiedade*. Não é incomum uma pessoa com sintomas de ansiedade estar também apresentando sintomas de depressão, e vice-versa.
+
+Vamos por partes: os sintomas de depressão podem incluir tristeza, falta de ânimo e dificuldade de reter interesse. Já os sintomas de ansiedade estão relacionados a agitação, a uma pessoa sentir que está prestes a entrar em pânico e a uma pessoa sentir-se assustada sem motivo (veja o artigo de Patias, Machado, Bandeira & Dell'Aglio: https://www.scielo.br/pdf/pusf/v21n3/2175-3563-pusf-21-03-00459.pdf ).
+
+Quando a depressão de uma pessoa aumenta, o seu nível de ansiedade tende a aumentar junto. Quando a depressão de uma pessoa diminui,  seu nível de ansiedade tende a diminuir junto.
+
+*Da mesma forma*, quando a ansiedade de uma pessoa aumenta, o seu nível de depressão tende a aumentar junto. Quando a ansiedade de uma pessoa diminui,  seu nível de depressão tende a diminuir junto.
+
+A variação da depressão acompanha a variação da ansiedade, assim como a variação da ansiedade acompanha a variação da depressão. Ou seja, essas variáveis andam juntas. Em termos estatísticos, pode-se dizer que elas possuem *variância compartilhada*. Essa variância entre as duas variáveis é chamada de *covariância* (variância compartilhada de duas variáveis).
+
+Agora, o quanto de variância elas compartilham?
+
+# Entendendo melhor a covariância
+
+## 100% juntinhas
+Digamos que estamos medindo depressão e também ansiedade, em duas escalas separadas, cada uma dessas indo de 1 a 10. Uma pessoa, em um primeiro momento, marca 7 em depressão e 7 em ansiedade. Um mês depois, ela marca 5 no escore de depressão e 5 no escore de ansiedade. Passados mais três meses, as mesmas escalas são aplicadas, e a pessoa marca 6 em depressão e 6 em ansiedade.
+
+Esse é o cenário:
+
+* Depressão: 7, Ansiedade: 7
+* Depressão: 5 (-2), Ansiedade: 5 (-2)
+* Depressão: 6 (+1), Ansiedade: 6 (+1)
+
+*O que isso nos diz sobre essas duas variáveis?* Isso nos diz que as duas variáveis possuem uma variância compartilhada de 100% - uma alteração em uma variável é acompanhada por uma mudança de igual magnitude na outra variável.
+
+Outro cenário que compartilharia uma variância de 100% seria o seguinte:
+
+* Depressão: 7, Ansiedade: 5
+* Depressão: 5 (-2), Ansiedade: 3 (-4)
+* Depressão: 6 (+1), Ansiedade: 4 (+2)
+
+A magnitude da variação permaneceu a mesma. No segundo momento, ambas diminuíram 2 pontos, em um terceiro, ambas aumentaram 1 ponto.
+
+Agora, imagine que depressão está sendo medida de 0 a 100, e ansiedade continua sendo medida de 0 a 10. Dê uma olhada nesse cenário:
+
+* Depressão: 70, Ansiedade: 5
+* Depressão: 50 (-20), Ansiedade: 3 (-2)
+* Depressão: 60 (+10), Ansiedade: 4 (+1)
+
+**De 0 a 100%, o quanto de variância você espera que essas variáveis compartilhem?**
+
+A resposta correta continua sendo 100%! Isso porque as mudanças em depressão foram acompanhadas por mudanças *de igual magnitude* na variável ansiedade.
+
+## Covariância negativa
+
+Do mesmo jeito que a covariância pode ser positiva, ela pode ser negativa. Aqui está um exemplo de uma covariância negativa perfeita.
+
+Uma pessoa, em um primeiro momento, marca 7 em depressão e 7 em ansiedade. Um mês depois, ela marca 5 no escore de depressão e 9 no escore de ansiedade. Passados mais três meses, as mesmas escalas são aplicadas, e a pessoa marca 6 em depressão e 8 em ansiedade.
+
+Esse é o cenário:
+
+* Depressão: 7, Ansiedade: 7
+* Depressão: 5 (-2), Ansiedade: 9 (+2)
+* Depressão: 6 (+1), Ansiedade: 6 (-1)
+
+*O que isso nos diz sobre essas duas variáveis?* A resposta é a mesma de antes: isso nos diz que as duas variáveis possuem uma variância compartilhada de 100% - uma alteração em uma variável é acompanhada por uma mudança de igual magnitude na outra variável.
+
+Ou seja, a *magnitude* permanece a mesma (100%), porém a direção das variações em uma variável é diferente da direção das variações na outra variável.
+
+Essas variáveis possuem covariância negativa perfeita.
+
+## Como se calcula covariância?
+
+Agora, vamos imaginar um exemplo mais complicado, no qual as alterações não possuam magnitude igual.
+
+Esse é o novo cenário:
+
+* Depressão: 7, Ansiedade: 7
+* Depressão: 5 (-2), Ansiedade: 9 (-4)
+* Depressão: 6 (+1), Ansiedade: 6 (+1)
+
+## R²
+
+
+
+
+
+
+
+
+
+

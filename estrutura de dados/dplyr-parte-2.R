@@ -65,7 +65,7 @@ dataframe_completo
 
 #' Vamos para funções mais completas e que levam em conta bancos com mais informações.
 
-## ----Lendo os três mini-bancos, message=FALSE, warning=FALSE----
+## ----Lendo os três mini-bancos----
 dass_dep <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_dep.csv")
 dass_ans <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_ans.csv")
 dass_est <- read.csv("https://raw.githubusercontent.com/GabrielReisR/R/master/estrutura%20de%20dados/dados/dass_est.csv")
