@@ -1,0 +1,452 @@
+---
+title: "Medidas comuns"
+author: "Gabriel R. R."
+date: "7 de Outubro de 2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    smooth_scroll: true
+    df_print: paged
+    code_folding: show
+---
+Ai, que alegria falar daquilo que é básico, do que é essencial! E tudo em um post só! Expressões como "a média das pessoas gosta de X" são comuns no nosso cotidiano. Mesmo assim, talvez seja difícil de compreender o que essa tal "média" realmente significa. Hoje a gente vai falar de modelos e medidas comuns do nosso dia a dia, e que são essenciais para falarmos de assuntos mais elaborados.
+
+Ah, vamos explorar porque a expectativa de vida no Brasil nos anos 1900 era de 33.7 anos e hoje é de 76.7 anos.
+
+Sem esses modelos simples a gente não consegue entender modelos mais complexos. Ainda, entender essas medidas é um processo essencial no início de uma análise exploratória de dados (tanto em Python quanto em R). 
+
+Para atingir nossos objetivos, vamos utilizar o software R. Começaremos lendo o pacote psych, que contém um banco de dados sobre 5 indicadores de personalidade, seguindo o modelo dos Cinco Grandes Fatores de personalidade. A gente vai focar em apenas um fator do modelo, o fator extroversão.
+
+# Extroversão com pacote 'psych'
+O psych é um pacote especializado para análises psicométricas, e contém em si um banco de dados com respostas ao modelo dos Cinco Grandes Fatores. Cada fator é representado por sua letra. Você pode ver facilmente o banco ao abrir o R, ler o pacote e fazer o seguinte:
+
+```{r Banco bfi, message=FALSE, warning=FALSE}
+library(psych) # caso não tenha, instale assim: install.packages('psych', dependencies = TRUE)
+head(bfi)
+```
+
+A extroversão pode ser compreendida como a tendência de buscar interações sociais e de procurar por estimulação no mundo exterior. Uma pessoa extrovertida pode adorar participar de vários projetos ao mesmo tempo, gostar de iniciar conversas com pessoas pouco conhecidas e buscar, de maneira geral, estar com pessoas.
+
+Agora que vimos o banco, vamos criar o escore total de extroversão somando todas as respostas à extroversão. Pessoas que possuem valores missing não vão ser contabilizadas. Depois de criar a variável, vamos escolher os 10 casos que eu quero e as colunas que nos interessa aqui.
+
+Os escores de extroversão foram computados a partir da resposta a 5 perguntas (E1, E2, E3, E4 e E5). Essas perguntas tinham respostas que variavam de 1 a 6. Sendo assim, o mínimo escore possível em extroversão é de 5, que ocorre quando uma pessoa responde com 1 a todas as 5 perguntas de extroversão (5 x 1 = 5). O maior escore possível é 30, que ocorre quando uma pessoa responde com 6 a todas as perguntas de extroversão (5 x 6 = 30).
+
+Nessa amostra do pacote psych, as respostas vão de 5 a 29 - nenhum respondente marcou 6 em todas as questões! A diferença entre o maior e o menor escore é chamada de amplitude. A amplitude é a diferença entre o maior e o menor escore da variável. No caso da extroversão, o maior escore é 29 e, o menor, 5. Podemos dizer que os escores de extroversão apresentam uma amplitude de 24 pontos (29–5 = 24).
+
+```{r Criando extroversão, message=FALSE, warning=FALSE}
+library(dplyr) # caso não tenha, instale assim: install.packages('dplyr', dependencies = TRUE)
+
+# Criando uma nova variável com 'mutate', que vai ser a soma de E1, E2, E3, E4, E5
+bfi <- bfi %>% rowwise() %>% mutate(extroversao = sum(E1, E2, E3, E4, E5))
+
+# Criando coluna 'id', de identificação
+bfi$id <- 1:nrow(bfi)
+bfi$id <- as.factor(bfi$id)
+```
+
+# Tendência central - Moda, média e mediana
+Temos uma ideia da amplitude, ou seja, do quanto os escores variam em sua totalidade, do menor ao maior valor. Porém, não sabemos ainda em quais lugares desses escores os participantes se concentram. Dessa forma, outra possibilidade mais interessante para nós seria  descobrir como os escores de extroversão estão distribuídos. Mais especificamente, sobre qual valor os escores se distribuem. Esses valores sobre os quais outros valores se distribuem em volta são chamados de tendências centrais. Ou seja, o valor para qual o restante dos escores tende a estar em volta, tende a se distribuir. Eles servem para a gente entender melhor em quais escores há uma concentração maior de participantes.
+
+## Tá na Moda
+Em primeiro lugar, vamos visualizar como esses dados estão distribuídos para cada participante com esse gráfico de frequências.
+
+```{Histograma 1 r}
+library(ggplot2) # caso não tenha, instale assim: install.packages('ggplot2', dependencies = TRUE)
+histograma1 <- 
+  # Construção inicial
+  ggplot(bfi,
+         aes(x = extroversao)) +
+  geom_histogram(bins = 26, color = '#011e5a', fill = '#011e5a') +
+  
+  # Rótulos
+  xlab('Escore de Extroversão') +
+  ylab('Frequência de Participantes') +
+  labs(title = 'Histograma (gráfico de frequências)') +
+  
+  # X-axis ticks
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  
+  # Tema
+  theme_classic()
+
+histograma1
+```
+
+Percebemos que a maioria dos casos está entre 15 e 25. Outra coisa que percebemos é que há um valor muito comum de extroversão aparecendo - esse valor é o 19: 461 das 2800 pessoas apresentaram esse valor. Caso me perguntassem qual valor um participante aleatório da amostra possui, o melhor palpite possível que posso dar é, nesse momento, o escore 19. Como 19 é o valor mais comum, podemos chamá-lo de moda. Isso mesmo, moda. A moda é o valor mais comum que uma variável possui.
+
+```{Moda r}
+library(DescTools) # caso não tenha, instale com: install.packages('DescTools', dependencies = T)
+Mode(bfi$extroversao, na.rm = T)
+```
+
+A moda da variável extroversão, nessa amostra, é 19. Caso dois valores fossem igualmente comuns, essa distribuição de valores na variável extroversão seria chamada de bimodal.
+
+## Tá na Média
+Novamente, caso me perguntassem qual valor um participante aleatório da amostra possui, posso também criar um modelo um pouco mais refinado do que "o valor mais comum" que aparece. Outro palpite possível é obtido ao somar todos os escores dos participantes, gerando uma soma total. Após isso, dividimos essa soma total por cada participante, obtendo o quanto cada participante contribuiu, em média, para essa soma total. Essa é a medida mais conhecida por nós, e se chama média. A média aritmética é a soma de todos os valores dividida pela quantidade de valores.
+
+```{Média r}
+mean(bfi$extroversao, na.rm = T)
+```
+
+A média dessa distribuição é, pasmem, 18.95 - muito próximo do valor da moda (19). A partir de agora, para facilitar as explicações, vou me referir ao valor da média também como 19.
+
+## Tá na Mediana?
+Outra possibilidade seria ver qual é o valor do meio nessa distribuição que apresentamos. Ou seja, qual o valor que aparece NO MEIO de todos os outros valores quando ordenamos os 2800 casos do menor para o maior?
+
+Essa medida de tendência central é chamada mediana. A mediana é o valor que divide pela metade os valores de uma variável. Para entender esse conceito naquela distribuição ali em cima, vamos fazer alguns exercícios antes:
+
+Me diga o valor do meio desse números: 
+
+2, 4, 6
+
+Ora, o valor do meio aqui é 4. E desses?
+
+2, 4, 1000
+
+O valor do meio continua sendo 4. E se tivéssemos esses aqui? 
+
+1, 1, 1, 2, 3, 4, 5, 5
+
+Como temos um número par de números, podemos fazer a média entre os dois valores centrais: 2 e 3. O valor do meio seria 2.5.
+
+Novamente, essa medida é chamada de mediana, e como podemos ver no segundo exemplo (o com o número 1000), a mediana é uma medida de tendência central que é bastante robusta. Isso significa que a mediana não é facilmente afetada por valores extremos, tanto valores muito pequenos quanto valores muito grandes. Assim, de maneira geral, a mediana informa a melhor representação da tendência central dos dados.
+
+```{Median r}
+median(bfi$extroversao, na.rm = T)
+```
+
+Quando fazemos o procedimento acima, encontramos que nessa amostra a mediana de extroversão é de 19!
+
+Como vamos falar em um próximo post, essa convergência para o valor 19 não acontece por acaso quando estamos falando de distribuições normais, como é a distribuição da extroversão nessa amostra.
+
+Os valores da média, moda e mediana são tão próximos que vamos agora traçar o 19 no nosso gráfico.
+
+```{Histograma 2 r}
+histograma2 <- 
+  # Construção inicial
+  ggplot(bfi,
+         aes(x = extroversao)) +
+  geom_histogram(bins = 26, color = '#011e5a', fill = '#011e5a') +
+  
+  # Rótulos
+  xlab('Escore de Extroversão') +
+  ylab('Frequência de Participantes') +
+  labs(title = 'Histograma (gráfico de frequências)') +
+  
+  # Linha vertical - moda e média
+  geom_vline(xintercept = 19, size = 2, col = '#5dbcd2') +
+  
+  # X-axis ticks
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  
+  # Tema
+  theme_classic()
+
+histograma2
+```
+
+# O que usar: média ou mediana?
+
+Lembra que falamos sobre a mediana ser mais robusta em casos extremos? Vou adicionar a esse banco de 2800 casos mais 1000 casos com o valor 5. Lembre-se: o valor 5 é o menor valor possível que alguém pode ter em extroversão. Como será que a média e a mediana são afetadas com mais 1000 casos com o valor 5?
+
+```{Média ou mediana? r}
+extroversao <- bfi$extroversao
+extroversao <- c(extroversao, rep(5, 1000))
+extroversao <- as.data.frame(extroversao)
+
+mean(extroversao$extroversao, na.rm = TRUE)
+median(extroversao$extroversao, na.rm = TRUE)
+```
+
+A mediana é uma melhor representação da medida central da maioria dos casos quando temos situações extremas no nosso banco de dados. Veja que ela quase não mudou de valor, mesmo adicionando 1000 casos (mais de um terço do banco anterior!) com o mínimo valor possível de extroversão.
+
+```{Histograma 3 r}
+histograma3 <- 
+  # Construção inicial
+  ggplot(extroversao,
+         aes(x = extroversao)) +
+  geom_histogram(bins = 26, color = '#011e5a', fill = '#011e5a') +
+  
+  # Rótulos
+  xlab('Escore de Extroversão') +
+  ylab('Frequência de Participantes') +
+  labs(title = 'Histograma (gráfico de frequências)') +
+  
+  # Linha vertical - média e mediana
+  geom_vline(xintercept = 15.19, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 18, size = 1, col = '#5dbcd2') +
+  
+  # Anotação
+  annotate(geom = 'text', x = 14, y = 1000, label = 'Média\n15.19') +
+  annotate(geom = 'text', x = 19.7, y = 1000, label = 'Mediana\n18') +
+  
+  
+  # X-axis ticks
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  
+  # Tema
+  theme_classic()
+
+histograma3
+```
+
+Aqui vai uma curiosidade: lembra que falamos sobre a expectativa de vida? No Brasil, a expectativa de vida era de 33.7 anos em 1900. Hoje, em 2020, a expectativa de vida de uma pessoa brasileira é de 76.7 anos.
+
+O cálculo da expectativa de vida é baseada na média de tempo de vida. Como é baseada na média, é facilmente influenciada por valores extremos. Em relação à expectativa de vida, acontecia algo semelhante à figura acima. Os valores extremos que traziam a expectativa de vida para um valor menor estavam associados às condições de saúde na infância e à mortalidade infantil no início do século XX. Estima-se que a partir do momento que a taxa de mortalidade começou a diminuir, a expectativa de vida da população começou a se elevar já que valores extremos não estavam mais influenciando a média. Ou seja, se pensarmos bem sobre isso, mesmo em 1900, é possível que as pessoas que passavam da idade infantil vivessem um tempo de vida semelhante ao nosso de hoje em dia.
+
+## Uma figura só para entender a distribuição
+
+No campo da visualização de dados, existe uma figura um pouco mais difícil de se entender, mas também muito utilizada por valorizar a mediana e 50% de todos os escores em torno da mediana. Essa figura é chamada de boxplot.
+
+Estamos apresentando ela aqui porque ela é uma ferramenta importante para se entender a distribuição de dados de uma variável.
+
+```{Boxplot r}
+boxplot(bfi$extroversao, 
+        notch = F, col = '#5dbcd2',
+        main = 'Boxplot do Escore de Extroversão')
+```
+
+![Boxplot](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/4.png)
+
+Vamos com calma. O valor da mediana no meio representa o escore no meio de todos os outros escores. A barra em azul, a pintada, representa 50% dos escores em torno da mediana. Esse intervalo se chama de Intervalo Interquartil (IQR). É um intervalo bem importante pois marca a diferença entre os 75% maiores valores (topo da parte pintada) e os 25% menores valores (fim da parte pintada).
+
+Todos os pontos que estão sendo mostrados na parte de fora do limite superior e inferior são chamados de outliers (ou valores extremos). A gente já viu esses pontos lá no gráfico anterior do histograma! Lembra que haviam poucos valores afastados de 19, bem longes dele? São esses! Outliers são casos que possuem valores extremos. Em alguns casos eles podem ser problemáticos. Aqui, entretanto, são normais.
+
+Sobre as linhas de fora, existe uma fórmula usada para as calcular. É geralmente 1.5 vezes o comprimento da parte pintada. Ou seja, 1.5 vezes o Intervalo Interquartil (IQR). Vamos devagar...
+
+Se pegarmos o IQR (50% da amostra) e multiplicarmos por dois, teríamos um comprimento estimado que teoricamente englobaria 100% dos escores (porque 2 x 50% = 100%). Para dividirmos essa variação para cima e para baixo, valor multiplicar 1.5x esse valor para cima e 1.5x esse valor para baixo.
+
+Assim, para fazer a parte de cima do boxplot (limite superior), calcula-se 1.5x o comprimento de dentro da parte pintada - esse valor é adicionado ao Intervalo Interquartil, e temos o limite superior do boxplot (1.5xIQR).
+
+Para se fazer a parte de baixo (limite inferior), 1.5x o comprimento de dentro da parte pintada - esse valor é diminuído do Intervalo Interquartil, e temos o limite inferior do boxplot (-1.5xIQR).
+
+# Entendendo o que é erro
+Outra parte muito importante de entender quando se fala de modelos estatísticos é a questão do erro, também chamado de resíduo. O erro ou resíduo nada mais é do que a diferença entre o escore observado e o escore esperado. Quando se traça um modelo estatístico, por mais simples ou acurado que seja, ele sempre vai conter erro. A ideia geral seria prezar pelo modelo que apresenta menor erro, menor resíduo.
+
+Para entender melhor isso, vamos usar de um modelo estatístico super simples e que já tratamos aqui: a média (nesse caso, a média aritmética, que já discutimos acima). Vamos tentar prever o escore de qualquer participante (i) utilizando a média!
+
+![Média](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/5.jpg)
+
+Essa é a fórmula assustadora da média. Vamos entendê-la com calma:
+
+* *Σ* (Sigma, o "Símbolo Gigante de Soma Tudo"): ele vai somar todos os escores de Xi. Ou seja, para cada participante i, o seu escore X será somado ao escore do participante anterior.
+* Denominador n: essa divisão indica que o valor de toda a soma será dividido pelo número de participantes (ou de casos, observações, etc.).
+
+Será que a média é um bom preditor dos escores dos participantes? Lembra que para entender isso precisamos entender o erro associado ao modelo? Vamos entender o que é erro pegando 10 casos escolhidos à dedo por mim nessa nossa amostra.
+
+```{Criando bfi_dezcasos r}
+bfi_dezcasos <- bfi[c(1, 4, 7, 200, 599, 610, 812, 1201, 1327, 1430), ]
+
+# Excluindo tudo que não é extroversão, gênero, educação e idade ####
+# O operador : representa um intervalo
+bfi_dezcasos <- bfi_dezcasos %>% select(-c(A1:C5,N1:O5))
+bfi_dezcasos
+
+```
+
+Criando pontos em torno da média com esses 10 participantes. 
+
+```{Criando pontos r}
+pontos1 <- 
+  # Construção inicial
+  ggplot(bfi_dezcasos,
+         aes(x = id, y = extroversao)) +
+  geom_point(color = '#011e5a', size = 2) +
+  
+  # Linha horizontal da média
+  geom_hline(yintercept = 19, size = 1, col = '#011e5a') +
+  
+  # Rótulos
+  xlab('Participante') +
+  ylab('Escore de Extroversão') +
+  labs(title = 'Escores de Extroversão por Participantes') +
+  
+  # Tema
+  theme_classic()
+
+pontos1
+```
+
+A média é essa linha azul horizontal que perpassa a figura. Cada participante está identificado no eixo X e seus devidos escores em extroversão são os pontos na figura. O erro está representado pela linha vermelha. Assim fica mais fácil de entender o que é o erro. O erro ou resíduo nada mais é do que a diferença entre o escore observado e o escore esperado.
+
+É comum que a adequação de modelos estatísticos lineares, como a regressão linear, sejam avaliados de acordo com a melhora desse modelo em relação ao modelo que acabamos de conhecer, a média. Ou seja, se o modelo alternativo a média explicar significativamente melhor os dados do que a média, ele é escolhido.
+
+Considerando apenas esses dez casos, vamos entender mais outras medidas importantes que vão tratar da dispersão do erro, do quão longe cada ponto está da média. Ou seja, do quão afastados da tendência central os escores dos participantes estão. Medidas assim são essenciais para, por exemplo, entendermos como duas variáveis estão relacionadas.
+
+## Variância: apenas um caminho para o desvio-padrão
+
+A variância indica o quanto os escores de uma variável estão dispersos em torno da média dessa variável. Como já vimos, a média é a soma de todos os valores dividido pelo número de valores. Nesse caso, temos 10 valores diferentes.
+
+A variação para cada participante é a seguinte: 
+
+![Média](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/7.png)
+
+O erro da média para cada participante está indicado com os números. A média apresentou erro de +10 quando utilizada para prever o escore do participante 610, por exemplo. 
+
+Uma medida legal de se ter é saber o quanto nosso modelo ERROU. Vamos somar todos os erros:
+
+- 2 + 1 + 2 - 6 + 5 + 10 - 2 + 3  + 3 - 14 = 0
+
+A soma é 0…
+
+```{Erro sempre dá 0 r}
+# Avaliando erro no pequeno dataset ####
+erros <- bfi_dezcasos$extroversao - 19
+sum(erros)
+
+# Avaliando erro em todo dataset
+erros_todo_bfi <- bfi$extroversao - mean(bfi$extroversao, na.rm = T)
+sum(erros_todo_bfi, na.rm = TRUE)
+```
+
+O que isso significa afinal? Bem, esse resultado deveria ser óbvio, já que a definição de média implica a existência dessa relação. Escores negativos e positivos se anulam, pois possuem uma relação idêntica com esse ponto médio.
+
+Isso não é só para esses 10 casos. Poderíamos ter testado isso no banco total, o resultado seria o mesmo. Assim, como saber o quão afastados os pontos estão da média? A soma continua sendo uma boa opção, porém os valores negativos e os valores positivos estão se anulando. Para garantir que os valores positivos e os valores negativos tenham peso igual e não se anulem, vamos utilizar de um recurso matemático.
+
+Um jeito simples de fazer essa soma funcionar é elevar ao quadrado a diferença entre o valor médio e o valor observado. Isso é algo bem recorrente em testes estatísticos, então se não entendeu, releia essa parte com a ideia de que vamos elevar o erro ao quadrado.
+
+(- 2)² + (1)² + (2)² + (- 6)² + (5)² + (10)² + (- 2)² + (3)²  + (3)² + (- 14)² = 388.
+
+```{Soma do quadrado do resíduo r}
+# Avaliando erro ao quadrado no pequeno dataset
+sum(erros^2)
+```
+
+Depois de elevar todos os resíduos (erros) ao quadrado, vamos agora somá-los, obtendo um escore diferente de 0 e conseguindo ter alguma noção da dispersão em torno da média. Esse valor é tão importante que recebe um nome: soma do quadrado dos resíduos.
+Se está difícil agora, EU JURO que já já vai fazer sentido!
+Ou seja, a soma do quadrado dos resíduos para esses 10 casos é de 388. Podemos escrever isso assim:
+
+*SS* = 388
+
+Sendo que *SS* representaria a Soma do Quadrado dos Resíduos.
+
+Oba! Temos agora o quanto extroversão, nesses 10 casos, varia em torno de sua média!
+
+Porém, o quanto será que cada participante contribui para esse 388? Ou seja, o quanto de erro ao quadrado ocorreu, em média, para cada participante? O quanto cada participante contribui para SS?
+Essa medida é justamente a variância. A variância é a
+
+Essa aqui é a fórmula da variância:
+
+![Fórmula Variância](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/8.jpg)
+* *s²*: representação da variância.
+* *1/n-1*: o denominador (o 1 no numerador pode ser ignorado)
+* *Σ* (Sigma, o "Símbolo Gigante de Soma Tudo"): ele vai somar todos os casos da próxima parte da equação, que é basicamente o quadrado dos resíduos. Lembra que se chama *soma do quadrado dos resíduos*? Essa é a parte que informa a *soma*.
+* *(X - μ)²*: Diferenças entre observação de um participante (X) e média de todo o escore (μ) elevado ao quadrado. Esse aqui é o quadrado dos resíduos. Resíduos são a diferença entre cada caso (Xi) e a média (μ).
+
+Veja que o denominador é número de observações -1. Como temos 10 participantes, temos 10 observações. Assim, nosso denominador é 9 (10–1).
+
+Portanto:
+
+388/9 = 43.11
+
+```{Variância r}
+# Calculando variância - bfi_dezcasos
+sum(erros^2)/(nrow(bfi_dezcasos) - 1)
+
+#' a função `var()` calcula a variância!
+#' quando usar, lembre de adicionar o `na.rm = TRUE` caso possua valores vazios
+var(bfi_dezcasos$extroversao)
+
+# Veja como ambas operações são a mesma coisa
+sum(erros^2)/(nrow(bfi_dezcasos) - 1) == var(bfi_dezcasos$extroversao)
+```
+
+Entre esses 10 casos, considerando a média do banco todo, a variância de extroversão nesses 10 casos foi de 43.11. Ou seja, como um modelo estatístico, a média errou, ao quadrado, em torno de 43.11 pontos para cada participante.
+
+Ufa! Entendemos a variância. Ou seja, o quão dispersas de sua própria média se encontra uma variável.
+
+## Desvio-padrão
+Mas pera aí, a variância, como vimos, é calculada a partir da soma do quadrado dos resíduos. Soma do quadrado dos resíduos. Assim, eu não consigo converter a variância para entender, diretamente, os escores que eu observo no meu gráfico de distribuição. Não faz sentido eu usar a variância como uma medida para entender a dispersão de erro porque ela está ao quadrado. Ela considera a distância entre a média e os pontos ao quadrado.
+
+Para resolver isso, basta tirar a raiz quadrada da equação. Essa nova medida de dispersão da média se chama desvio-padrão. Essa medida pode, sim, nos auxiliar na compreensão de dispersão em torno da média diretamente no nosso gráfico.
+
+Lembra que o símbolo de variância é s²? O símbolo de desvio-padrão é apenas s. Isso porque o desvio-padrão faz o valor ao quadrado do erro retornar à medida original. Aí vai a sua fórmula:
+
+![Fórmula Desvio-Padrão](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/9.jpg)
+
+Nesse caso, a média está sendo representada por um X com um traço em cima, mas continua sendo a mesma coisa que estávamos representando por μ. Perceba que a fórmula é a mesma fórmula da variância! A única diferença é a inclusão da raiz, que retira a propriedade de estar elevada ao quadrado.
+
+O desvio-padrão de extroversão, nessa amostra, é de 2.71.
+Lembra que os escores de extroversão caem, nessa amostra, entre 5 e 29? Com o valor de desvio-padrão, podemos entender "blocos de afastamento" da média. Isso porque temos, com o desvio-padrão, a medida de quanto erro em torno da média a gente possui (na própria unidade de medida da variável). Vamos visualizar isso no nosso histograma inicial.
+
+```{Variância e Desvio-padrão de todo dataset r}
+# Calculando variância de todo dataset ####
+var(bfi$extroversao, na.rm = TRUE)
+
+# Calculando desvio-padrão
+sqrt(var(bfi$extroversao, na.rm = TRUE))
+
+#' a função `sd()` calcula o desvio-padrão!
+#' quando usar, lembre de adicionar o `na.rm = TRUE` caso possua valores vazios
+sd(bfi$extroversao, na.rm = TRUE)
+
+# Veja como ambas operações são a mesma coisa
+sqrt(var(bfi$extroversao, na.rm = TRUE)) == sd(bfi$extroversao, na.rm = TRUE)
+```
+
+Agora, vamos ver isso em um gráfico.
+
+```{Visualizando desvios-padrões r}
+# Visualizando desvios-padrões
+histograma4 <- 
+  # Construção inicial
+  ggplot(bfi,
+         aes(x = extroversao)) +
+  geom_histogram(bins = 26, color = '#011e5a', fill = '#011e5a') +
+  
+  # Rótulos
+  xlab('Escore de Extroversão') +
+  ylab('Frequência de Participantes') +
+  labs(title = 'Histograma (gráfico de frequências)') +
+  
+  # Linha vertical e anotação da média
+  geom_vline(xintercept = 19, size = 1.5, col = 'black') +
+  annotate(geom = 'text', x = 20, y = 500, label = 'Média\n19', size = 3) +
+  
+  # Desvios-padrões < Média
+  geom_vline(xintercept = 16.24687, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 13.53834, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 10.82981, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 8.121278, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 5.412748, size = 1, col = '#5dbcd2') +
+  
+  # Desvios-padrões > Média
+  geom_vline(xintercept = 21.66393, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 24.37246, size = 1, col = '#5dbcd2') +
+  geom_vline(xintercept = 27.08099, size = 1, col = '#5dbcd2') +
+  
+  # X-axis ticks
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  
+  # Tema
+  theme_classic()
+
+histograma4
+```
+
+Olha que bacana! Parece que o desvio-padrão (linhas em azul claro) nos informa o quão afastados da média cada intervalo de valores está.
+
+Por exemplo, o valor 16.29 está exatamente 1 desvio-padrão abaixo da média. Isso porque 19–2.71 = 16.29. Podemos saber também qual valor demarca 1 desvio-padrão acima da média. Nesse caso, adicionaríamos o desvio-padrão à média. Teríamos 19 + 2.71 = 21.71.
+
+O desvio-padrão auxilia a detectar escores muito elevados e escores muito rebaixados. Sabemos, por exemplo, que o valor de 5 em extroversão, nessa amostra, está a mais de 5 desvios-padrões afastados da média. Isso indica que essa pessoa é extremamente introvertida, podendo ser caracterizada como uma outlier, como um valor extremo. Outliers, geralmente, situam-se 3 desvios-padrões acima da média ou 3 desvios-padrões abaixo da média.
+
+Essa utilização clínica do desvio-padrão é bastante utilizada no contexto de Avaliação Psicológica. A partir das medidas de média e desvio-padrão de um instrumento, se estabelecem critérios clínicos de prejuízo ou de vantagem no construto mensurado. Por exemplo, uma pessoa que faz um teste de inteligência e que apresenta escore 1 desvio-padrão acima do escore da média pode ser considerada como uma pessoa com inteligência Média Superior (à da população com mesma idade da dela). Uma pessoa que pontua 2 desvios-padrões acima da média em um teste de inteligência pode ser considerada como uma pessoa com inteligência Superior (à da população com mesma idade da dela). Já uma pessoa que pontue 3 desvios-padrões acima da média pode ser considerada como uma pessoa com inteligência Muito Superior (à média da população com a mesma idade da dela). O mesmo é feito para outros instrumentos, como por exemplo instrumentos que meçam engajamento no trabalho ou felicidade.
+
+# Pensando criticamente sobre a distribuição
+Agora que vimos os principais pontos da extroversão nesse pacote psych, vamos pensar criticamente sobre a distribuição dessa variável. Retomando: as medidas de dispersão e de tendência central existem para entendermos onde os principais valores de uma variável se situam. Vimos que a amplitude é de 24 pontos, de 5 a 29. A média, mediana e moda se situam em volta do ponto 19. Ainda, o desvio-padrão é de 2.71, indicando que a maioria dos escores está 1 desvio-padrão acima ou 1 desvio-padrão abaixo dessa média.
+
+Com o valor de desvio-padrão tão pequeno quando comparado à amplitude, percebe-se que provavelmente teremos alguns outliers. Isso pois precisaria-se pular vários desvios-padrões para se chegar em 29. Da mesma forma, precisaria-se pular vários desvios-padrões para se chegar em 5.
+
+Tudo o que vimos até aqui aplica-se somente a distribuições com a forma de sino. Distribuições assim:
+
+![Curva de Gauss](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Medidas comuns/11.png)
+A linha verde no meio representa a média, mediana e moda. As outras linhas representam os desvios-padrões em torno da média. Veja que há uma concentração maior em torno da média. Da mesma forma, a partir do terceiro desvio-padrão, muitos poucos casos são encontrados. Essa é a famosíssima Curva de Gauss, também chamada de Distribuição Normal ou Curva Normal.
+
+Vamos falar sobre ela em um próximo post. Por agora, perceba que faz sentido a nossa variável extroversão possuir vários valores concentrados em torno de um ponto médio. Da mesma forma, faz sentido pouquíssimos pontos estarem muito afastados desse ponto médio. Isso porque existem diversos níveis de extroversão. Porém é difícil encontrar uma pessoa que seja MUITO extrovertida ou uma pessoa que seja MUITO POUCO extrovertida. Geralmente, as pessoas que convivemos apresentam níveis medianos de depressão.
+
+Essa é a principal premissa da Distribuição Normal: escores extremos são raros, sendo escores medianos são mais comuns.
+
+Como a maioria dos modelos estatísticos que vamos ver partem dessa premissa de normalidade (a premissa que vimos acima), é importante entender a distribuição em torno da média e o desvio-padrão das variáveis que estamos trabalhando com.
+  
