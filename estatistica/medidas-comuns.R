@@ -48,9 +48,6 @@ histograma1 <-
 histograma1
 
 # Valores de medidas centrais
-# Moda
-library(DescTools) # caso não tenha, instale com: install.packages('DescTools', dependencies = T)
-Mode(bfi$extroversao, na.rm = T)
 
 # Média
 mean(bfi$extroversao, na.rm = T)

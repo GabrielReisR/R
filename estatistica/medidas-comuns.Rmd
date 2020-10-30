@@ -52,7 +52,7 @@ Temos uma ideia da amplitude, ou seja, do quanto os escores variam em sua totali
 ## Tá na Moda
 Em primeiro lugar, vamos visualizar como esses dados estão distribuídos para cada participante com esse gráfico de frequências.
 
-```{Histograma 1 r}
+```{r Histograma 1}
 library(ggplot2) # caso não tenha, instale assim: install.packages('ggplot2', dependencies = TRUE)
 histograma1 <- 
   # Construção inicial
@@ -76,17 +76,12 @@ histograma1
 
 Percebemos que a maioria dos casos está entre 15 e 25. Outra coisa que percebemos é que há um valor muito comum de extroversão aparecendo - esse valor é o 19: 461 das 2800 pessoas apresentaram esse valor. Caso me perguntassem qual valor um participante aleatório da amostra possui, o melhor palpite possível que posso dar é, nesse momento, o escore 19. Como 19 é o valor mais comum, podemos chamá-lo de moda. Isso mesmo, moda. A moda é o valor mais comum que uma variável possui.
 
-```{Moda r}
-library(DescTools) # caso não tenha, instale com: install.packages('DescTools', dependencies = T)
-Mode(bfi$extroversao, na.rm = T)
-```
-
 A moda da variável extroversão, nessa amostra, é 19. Caso dois valores fossem igualmente comuns, essa distribuição de valores na variável extroversão seria chamada de bimodal.
 
 ## Tá na Média
 Novamente, caso me perguntassem qual valor um participante aleatório da amostra possui, posso também criar um modelo um pouco mais refinado do que "o valor mais comum" que aparece. Outro palpite possível é obtido ao somar todos os escores dos participantes, gerando uma soma total. Após isso, dividimos essa soma total por cada participante, obtendo o quanto cada participante contribuiu, em média, para essa soma total. Essa é a medida mais conhecida por nós, e se chama média. A média aritmética é a soma de todos os valores dividida pela quantidade de valores.
 
-```{Média r}
+```{r Média}
 mean(bfi$extroversao, na.rm = T)
 ```
 
@@ -113,7 +108,7 @@ Como temos um número par de números, podemos fazer a média entre os dois valo
 
 Novamente, essa medida é chamada de mediana, e como podemos ver no segundo exemplo (o com o número 1000), a mediana é uma medida de tendência central que é bastante robusta. Isso significa que a mediana não é facilmente afetada por valores extremos, tanto valores muito pequenos quanto valores muito grandes. Assim, de maneira geral, a mediana informa a melhor representação da tendência central dos dados.
 
-```{Median r}
+```{r Median}
 median(bfi$extroversao, na.rm = T)
 ```
 
@@ -123,7 +118,7 @@ Como vamos falar em um próximo post, essa convergência para o valor 19 não ac
 
 Os valores da média, moda e mediana são tão próximos que vamos agora traçar o 19 no nosso gráfico.
 
-```{Histograma 2 r}
+```{r Histograma 2}
 histograma2 <- 
   # Construção inicial
   ggplot(bfi,
@@ -151,7 +146,7 @@ histograma2
 
 Lembra que falamos sobre a mediana ser mais robusta em casos extremos? Vou adicionar a esse banco de 2800 casos mais 1000 casos com o valor 5. Lembre-se: o valor 5 é o menor valor possível que alguém pode ter em extroversão. Como será que a média e a mediana são afetadas com mais 1000 casos com o valor 5?
 
-```{Média ou mediana? r}
+```{r Média ou mediana?}
 extroversao <- bfi$extroversao
 extroversao <- c(extroversao, rep(5, 1000))
 extroversao <- as.data.frame(extroversao)
@@ -162,7 +157,7 @@ median(extroversao$extroversao, na.rm = TRUE)
 
 A mediana é uma melhor representação da medida central da maioria dos casos quando temos situações extremas no nosso banco de dados. Veja que ela quase não mudou de valor, mesmo adicionando 1000 casos (mais de um terço do banco anterior!) com o mínimo valor possível de extroversão.
 
-```{Histograma 3 r}
+```{r Histograma 3}
 histograma3 <- 
   # Construção inicial
   ggplot(extroversao,
@@ -202,7 +197,7 @@ No campo da visualização de dados, existe uma figura um pouco mais difícil de
 
 Estamos apresentando ela aqui porque ela é uma ferramenta importante para se entender a distribuição de dados de uma variável.
 
-```{Boxplot r}
+```{r Boxplot}
 boxplot(bfi$extroversao, 
         notch = F, col = '#5dbcd2',
         main = 'Boxplot do Escore de Extroversão')
@@ -236,7 +231,7 @@ Essa é a fórmula assustadora da média. Vamos entendê-la com calma:
 
 Será que a média é um bom preditor dos escores dos participantes? Lembra que para entender isso precisamos entender o erro associado ao modelo? Vamos entender o que é erro pegando 10 casos escolhidos à dedo por mim nessa nossa amostra.
 
-```{Criando bfi_dezcasos r}
+```{r Criando bfi_dezcasos}
 bfi_dezcasos <- bfi[c(1, 4, 7, 200, 599, 610, 812, 1201, 1327, 1430), ]
 
 # Excluindo tudo que não é extroversão, gênero, educação e idade ####
@@ -248,7 +243,7 @@ bfi_dezcasos
 
 Criando pontos em torno da média com esses 10 participantes. 
 
-```{Criando pontos r}
+```{r Criando pontos}
 pontos1 <- 
   # Construção inicial
   ggplot(bfi_dezcasos,
@@ -291,7 +286,7 @@ Uma medida legal de se ter é saber o quanto nosso modelo ERROU. Vamos somar tod
 
 A soma é 0…
 
-```{Erro sempre dá 0 r}
+```{r Erro sempre dá 0}
 # Avaliando erro no pequeno dataset ####
 erros <- bfi_dezcasos$extroversao - 19
 sum(erros)
@@ -309,7 +304,7 @@ Um jeito simples de fazer essa soma funcionar é elevar ao quadrado a diferença
 
 (- 2)² + (1)² + (2)² + (- 6)² + (5)² + (10)² + (- 2)² + (3)²  + (3)² + (- 14)² = 388.
 
-```{Soma do quadrado do resíduo r}
+```{r Soma do quadrado do resíduo}
 # Avaliando erro ao quadrado no pequeno dataset
 sum(erros^2)
 ```
@@ -341,7 +336,7 @@ Portanto:
 
 388/9 = 43.11
 
-```{Variância r}
+```{r Variância}
 # Calculando variância - bfi_dezcasos
 sum(erros^2)/(nrow(bfi_dezcasos) - 1)
 
@@ -371,7 +366,7 @@ Nesse caso, a média está sendo representada por um X com um traço em cima, ma
 O desvio-padrão de extroversão, nessa amostra, é de 2.71.
 Lembra que os escores de extroversão caem, nessa amostra, entre 5 e 29? Com o valor de desvio-padrão, podemos entender "blocos de afastamento" da média. Isso porque temos, com o desvio-padrão, a medida de quanto erro em torno da média a gente possui (na própria unidade de medida da variável). Vamos visualizar isso no nosso histograma inicial.
 
-```{Variância e Desvio-padrão de todo dataset r}
+```{r Variância e Desvio-padrão de todo dataset}
 # Calculando variância de todo dataset ####
 var(bfi$extroversao, na.rm = TRUE)
 
@@ -388,7 +383,7 @@ sqrt(var(bfi$extroversao, na.rm = TRUE)) == sd(bfi$extroversao, na.rm = TRUE)
 
 Agora, vamos ver isso em um gráfico.
 
-```{Visualizando desvios-padrões r}
+```{r Visualizando desvios-padrões}
 # Visualizando desvios-padrões
 histograma4 <- 
   # Construção inicial

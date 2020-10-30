@@ -17,7 +17,7 @@ A correlação é uma medida que informa o quanto uma variável está relacionad
 
 Um exemplo de correlação ocorre entre as variáveis *depressão* e *ansiedade*. Não é incomum uma pessoa com sintomas de ansiedade estar também apresentando sintomas de depressão, e vice-versa.
 
-Vamos por partes: os sintomas de depressão podem incluir tristeza, falta de ânimo e dificuldade de reter interesse. Já os sintomas de ansiedade estão relacionados a agitação, a uma pessoa sentir que está prestes a entrar em pânico e a uma pessoa sentir-se assustada sem motivo (veja o artigo de Patias, Machado, Bandeira & Dell'Aglio: https://www.scielo.br/pdf/pusf/v21n3/2175-3563-pusf-21-03-00459.pdf ).
+Vamos por partes: os sintomas de depressão podem incluir tristeza, falta de ânimo e dificuldade de reter interesse. Já os sintomas de ansiedade estão relacionados a agitação, a uma pessoa sentir que está prestes a entrar em pânico e a uma pessoa sentir-se assustada sem motivo (veja o artigo de Patias, Machado, Bandeira, & Dell'Aglio: https://www.scielo.br/pdf/pusf/v21n3/2175-3563-pusf-21-03-00459.pdf ).
 
 Quando a depressão de uma pessoa aumenta, o seu nível de ansiedade tende a aumentar junto. Quando a depressão de uma pessoa diminui,  seu nível de ansiedade tende a diminuir junto.
 
@@ -68,7 +68,7 @@ Esse é o cenário:
 
 * Depressão: 7, Ansiedade: 7
 * Depressão: 5 (-2), Ansiedade: 9 (+2)
-* Depressão: 6 (+1), Ansiedade: 6 (-1)
+* Depressão: 6 (+1), Ansiedade: 8 (-1)
 
 *O que isso nos diz sobre essas duas variáveis?* A resposta é a mesma de antes: isso nos diz que as duas variáveis possuem uma variância compartilhada de 100% - uma alteração em uma variável é acompanhada por uma mudança de igual magnitude na outra variável.
 
@@ -76,15 +76,21 @@ Ou seja, a *magnitude* permanece a mesma (100%), porém a direção das variaç�
 
 Essas variáveis possuem covariância negativa perfeita.
 
-## Como se calcula covariância?
+## Como se calcula a tal covariância?
 
 Agora, vamos imaginar um exemplo mais complicado, no qual as alterações não possuam magnitude igual.
+Também, ao invés de termos apenas uma pessoa respondendo, vamos imaginar que cada linha representa a resposta de um participante diferente.
 
-Esse é o novo cenário:
+Esse é o novo cenário, agora com mais participantes e com uma tabela para ajudar:
 
-* Depressão: 7, Ansiedade: 7
-* Depressão: 5 (-2), Ansiedade: 9 (-4)
-* Depressão: 6 (+1), Ansiedade: 6 (+1)
+![Tabela 1](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor1.png)
+Como saber o quanto essas variáveis estão andando juntas?
+Não podemos aqui ficar contando o quanto cada uma variou, assim como estávamos fazendo antes. Ora, do mesmo jeito, caso tivéssemos 20000 casos, não teríamos como acompanhar a mudança individual em cada um deles.
+
+É para isso que servem as fórmulas estatísticas. Lembra que falamos da variância?
+Vamos iniciar entendendo o quanto cada variável varia consigo mesma.
+
+Você pode estar se perguntando: "Ué, Gabriel, como assim varia consigo mesma? *Em torno de que* ela varia?" Em torno da medida mais comum e falada por aí: **a média**.
 
 ## R²
 
