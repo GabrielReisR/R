@@ -72,3 +72,10 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
   - Substituindo missings
     - fill_na, replace_na
   - Imputando missings com regressão linear
+  
+  
+## Estatística
+#### Medidas comuns
+**[Medium](https://medium.com/psicodata/entenda-a-media-pelo-menos-1-desvio-padrao-acima-da-media-145e9edb6a8f), [RMarkdown](https://rpubs.com/reisrgabriel/medidascomuns) ou [Script](https://github.com/GabrielReisR/R/blob/master/estatistica/medidas-comuns.R)**
+
+Entendendo amplitude, moda, média, mediana, boxplot e desvio-padrão.
