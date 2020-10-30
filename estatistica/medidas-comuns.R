@@ -2,9 +2,9 @@
 
 #' Autor: Gabriel R. R.
 
-#' O código inicial, em R, está disponível nesse link:
+#' O código inicial, em R, está disponível nesse link: https://github.com/GabrielReisR/R/blob/master/estatistica/medidas-comuns.R
 
-#' Essa apresentação, em RMarkdown, está disponível nesse link:
+#' Essa apresentação, em RMarkdown, está disponível nesse link: https://rpubs.com/reisrgabriel/medidascomuns
 
 #' Todo esse código pode ser rodado direto no R.
 #' Tudo o que inicia com "#" ou "#'" são comentários, e não são computados pelo R.
