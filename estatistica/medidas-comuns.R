@@ -11,9 +11,6 @@
 
 ####################################################
 
-# Considerações iniciais ##########################
-
-
 # Lendo pacote e vendo o banco
 library(psych) # caso não tenha, instale assim: install.packages('psych', dependencies = TRUE)
 head(bfi) # vendo o banco

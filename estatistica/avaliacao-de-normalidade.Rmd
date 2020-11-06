@@ -1,0 +1,256 @@
+---
+title: "Avaliando a normalidade"
+author: "Gabriel R. R."
+date: "7 de Outubro de 2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    smooth_scroll: true
+    df_print: paged
+    code_folding: show
+---
+Hoje vamos discutir sobre aquela que é muito falada mas pouco vista: a tal da normalidade.
+
+Assim como vimos no post anterior sobre medidas comuns em estatística, algumas características humanas possuem valores muito comuns de existirem e outros valores menos comuns de acontecerem. Esta característica é o cerne do que se considera a normalidade. Vamos aprender um pouco mais sobre normalidade e como a avaliar nesse post. Caso você só queira ver o código em R, clique aqui: https://github.com/GabrielReisR/R/blob/master/estatistica/avaliacao-de-normalidade.R
+
+(1) Primeiro vamos falar sobre o que é a distribuição normal. Para explicar um pouco melhor sobre ela, (2) iremos aprender sobre escores z. Depois disso, (3) aprenderemos o passo a passo do processo de estimação da normalidade.
+Voltando ao exemplo da semana anterior, nós calculamos escores de extroversão para cada um dos 2800 participantes de um banco de dados. Esse banco de dados possui respostas para cinco dimensões de personalidade e pode ser encontrado no pacote psych.
+
+Vamos voltar ao exemplo da variável extroversão e de como ela está distribuída entre os 2800 participantes.
+
+![Figura 1](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/1.png)
+
+Podemos perceber que os valores de extroversão se concentram em um ponto médio (19) - ao mesmo tempo, valores afastados da média são menos comuns de ocorrerem. Quando tentamos estimar a normalidade, a ideia principal é de que a distribuição de nossa variável (nesse caso a extroversão) seja similar o suficiente à Distribuição Normal. Isso porque podemos inferir coisas interessantes sobre nossa variável se ela for parecida o suficiente com uma distribuição normal. Veja a figura abaixo e tente responder se ela é semelhante ou não à extroversão.
+
+![Figura 2](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/2.png)
+# Afinal, o que é a Distribuição Normal?
+A Distribuição Normal, ou Curva Normal, ou Curva de Gauss, ou Curva de Gauss-Laplace (ufa!) é um tipo de distribuição estatística para valores contínuos. Em uma curva normal, a média, moda e mediana possuem valores iguais, sendo que há baixa probabilidade de valores extremos - mais afastados da média - ocorrerem.
+
+Por que isso é importante afinal? A principal questão aqui é que variáveis que possuem características semelhantes à curva normal podem passar por procedimentos estatísticos que são considerados mais robustos. Geralmente, variáveis que apresentam uma distribuição normal se parecem com a distribuição de sino que a gente viu na figura acima.
+
+## Entendendo escore-z
+Para entender o fenômeno da normalidade, é interessante entender o escore *z* (também conhecido como escore *padrão*).
+
+Lembra que a extroversão possui valores que vão de 5 a 29, sendo sua média = 19 e desvio-padrão = 2.71. Ah, e cada linha na figura representa 1 desvio-padrão da média.
+
+![Figura 3](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/1.png)
+
+
+Sabemos a partir dos valores que temos que o valor 16.29 está a 1 desvio-padrão a menos da média. Isso porque 19–2.71 = 16.29. Podemos observar isso no gráfico, esse valor está representado pela primeira linha à esquerda da média.
+
+Um escore *z* é utilizado para calcular a quantidade de desvios-padrões que um valor se encontra da média.
+
+No caso descrito acima, o valor 16.29 teria um escore *z* = -1. Por que -1? Porque está a 1 desvio-padrão abaixo da média. Desse mesmo jeito, o valor 21.71 teria então um escore *z* de +1. Isso porque 19 + 2.71.
+
+A fórmula para calcular qualquer escore *z* é: (Valor - Média)/(Desvio-padrão).
+
+![Figura 4](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/4.png)
+
+
+https://www.khanacademy.org/math/ap-statistics/density-curves-normal-distribution-ap/measuring-position/a/z-scores-problem
+
+O valor de *z* para o escore Xi é igual a (Valor - Média)/(Desvio-padrão). 
+
+Nos nossos exemplos:
+
+* (16.29 - 19)/(2.71) = (- 2.71)/(2.71) = -1
+* (21.71 - 19)/(2.71) = (+ 2.71)/(2.71) = +1
+
+## Probabilidade de um valor
+Pois bem, se a gente considerar a distribuição de *extroversão* como normal, a gente aceita as seguintes probabilidades para essa distribuição.
+
+![Figura 5](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/3.png)
+https://www.drdawnwright.com/empirical-rule-and-z-score-probability/
+
+Esse gráfico é o mesmo do gráfico acima, mas agora com seus devidos valores probabilísticos representados. No eixo X, temos o valor do escore z. Dentro de cada pedacinho das linhas verticais, a probabilidade de encontrar aquele valor.
+
+Vamos lá: de 0 a 1 nesse gráfico, temos 34.1% dos valores dessa amostra. Perceba a probabilidade de se encontrar um valor que esteja a 3 desvios-padrões (3 escores z) da média é muito pequena: é só 0.15%.
+Outra questão que podemos ver é que, nessa distribuição, 95.4% de todos os valores estão concentrados em torno de 2 desvios-padrões da média. Ou seja, até 2 escores z da média.
+Por que isso é importante? Porque se a gente considerar a extroversão como uma variável que segue a curva normal, nós podemos ter as mesmas expectativas de distribuição de valores acima!
+
+Vamos juntar tudo o que aprendemos aqui e entender a probabilidade de se encontrar um indivíduo com escore 10.87 em extroversão. Vamos antes entender quantos desvios-padrões afastados da média esse participante está. Lembremos que a média = 19 e o desvio-padrão = 2.71.
+
+Quantos escores z afastado da média está esse participante? Usando nossa fórmula, vemos que essa pessoa está a 3 desvios-padrões abaixo da média. Ou seja, seu escore z = -3. Isso porque 
+
+z = (Valor - Média)/(Desvio-padrão) = (10.87 - 19)/(2.71) = -8.13/2.71 = 3
+
+Olhando no nosso gráfico do escore z, vemos que a probabilidade de alguém possuir esse valor seria de 0.15%! Valores maiores que esse nem aparecem na curva acima.
+
+Ora, mas temos aqui no gráfico abaixo outros valores mais baixos que 10.87... Qual será a probabilidade de termos encontrado, por exemplo, o valor 5 considerando que a distribuição de extroversão é normal?
+
+![Figura 6](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/1.png)
+Vamos novamente calcular o escore *z* para o escore 5.
+
+z = (Valor - Média)/(Desvio-padrão) = (5 - 19)/(2.71) = -14/2.71 = -5.166052
+
+Esse valor de z poderia ser verificado em uma Tabela de Escore Z. Adiantando, a probabilidade de termos encontrado o valor 5 considerando a variável extroversão como normal é de menos 0.001%. Ou seja, que fenômeno termos encontrado esse valor tão afastado da média!
+
+# Avaliando a normalidade
+Além dessas propriedades envolvendo o escore *z*, a característica da normalidade é um pré-requisito (ou premissa) para testes estatísticos importantes, como a correlação de Pearson ou a regressão linear. Testes estatísticos que partem da premissa de normalidade são conhecidos como **testes paramétricos**. Testes estatísticos que não parte dessa premissão são conhecidos como **testes não paramétricos**.
+
+De forma geral, aplicar testes paramétricos a uma distribuição que não segue as premissas de normalidade aumenta a possibilidade de erro desse teste, podendo tanto inflar uma relação que não existe quanto deixar de mostrar uma relação existente. Assim, torna-se importante entender se uma variável é normal ou não.
+
+Para avaliarmos a normalidade, vamos seguir 4 passos: (1) histograma, (2) avaliação da curtose e assimetria, (3) gráfico quantil-quantil, e (4) teste de normalidade Shapiro-Wilk/Kolgomorov-Smirnov.
+
+## Passo 1 - Histograma
+A primeira coisa a se fazer é plotar o gráfico de frequência de respostas dessa variável junto com uma linha de densidade. Basicamente, a linha de densidade reflete a porcentagem de respostas em determinados escores. Quanto maior a área abaixo da linha, maior a concentração de escores naquele ponto.
+
+Quando colocamos junto a linha de densidade e o histograma, buscamos entender se a distribuição dessa variável segue a curva de um sino ou não, ou se valores extremos são comuns. Basicamente, a pergunta é: o quão semelhante da distribuição normal a distribuição dessa variável é?
+
+```{r Histograma de extroversão, message=FALSE, warning=FALSE}
+library(dplyr)# caso não tenha, instale assim: install.packages('psych', dependencies = TRUE)
+library(psych) # caso não tenha, instale assim: install.packages('psych', dependencies = TRUE)
+
+# Criando 'extroversao'
+bfi <- bfi %>% rowwise() %>% mutate(extroversao = sum(E1, E2, E3, E4, E5))
+
+# Criando histograma
+# Passo 1 - Avaliando histograma
+library(ggplot2) # caso não tenha, instale assim: install.packages('ggplot2', dependencies = TRUE)
+histograma <- bfi %>%
+  ggplot(aes(extroversao)) +
+  geom_histogram(aes(y = ..density..), bins = 26, colour = "#011e5a", fill = "white") +
+  stat_function(fun = dnorm,
+                args = list(
+                  mean = mean(bfi$extroversao, na.rm = T),
+                  sd = sd(bfi$extroversao, na.rm = T)),
+                colour = "#011e5a") +
+  
+  # Rótulos
+  xlab('Escore de Extroversão') +
+  ylab('Frequência de Participantes') +
+  labs(title = 'Histograma (gráfico de frequências)') +
+  
+  # X-axis ticks
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30)) +
+  
+  # Tema
+  theme_classic()
+
+histograma
+```
+
+Olhe que interessante! Parece que nossa distribuição está seguindo uma curva de sino, assim como a distribuição normal. Isso é um bom indicador inicial de que extroversão está se distribuindo normalmente.
+
+## Passo 2 - Avaliação de Curtose e Assimetria
+Outra questão importante de se avaliar é o formato da distribuição. Será que ela é muito achatada? Será que ela anda demais para um lado ou para outro?
+
+Nesse caso, vamos avaliar *assimetria* (o quão "pro lado" uma variável se distribui) e *curtose* (o quão "achatada" uma distribuição está).
+
+Em relação a curtose, podemos ter três situações:
+
+* Variável que apresente distribuição próxima à normal, chamada de distribuição *mesocúrtica* (meso de *meio*).
+* Variável que apresente distribuição muito agrupada em torno da média, tendo uma aparência fina, chamada de distribuição *leptocúrtica*.
+* Variável que apresente distribuição muito afastada em torno da média, tendo uma aparência achatada, chamada de distribuição *platicúrtica* (plati de *platô*).
+
+Essas são as três situações:
+
+![Curtose](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/curtose.jpg)
+
+https://maestrovirtuale.com/curtose-definicao-tipos-formulas-para-que-serve-exemplo/
+
+Perceba que mesmo assim, todos esses valores estão se distribuindo em torno da média.
+Para avaliar se uma variável está se distribuindo de forma assimétrica em torno de sua média, temos os valores de *assimetria* (em inglês, *skewness*, que significaria *distorção*).
+
+Em relação à assimetria, temos a possibilidade de:
+
+* Distribuição simétrica em torno da média. Nessa situação, temos a presença de uma distribuição próxima da normal. Ou seja, Média = Mediana = Moda.
+* Distribuição simétrica negativa. Nessa situação, a variável possui valores negativos extremos. Ou seja, uma cauda negativa longa. Aqui, Média < Mediana < Moda.
+* Distribuição simétrica positiva. Nessa situação, a variável possui valores positivos extremos. Ou seja, uma cauda positiva longa. Aqui, Média > Mediana > Moda.
+
+
+![Curtose](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/assimetria.png)
+
+https://alevelmaths.co.uk/statistics/skewness/
+
+Para avaliar a curtose e assimetria basta olhar para a distribuição. Em relação à curtose, parece que extroversão apresenta uma distribuição mesocúrtica. Em relação à assimetria, temos vários valores negativos extremos, o que sugeriria assimetria negativa.
+
+Para evitar uma medida "no olho", existem valores que podemos calcular disso. Melhor ainda, existem valores que o R pode calcular. Para entender se temos um desvio estatisticamente significativo, vamos utilizar a função `stat.desc(variável, basic = FALSE, norm = TRUE)` do pacote *pastecs*.
+
+```{r Entendendo curtose e assimetria, message=FALSE, warning=FALSE}
+library(pastecs) # caso não tenha, instale assim: install.packages('pastecs', dependencies = TRUE)
+
+stat.desc(bfi$extroversao, basic = FALSE, norm = TRUE)
+```
+
+Estamos procurando aqui pelos resultados de kurt.2SE (curtose) e skew.2SE (assimetria). Resultados que sejam entre -1 e 1 indicariam proximidade à normalidade. Resultados maiores que 1 e menores que -1 indicariam desvio da nromalidade. Após a função, temos que:
+
+* kurt.2SE = 5.740591
+* skew.2SE = 0.1356251
+
+Valores positivos de *kurt.2SE* (acima de 1) indicam uma distribuição pontuda (distribuição leptocúrtica). Assim, aparentemente o valor de curtose de nossa variável extroversão é elevado (kurt.2SE = 5.740591). Valores negativos (abaixo de -1) indicariam uma distribuição platicúrtica (como um platô).
+
+Sobre a assimetria, valores positivos de *skew.2SE* (acima de 1) indicariam uma distribuição com valores positivos extremos. Valores negativos (abaixo de -1) indicariam uma distribuição com valores negativos extremos. Assim, aparentemente o valor de assimetria de nossa variável extroversão se aproxima da normalidade (skew.2SE = 0.1356251), já que 0.13 está entre - 1 e 1. Aparentemente, não temos uma assimetria relevante na variável extroversão.
+
+Se não quiser ficar relendo os parágrafos acima, é só consultar essa tabela abaixo com as informações acerca de `stat.desc(variável, basic = FALSE, norm = TRUE)`:
+
+![Curtose e Assimetria](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Normalidade/statdesc.png)
+
+## Passo 3 - Gráfico Quantil-Quantil
+Após esses passos, vamos agora avaliar a distribuição com o gráfico Quantil-Quantil (também chamado de QQ plot). O QQ plot avalia se nossa variável tem valores concentrados em torno da média e se os valores extremos dessa variável são mais extremos do que o esperado.
+
+Como o gráfico QQ faz isso? Ele entende qual é a média e desvio-padrão da variável e traça quais seriam os pontos extremos TEÓRICOS - ou seja, os pontos que se baseiam apenas na média, desvio-padrão e na premissa de normalidade. Esses pontos formam o eixo X (que são escores z).
+
+Após isso, todos os valores realmente observados na variável são traçados no eixo Y. A partir disso, se espera que os valores de Y e os valores de X estejam alinhados como uma linha. Pode-se traçar uma linha para ajudar a ver se esse alinhamento existe.
+
+Simplificando: o que queremos aqui é que todos os pontos de Y se encaixem na linha do gráfico QQ. Esse seria um bom indicador de normalidade.
+
+Para entender um pouco mais sobre QQ, acesse: https://www.youtube.com/watch?v=tv8koYxYcGU
+
+```{r Gráfico QQ}
+# Passo 3 - Gráfico QQ
+qqnorm(bfi$extroversao,
+       main = "Gráfico QQ (QQ Plot)",
+       xlab = "Quantis Teóricos",
+       ylab = "Valores da Amostra",
+       col = "#011e5a")
+
+qqline(bfi$extroversao, col = "black", lwd = 3)
+```
+
+Veja que a distribuição não se encaixa perfeitamente com a linha. Agora, por que essa linha existe? Lembra que, em uma distribuição normal, a partir de 3 desvios-padrões nós temos uma chance menor que 0.15% de encontrar algum valor? O início da linha fica a 3 desvios-padrões abaixo da média (10.87) e o final da linha fica a 3 desvios-padrões acima da média (27.13). Sabendo que tais valores são muitos extremos, o que vier fora deles indica uma "escapada" da normalidade.
+
+Vamos entender isso ponto por ponto:
+
+1. Em primeiro lugar, temos valores extremamente baixos. Aqueles valores no canto inferior esquerdo do gráfico, que já tínhamos avaliado em outro momento.
+1. Após isso, temos uma distribuição relativamente normal. Note que a maioria dos valores se concentra em torno do Eixo X quando X é maior que -1 e menor que 1. Isso aponta para a tendência "pontuda" da distribuição (valores muito concentrados), assim como já havia sido avaliado pela curtose.
+1. A partir do valor 22/23 no eixo Y, começamos a ter outros valores altos. De certa forma, *já havíamos avaliado isso no boxplot que fizemos semana passada*.
+
+Assim, com o QQ plot conseguimos entender melhor que há valores extremos nessa variável. Porém, perto da média (eixo X = 0), temos valores que se distribuem de forma relativamente normal.
+
+## Passo 4 - Teste de Normalidade Shapiro-Wilk e Kolgomorov-Smirnov
+Não, não estamos falando de bebidas alcoólicas russas, mas de testes estatísticos mesmo (aliás, qual a semelhança entre bebidas russas e testes estatísticos? Se alguém souber, me avisa, adoraria saber). 
+
+Temos várias evidências apontando para uma distribuição relativamente normal. Algumas observações parecem corroborar com a ideia de normalidade, enquanto outras só dificultam essa tomada de decisão.
+
+Um outro passo interessante para avaliar a normalidade de uma variável seria performar o teste de normalidade de Shapiro-Wilk.
+
+O teste parte da premissa de que a variável (nesse caso, extroversão) veio de uma distribuição normal. Assim, se *p* < 0.05, isso seria uma evidência a mais de que a variável não veio de uma distribuição normal. O teste é facilmente performado no R com o comando `shapiro.test(variavel)`.
+
+```{r Shapiro Wilk}
+# Passo 4 - Teste de Normalidade Shapiro-Wilk
+shapiro.test(bfi$extroversao)
+```
+
+Com isso, recebemos o valor do teste (*W* = 0.97) e o valor de *p*, sendo que *p* < 2.2e-16. Isso signfica que o valor de *p* é menor que 2.2 com 16 "zeros" na frente de 2. Ou seja, *p* < < 0.0000000000000022
+
+Esse valor baixo é menor que 0.05. Sendo assim, há uma baixa probabilidade de que extroversão tenha vindo de uma distribuição normal.
+
+Não contentes, poderíamos também performar o teste de Kolgomorov-Smirnov. Nesse caso, a função ficaria: `ks.test(variavel, "pnorm")`
+
+```{r Kolgomorov Smirnov}
+ks.test(bfi$extroversao, "pnorm")
+```
+
+O teste de Kolgomorov-Smirnov retornou o mesmo valor de significância de Shapiro-Wilk: *p* < 0.0000000000000022. 
+
+Mais uma vez, temos evidências de que essa variável não segue a distribuição normal.
+
+# Extroversão é normal ou não é?
+A resposta final para essa pergunta é que tudo aponta que extroversão não é uma variável que pode passar por testes paramétricos (testes feitos apenas para variáveis que seguem a distribuição normal). Apesar disso, de acordo com o **Teorema Central do Limite**, amostras que possuam a partir de 30 casos realmente aleatórios poderiam ser consideradas como normai. Já que a nossa distribuição possui algumas características de normalidade (a distribuição e a assimetria estável), poderíamos tratar, se quiséssemos e ao nosso próprio custo, essa distribuição como normal. Até porque esse banco de dados tem 2800 casos.
+
+Veja que coisa! Haveriam ainda argumentos para suportar a utilização de testes paramétricos para essa variável. Porém, o mais correto seria a utilização de testes não paramétricos para extroversão, até porque algumas premissas de normalidade foram sim quebradas (curtose, QQ Plot e Shapiro-Wilk/Kolgomorov-Smirnov).
+
+O importante nesse processo todo é entender a distribuição de sua variável, os pontos fortes dela em relação à normalidade e os pontos fracos dela em relação à normalidade. Se fizer sentido a partir de sua análise a utilização de um teste paramétrico (e você está ciente dos riscos disso), utilize um teste paramétrico. De qualquer forma, explore bastante suas variáveis antes de começar a análise mais aprofundada dos dados.
