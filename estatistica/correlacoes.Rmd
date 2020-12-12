@@ -15,17 +15,19 @@ output:
 # Introdução
 A correlação é uma medida que informa o quanto uma variável está relacionada a outra variável. Isto é, o quanto a variação em uma variável acompanha a variação em outra variável.
 
+A correlação vai de -1 a 1.
+
 Um exemplo de correlação ocorre entre as variáveis *depressão* e *ansiedade*. Não é incomum uma pessoa com sintomas de ansiedade estar também apresentando sintomas de depressão, e vice-versa.
 
 Vamos por partes: os sintomas de depressão podem incluir tristeza, falta de ânimo e dificuldade de reter interesse. Já os sintomas de ansiedade estão relacionados a agitação, a uma pessoa sentir que está prestes a entrar em pânico e a uma pessoa sentir-se assustada sem motivo (veja o artigo de Patias, Machado, Bandeira, & Dell'Aglio: https://www.scielo.br/pdf/pusf/v21n3/2175-3563-pusf-21-03-00459.pdf ).
 
-Quando a depressão de uma pessoa aumenta, o seu nível de ansiedade tende a aumentar junto. Quando a depressão de uma pessoa diminui,  seu nível de ansiedade tende a diminuir junto.
+Quando a depressão de uma pessoa aumenta, o seu nível de ansiedade tende a aumentar junto. Quando a depressão de uma pessoa diminui, seu nível de ansiedade tende a diminuir junto.
 
 *Da mesma forma*, quando a ansiedade de uma pessoa aumenta, o seu nível de depressão tende a aumentar junto. Quando a ansiedade de uma pessoa diminui,  seu nível de depressão tende a diminuir junto.
 
-A variação da depressão acompanha a variação da ansiedade, assim como a variação da ansiedade acompanha a variação da depressão. Ou seja, essas variáveis andam juntas. Em termos estatísticos, pode-se dizer que elas possuem *variância compartilhada*. Essa variância entre as duas variáveis é chamada de *covariância* (variância compartilhada de duas variáveis).
+A variação da depressão acompanha a variação da ansiedade, assim como a variação da ansiedade acompanha a variação da depressão. Ou seja, essas variáveis andam juntas. Em termos estatísticos, pode-se dizer que elas possuem *variância compartilhada*. Essa variância compartilhada entre as duas variáveis é chamada de *covariância* (variância compartilhada de duas variáveis).
 
-Agora, o quanto de variância elas compartilham?
+Entender a covariância e de onde ela surge é a chave para entender o que é correlação. Antes, aos exemplos!
 
 # Entendendo melhor a covariância
 
@@ -87,14 +89,106 @@ Esse é o novo cenário, agora com mais participantes e com uma tabela para ajud
 Como saber o quanto essas variáveis estão andando juntas?
 Não podemos aqui ficar contando o quanto cada uma variou, assim como estávamos fazendo antes. Ora, do mesmo jeito, caso tivéssemos 20000 casos, não teríamos como acompanhar a mudança individual em cada um deles.
 
+Vamos visualizar como essas variáveis estão se relacionando:
+
+![Correlação](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/correlacao.png)
+
+Parece que um aumento em uma está acompanhado do aumento na outra. Essa linha ascendente é um bom sinal de covariância/correlação positiva. Entretanto, qual a *força* dessa associação?
+
 É para isso que servem as fórmulas estatísticas. Lembra que falamos da variância?
 Vamos iniciar entendendo o quanto cada variável varia consigo mesma.
 
-Você pode estar se perguntando: "Ué, Gabriel, como assim varia consigo mesma? *Em torno de que* ela varia?" Em torno da medida mais comum e falada por aí: **a média**.
+Você pode estar se perguntando: "Ué, Gabriel, como assim varia consigo mesma? *Em torno de que* ela varia?" Em torno da medida mais comum e mais falada por aí: **a média**. Vamos visualizar agora o quanto essas duas variáveis estão se comportando em torno de suas médias:
+
+![Tabela 2](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor2.png)
+
+O valor entre parênteses é a diferença entre o valor encontrado e a média da variável. Esse valor pode ser representado por (X - μ). Ele está presente lá na fórmula da covariância.
+
+Lembra da fórmula da variância? Ela tem tudo a ver com a covariância.
+
+![Variância](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor3.png)
+
+Note que ali no numerador, a primeira parte é (X - μ)². Esse é o erro ao quadrado em relação à média de uma variável. Enquanto na fórmula da variância esse erro é somado e multiplicado entre si, na covariância, é o erro relativo às duas variáveis que vai entrar na fórmula.
+Isso já está na tabela acima! O número entre parênteses é a diferença entre o valor e o erro.
+
+Colocando de maneira mais simples, na variância temos *(X - μ)(X - μ)*, já na covariância temos *(X - μ)(Y - μ)*.
+
+Essa é a fórmula de covariância:
+
+![Covariância](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor5.png)
+
+Perceba que a única mudança é no numerador! Pois bem, vamos agora ver a primeira parte da covariância lá na nossa tabela. Para isso, vamos multiplicar os números entre parênteses de depressão e de ansiedade.
+
+![Covariância Tabela](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor4.png)
+Note que já adicionamos ali no final o valor da soma de todos esses erros, que é 51! Agora, a covariância é simplesmente 51 / (n-1).
+Já que temos 10 participantes, nosso denominador é 10-1 = 9. Assim, a covariância entre depressão e ansiedade é 51 / 9 = 5.667.
+
+É fácil assim para achar a covariância. Olhando para o sinal da covariância, vemos que o valor de 5.667 é positivo. Assim, essas duas variáveis estão positivamente relacionadas.
+
+## Calculando a correlação
+Temos um problema: apenas pelo número da covariância não temos como dizer a força dessa associação. Hipoteticamente, se depressão fosse medida de 0 a 100, o valor da covariância aumentaria, somente porque a magnitude de medida de uma variável aumentou.
+
+A partir disso, a correlação surge para *padronizar* essa medida de covariância. Lembra que a correlação vai de -1 a 1?
+Ela faz isso de forma simples: dividindo a covariância pela multiplicação do desvio-padrão de x e y.
+
+![Correlação Fórmula](C:/Users/Marco2/Desktop/Gabriel/Data Science/PsicoData/Medium/Texto/Correlação/1-cor6.png)
+
+O σ representa o desvio-padrão. Enquanto já temos o valor da covariância entre x e y (5.667), o desvio-padrão de x é 3.091; o desvio-padrão de ansiedade é 2.299. Indo pela fórmula: 5.667/(2.299 * 3.091) = 0.79.
+
+A correlação entre depressão e ansiedade é de 0.79!
+
+Essa fórmula de correlação que vimos aqui se chama correlação de Pearson, também chamada de coeficiente de correlação de Pearson, r de Pearson, coeficiente de correlação produto-momento e correlação linear. É a fórmula mais comumente usada.
+
+Uma coisa legal da correlação de Pearson é o r².
+
+Quando fazemos o quadrado da correlação, o resultado disso é a porcentagem de variância compartilhada entre duas variáveis! Olha que legal :)
+
+No exemplo dado, como r = 0.79, depressão e ansiedade possuiriam 62.41% de sua variância compartilhada. Isso porque r² = 0.79 * 0.79.
+
+Ah, todo esse cálculo pode ser feito dessa forma no R:
+
+```{r Calculando correlação}
+# Criando variáveis
+depressao <- c(7, 1, 2, 8, 10, 8, 5, 2, 3, 4)
+ansiedade <- c(7, 3, 4, 9, 7, 6, 6, 4, 1, 5)
+
+# Calculando erro em torno da média
+erro_depressao <- depressao - mean(depressao)
+erro_ansiedade <- ansiedade - mean(ansiedade)
+
+# Calculando covariância
+covar_numerador <- sum(erro_depressao * erro_ansiedade)
+covar_denomidador <- length(depressao) - 1 # podia também ser length(ansiedade)
+
+covariancia <- covar_numerador/covar_denomidador
+covariancia
+
+# Calculando correlação
+correlacao <- covariancia / (sd(depressao) * sd(ansiedade))
+correlacao
+
+cor(depressao, ansiedade) # Calculando direto com R
+```
+
+# Tipos de correlação
+Como vimos aqui, toda a fórmula de correlação de Pearson depende da variação em torno da média. Essa é uma limitação importante da fórmula da correlação de Pearson. Isso porque, para considerar a média na fórmula da correlação, se parte do pressuposto de que a média é um bom modelo de tendência central para as variáveis. Por causa disso, a correlação de Pearson é um teste paramétrico. Ou seja, ela compreende que as variáveis que participam da correlação são variáveis contínuas que seguem a distribuição normal.
+
+Além disso, pode-se calcular a correlação não só entre variáveis contínuas, mas entre variáveis contínuas e categóricas (como sim/não), contínuas e ordinais, ordinais e ordinais, categóricas e categóricas, etc.
+
+Essas são as correlações utilizadas para cada um desses casos:
+
+
+
+
+
+
+Para isso, vamos entender a correlação de Pearson, a correlação mais utilizada, geralmente aplicada a duas variáveis contínuas.
+
+
+## Correlação de Pearson 
+
 
 ## R²
-
-
 
 
 

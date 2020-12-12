@@ -1,0 +1,17 @@
+  TITLE:  MPLUS EXAMPLE OF EFA;
+
+  DATA:   FILE IS matriz_de_cor.dat;
+
+          NOBSERVATIONS = 300;
+
+          TYPE=CORRELATION;
+
+  VARIABLE:
+          NAMES ARE O1 O2 O3 O4;
+
+  ANALYSIS:
+          TYPE = EFA 1 1;
+
+          ESTIMATOR=ML;
+
+  OUTPUT: FSDETERMINACY;

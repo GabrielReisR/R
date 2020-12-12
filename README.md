@@ -87,3 +87,38 @@ Passo a passo sobre como avaliar a normalidade de uma variável.
   - QQ Plot
   - Assimetria e Curtose com `stat.desc`
   - Shapiro-Wilk e Kolgomorov-Smirnov
+  
+#### Correlação
+**[Medium](https://medium.com/psicodata/entendendo-de-coracao-a-correlacao-ad27a948c14a) ou [Script](https://github.com/GabrielReisR/R/blob/master/estatistica/correlacoes.R)**
+
+Discutidos procedimentos de correlação no R. São vistas as seguintes correlações:
+  - Linear de Pearson (contínua-contínua)
+    - Cálculo da correlação do zero
+    - Correlação parcial
+  - Point-biserial (contínua-dicotômica)
+  - Biserial (contínua-dicotomizada)
+  - Tetracórica (dicotomizada-dicotomizada)
+  - Policórica (ordinal-ordinal)
+  - qgraph::cor_auto() (detecta automaticamente o tipo das variáveis)
+  - Análise de redes (brevemente citada a partir da matriz de correlação policórica)
+    
+#### Análise Fatorial Exploratória
+**[Medium](https://medium.com/psicodata/tutorial-de-analise-fatorial-exploratoria-no-r-1db5b6bf8dd5) ou [Script](https://github.com/GabrielReisR/R/blob/master/estatistica/analise_fatorial_exploratoria.R)**
+
+É feita a discussão passo a passo do procedimento de Análise Fatorial Exploratória.
+
+  - Matriz inicial de correlação
+  - Seleção de fatores
+    - Cálculo do Eigenvalue
+    - Scree plot
+    - Análise paralela
+  - Análise fatorial exploratória
+    - Explicação de factor loadings (escores fatoriais)
+    - Explicação de comunalidade e unicidade (communality e uniqueness)
+    - Explicação do novo valor de Eigenvalue
+    - Explicação do que significa Proportion of Variance (proporção de variância)
+  - Diagrama da análise fatorial
+    - Diagrama mais bonitinho da análise
+    - Visualização geométrica do modelo
+  - CURIOSIDADE
+    - Descobrindo Eigenvalue e Proportion Var da EFA na mão
