@@ -123,5 +123,3 @@ Discutidos procedimentos de correlação no R. São vistas as seguintes correla�
     - Visualização geométrica do modelo
   - CURIOSIDADE
     - Descobrindo Eigenvalue e Proportion Var da EFA na mão
-=======
->>>>>>> 3d4fc474ed5fb93b2fe572e7a99dbe4228add940
