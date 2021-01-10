@@ -80,7 +80,7 @@ Fazendo alterações em data.frame com o pacote tidyr buscando qualidade dos dad
 Entendendo amplitude, moda, média, mediana, boxplot e desvio-padrão.
 
 #### Avaliação de normalidade
-**[Medium](bit.ly/normalcomr), [RMarkdown](https://rpubs.com/reisrgabriel/avalicaodenormalidade) ou [Script](https://github.com/GabrielReisR/R/blob/master/estatistica/avalicao-de-normalidade.R)**
+**[Medium](bit.ly/normalcomr), [RMarkdown](https://rpubs.com/reisrgabriel/avalicaodenormalidade) ou [Script](https://github.com/GabrielReisR/R/blob/master/estatistica/avaliacao-de-normalidade.R)**
 
 Passo a passo sobre como avaliar a normalidade de uma variável.
   - Histograma e densidade
